@@ -27,5 +27,10 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass = 'my.place.App'
+    mainClass = 'com.bitcamp.goodplace.App'
+}
+eclipse{
+    project {
+        name = "good-place"
+    }
 }
