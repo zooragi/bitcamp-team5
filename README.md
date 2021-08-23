@@ -2,3 +2,4 @@
 ## Good-Place Project
 굿굿 방우주
 
+우주 바보
