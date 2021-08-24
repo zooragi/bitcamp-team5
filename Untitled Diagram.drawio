@@ -368,7 +368,7 @@
         <mxCell id="pNTt-cpH09BAnZ2QkXpP-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="EAaBcd7ZClpU04VrfA0i-1" source="pNTt-cpH09BAnZ2QkXpP-0" target="pNTt-cpH09BAnZ2QkXpP-7">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="pNTt-cpH09BAnZ2QkXpP-0" value="비회원" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="EAaBcd7ZClpU04VrfA0i-1">
+        <mxCell id="pNTt-cpH09BAnZ2QkXpP-0" value="" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="EAaBcd7ZClpU04VrfA0i-1">
           <mxGeometry x="214" y="1675" width="79" height="158" as="geometry" />
         </mxCell>
         <mxCell id="pNTt-cpH09BAnZ2QkXpP-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="EAaBcd7ZClpU04VrfA0i-1" source="pNTt-cpH09BAnZ2QkXpP-1" target="pNTt-cpH09BAnZ2QkXpP-2">
