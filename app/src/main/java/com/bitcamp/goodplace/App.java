@@ -3,13 +3,33 @@
  */
 package com.bitcamp.goodplace;
 
+import com.bitcamp.goodplace.Handler.MyMapHandler;
+import com.bitcamp.goodplace.domain.User;
+import com.bitcamp.menu.Menu;
 import com.bitcamp.menu.MenuGroup;
 
 public class App {
     public static void main(String[] args) {
+    	User user = new User();
+    	MyMapHandler myMapHandler = new MyMapHandler(user);
+    	
         MenuGroup mg = new MenuGroup("메인 메뉴");
         
         MenuGroup myMap = new MenuGroup("나만의 지도");
+        myMap.add(new Menu("테마 등록") {
+			@Override
+			public void execute() {
+				myMapHandler.add();
+			}
+        	
+        });
+        myMap.add(new Menu("테마 목록") {
+ 			@Override
+ 			public void execute() {
+ 				myMapHandler.list();
+ 			}
+         	
+         });
         mg.add(myMap);
         
         MenuGroup fullThema = new MenuGroup("전체 테마 보기");

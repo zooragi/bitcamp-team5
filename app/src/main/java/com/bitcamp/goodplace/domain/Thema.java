@@ -4,12 +4,13 @@ import java.util.List;
 
 public class Thema {
 	private String title;
-	private List<String> hashtag;
-	private boolean isPublic;
-	private int viewCount;
-	private List<String> placeList;
-	private boolean isShare;
 	private String userName;
+	private int viewCount;
+	private boolean isPublic;
+	private boolean isShare;
+	private List<String> placeList;
+	private List<String> hashtag;
+	
 	public String getTitle() {
 		return title;
 	}

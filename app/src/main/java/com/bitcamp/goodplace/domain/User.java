@@ -1,5 +1,6 @@
 package com.bitcamp.goodplace.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
@@ -11,6 +12,7 @@ public class User {
 	private String nickName;
 	private List<Thema> themaList; 
 	private List<String> bookMark;
+	
 	public String getName() {
 		return name;
 	}
