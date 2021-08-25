@@ -1,15 +1,16 @@
 package com.bitcamp.goodplace.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Thema {
+public class Theme {
 	private String title;
 	private String userName;
 	private int viewCount;
 	private boolean isPublic;
 	private boolean isShare;
 	private List<String> placeList;
-	private List<String> hashtag;
+	private List<String> hashtags;
 	
 	public String getTitle() {
 		return title;
@@ -17,11 +18,14 @@ public class Thema {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public List<String> getHashtag() {
-		return hashtag;
+	public List<String> getHashtags() {
+		if(this.hashtags == null) {
+			setHashtags(new ArrayList<String>());
+		}
+		return hashtags;
 	}
-	public void setHashtag(List<String> hashtag) {
-		this.hashtag = hashtag;
+	public void setHashtags(List<String> hashtag) {
+		this.hashtags = hashtag;
 	}
 	public boolean isPublic() {
 		return isPublic;
