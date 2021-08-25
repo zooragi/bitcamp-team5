@@ -3,12 +3,25 @@
  */
 package com.bitcamp.goodplace;
 
-public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
+import com.bitcamp.menu.MenuGroup;
 
+public class App {
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        MenuGroup mg = new MenuGroup("메인 메뉴");
+        
+        MenuGroup myMap = new MenuGroup("나만의 지도");
+        mg.add(myMap);
+        
+        MenuGroup fullThema = new MenuGroup("전체 테마 보기");
+        mg.add(fullThema);
+        
+        MenuGroup bookmark = new MenuGroup("북마크");
+        mg.add(bookmark);
+        
+        MenuGroup rank = new MenuGroup("순위");
+        mg.add(rank);
+        
+        mg.execute();
+        
     }
 }
