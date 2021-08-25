@@ -10,8 +10,8 @@ public class User {
 	private String email;
 	private String tel;
 	private String nickName;
-	private List<Thema> themaList; 
-	private List<String> bookMark;
+	private List<Theme> themeList; 
+	private List<String> bookMarks;
 	
 	public String getName() {
 		return name;
@@ -49,17 +49,20 @@ public class User {
 	public void setNickName(String nickName) {
 		this.nickName = nickName;
 	}
-	public List<Thema> getThemaList() {
-		return themaList;
+	public List<Theme> getThemeList() {
+		if(this.themeList == null) {
+			setThemeList(new ArrayList<Theme>());
+		}
+		return themeList;
 	}
-	public void setThemaList(List<Thema> themaList) {
-		this.themaList = themaList;
+	public void setThemeList(List<Theme> themeList) {
+		this.themeList = themeList;
 	}
 	public List<String> getBookMark() {
-		return bookMark;
+		return bookMarks;
 	}
 	public void setBookMark(List<String> bookMark) {
-		this.bookMark = bookMark;
+		this.bookMarks = bookMark;
 	}
 	
 	

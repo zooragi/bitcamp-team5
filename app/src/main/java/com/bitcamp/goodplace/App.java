@@ -7,6 +7,7 @@ import com.bitcamp.goodplace.Handler.MyMapHandler;
 import com.bitcamp.goodplace.domain.User;
 import com.bitcamp.menu.Menu;
 import com.bitcamp.menu.MenuGroup;
+import com.bitcamp.util.MapApi;
 
 public class App {
     public static void main(String[] args) {
