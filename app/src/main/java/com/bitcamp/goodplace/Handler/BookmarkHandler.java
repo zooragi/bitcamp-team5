@@ -39,10 +39,10 @@ public class BookmarkHandler {
     this.user.getBookMark().remove(user);
   }
 
-  private Object findByNo(int bookmarkNo) {
+  private Object findByTheme(String themeTitle) {
     //    Object[] arr = user.getBookMark().toArray(new Object[0]);
     for (Object user : user.getBookMark().toArray(new Object[0])) {
-      if (((User) user).getName() == bookmarkNo) {
+      if (theme.title.equals(themeTitle)) {
         return user;
       }
     }
