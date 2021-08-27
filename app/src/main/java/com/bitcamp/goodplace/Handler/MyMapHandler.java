@@ -8,7 +8,7 @@ import com.bitcamp.util.Prompt;
 
 public class MyMapHandler {
   User user;
-
+  User user2;
   public MyMapHandler(User user) {
     this.user = user;
   }
