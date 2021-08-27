@@ -11,39 +11,28 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import com.bitcamp.goodplace.domain.Theme;
 import com.google.gson.Gson;
 
 public class MapApi {
-	private Gson gson;
-
-	private void setup() {
-		gson = new Gson();
-	}
-
-	public void searchPlace(String keyword) {
+	public AddressInfo searchPlace(String keyword) {
+		Gson gson = new Gson();
+		Map map = new HashMap();
 		try {
 			keyword = URLEncoder.encode(keyword, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			throw new RuntimeException("encoding fail!", e);
 		}
-
-		String apiURL = "https://openapi.naver.com/v1/search/local.json?query=" + keyword
-				+ "&display=20&start=1&sort=random"; // json 결과
-		// String apiURL = "https://openapi.naver.com/v1/search/blog.xml?query="+ text;
-		// // xml 결과
+		
+		String apiURL = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=" + keyword;
 
 		Map<String, String> requestHeaders = new HashMap<>();
-		requestHeaders.put("X-Naver-Client-Id", "qa5z3swe3a");
-		requestHeaders.put("X-Naver-Client-Secret", "WNW8GyfEyDZIR8fIJSGsnBBIr2wPivd1DQCZN6cU");
+		requestHeaders.put("X-NCP-APIGW-API-KEY-ID", "qa5z3swe3a");
+		requestHeaders.put("X-NCP-APIGW-API-KEY", "WNW8GyfEyDZIR8fIJSGsnBBIr2wPivd1DQCZN6cU");
 		String responseBody = get(apiURL, requestHeaders);
-
-		System.out.println("네이버에서 받은 결과 = " + responseBody);
-		System.out.println("-----------------------------------------");
-
-		System.out.println(responseBody);
+		return gson.fromJson(gson.toJson(gson.fromJson(responseBody, Address.class).addresses[0]), AddressInfo.class);
 	}
 
 	private String get(String apiUrl, Map<String, String> requestHeaders) {
