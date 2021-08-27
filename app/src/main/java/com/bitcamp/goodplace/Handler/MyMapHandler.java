@@ -14,29 +14,29 @@ public class MyMapHandler {
   }
 
   public void add() {
-    Theme thema = new Theme();
-    ArrayList<Theme> themaList = (ArrayList<Theme>) user.getThemeList();
-    ArrayList<String> hashtagList = (ArrayList<String>) thema.getHashtags();
-    System.out.println("나의 테마 등록하기");
+    Theme theme = new Theme();
+    ArrayList<Theme> themeList = (ArrayList<Theme>) user.getThemeList();
+    ArrayList<String> hashtagList = (ArrayList<String>) theme.getHashtags();
+    System.out.println("나의 테마 등록");
 
-    thema.setTitle(Prompt.inputString("테마 제목 : "));
+    theme.setTitle(Prompt.inputString("테마 이름을 입력하세요> "));
     while (true) {
-      String input = Prompt.inputString("해시 태그(완료: 빈 문자열) : ");
+      String input = Prompt.inputString("해시 태그를 입력하세요(완료: 빈 문자열)> ");
       if (input.length() == 0)
         break;
 
       hashtagList.add(input);
     }
-    if (Prompt.inputString("공개 설정 하시겠습니까?(y/N) : ").equalsIgnoreCase("y")) {
-      thema.setPublic(true);
+    if (Prompt.inputString("공개 설정 하시겠습니까?(y/N)> ").equalsIgnoreCase("y")) {
+      theme.setPublic(true);
     }
-    themaList.add(thema);
+    themeList.add(theme);
   }
 
   public void list() {
     int index = 1;
     System.out.println("[테마 목록 조회]");
-    if (user.getThemeList() == null) {
+    if (user.getThemeList().size() == 0) {
       System.out.println("등록된 테마가 없습니다.");
       return;
     }
@@ -52,16 +52,16 @@ public class MyMapHandler {
 
   public void delete() {
     System.out.println("[테마 삭제]");
-    String title = Prompt.inputString("삭제할 테마 제목? ");
+    String title = Prompt.inputString("테마 이름을 입력하세요> ");
 
     Theme theme = findByTitle(title);
 
     if (theme == null) {
-      System.out.println("해당 제목의 테마가 없습니다.");
+      System.out.println("해당 이름의 테마가 없습니다.");
       return;
     }
 
-    String input = Prompt.inputString("정말 삭제하시겠습니까?(y/N) ");
+    String input = Prompt.inputString("정말 삭제하시겠습니까?(y/N)> ");
     if (input.equalsIgnoreCase("n") || input.length() == 0) {
       System.out.println("테마 삭제를 취소하였습니다.");
       return;
@@ -80,7 +80,7 @@ public class MyMapHandler {
     Theme theme = findByTitle(title);
 
     if (theme == null) {
-      System.out.println("해당 제목의 테마가 없습니다.");
+      System.out.println("해당 이름의 테마가 없습니다.");
       return;
     }
 
@@ -94,9 +94,16 @@ public class MyMapHandler {
         break;
 
       hashtagList.add(input);
+
     }
 
-    String input = Prompt.inputString("정말 변경하시겠습니까?(y/N) ");
+    if(Prompt.inputString("공개 설정 하시겠습니까?(y/N) : ").equalsIgnoreCase("y")) {
+      theme.setPublic(true);
+    } else {
+      theme.setPublic(false);
+    }
+
+    String input = Prompt.inputString("정말 변경하시겠습니까?(y/N)> ");
     if (input.equalsIgnoreCase("n") || input.length() == 0) {
       System.out.println("테마 변경을 취소하였습니다.");
       return;
@@ -108,11 +115,9 @@ public class MyMapHandler {
     System.out.println("테마를 변경하였습니다.");
   }
 
-
-
   private Theme findByTitle(String themeTitle) {
-    ArrayList<Theme> themaList = (ArrayList<Theme>) user.getThemeList();
-    for (Theme list : themaList) {
+    ArrayList<Theme> themeList = (ArrayList<Theme>) user.getThemeList();
+    for (Theme list : themeList) {
       if (list.getTitle().equals(themeTitle)) {
         return list;
       }

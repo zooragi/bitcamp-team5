@@ -35,18 +35,18 @@ public class App {
 
     });
 
-    myMap.add(new Menu("테마 삭제") {
-      @Override
-      public void execute() {
-        myMapHandler.delete();
-      }
-
-    });
-
     myMap.add(new Menu("테마 수정") {
       @Override
       public void execute() {
         myMapHandler.update();
+      }
+
+    });
+
+    myMap.add(new Menu("테마 삭제") {
+      @Override
+      public void execute() {
+        myMapHandler.delete();
       }
 
     });
@@ -67,14 +67,14 @@ public class App {
 
     MenuGroup bookmark = new MenuGroup("북마크");
 
-    bookmark.add(new Menu("추가") {
+    bookmark.add(new Menu("북마크 등록") {
       @Override
       public void execute() {
         bookmarkHandler.add();
       }
     });
 
-    bookmark.add(new Menu("목록") {
+    bookmark.add(new Menu("북마크 목록") {
       @Override
       public void execute() {
         bookmarkHandler.list();
@@ -82,7 +82,7 @@ public class App {
     }); 
 
 
-    bookmark.add(new Menu("삭제") {
+    bookmark.add(new Menu("북마크 삭제") {
       @Override
       public void execute() {
         bookmarkHandler.delete();

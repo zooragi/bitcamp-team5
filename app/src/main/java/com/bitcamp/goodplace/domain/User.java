@@ -58,13 +58,13 @@ public class User {
   public void setThemeList(List<Theme> themeList) {
     this.themeList = themeList;
   }
-  public List<Theme> getBookMark() {
+  public List<Theme> getBookMarks() {
     if(this.bookMarks == null) {
-      setBookMark(new ArrayList<Theme>());
+      setBookMarks(new ArrayList<Theme>());
     }
     return bookMarks;
   }
-  public void setBookMark(List<Theme> bookMarks) {
+  public void setBookMarks(List<Theme> bookMarks) {
     this.bookMarks = bookMarks;
   }
 
