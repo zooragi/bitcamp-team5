@@ -38,7 +38,7 @@ public class App {
     myMap.add(new Menu("테마 삭제") {
       @Override
       public void execute() {
-        myMapHandler.list();
+        myMapHandler.delete();
       }
 
     });
@@ -46,7 +46,7 @@ public class App {
     myMap.add(new Menu("테마 수정") {
       @Override
       public void execute() {
-        myMapHandler.list();
+        myMapHandler.update();
       }
 
     });
