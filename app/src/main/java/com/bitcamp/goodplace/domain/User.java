@@ -59,6 +59,9 @@ public class User {
     this.themeList = themeList;
   }
   public List<Theme> getBookMark() {
+    if(this.bookMarks == null) {
+      setBookMark(new ArrayList<Theme>());
+    }
     return bookMarks;
   }
   public void setBookMark(List<Theme> bookMarks) {

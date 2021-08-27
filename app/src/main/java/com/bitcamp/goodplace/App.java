@@ -70,7 +70,7 @@ public class App {
     bookmark.add(new Menu("추가") {
       @Override
       public void execute() {
-        bookmarkHandler.list();
+        bookmarkHandler.add();
       }
     });
 
