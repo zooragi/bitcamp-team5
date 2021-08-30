@@ -76,29 +76,4 @@ public class BookmarkHandler {
     return null;
   }
 
-  public void listPlace() {
-
-    System.out.println("[장소 목록]");
-
-    String themeTitle = Prompt.inputString("테마 이름을 입력하세요>");
-
-    Theme theme = findByTheme(themeTitle);
-
-    if(theme == null) {
-      System.out.println("해당 이름의 테마가 없습니다.");
-      return;
-    }
-
-    int index = 1;
-
-    for(Place list : theme.getPlaceList()) {
-      System.out.printf("(%d)\n",index++);
-      System.out.printf("가게명 : %s\n",list.getStoreName());
-      System.out.printf("주소 : %s\n",list.getAddress());
-      System.out.printf("테마 : %s\n",list.getThema());
-      System.out.println();
-    }
-  }
-
-
 }
