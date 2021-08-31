@@ -58,13 +58,18 @@ public class App {
 			}
 		});
 
-		myMap.add(addThemeDetailMenuGroup(myMapHandler));
 		mg.add(myMap);
 
 ///////////////////////////////////////////////////////////////////////////////
 		MenuGroup fullTheme = new MenuGroup("전체 테마 보기");
 
 		fullTheme.add(new Menu("전체테마 목록조회") {
+			@Override
+			public void execute() {
+				bookmarkHandler.list();
+			}
+		});
+		fullTheme.add(new Menu("해시태그 검색") {
 			@Override
 			public void execute() {
 				bookmarkHandler.list();
@@ -98,57 +103,22 @@ public class App {
 		mg.add(bookmark);
 ///////////////////////////////////////////////////////////////////////////////
 		MenuGroup rank = new MenuGroup("순위");
+		rank.add(new Menu("실시간 테마 순위") {
+			@Override
+			public void execute() {
+				bookmarkHandler.delete();
+			}
+		});
+		rank.add(new Menu("전체 테마 순위") {
+			@Override
+			public void execute() {
+				bookmarkHandler.delete();
+			}
+		});
+		
 		mg.add(rank);
 
 ///////////////////////////////////////////////////////////////////////////////
 		return mg;
-	}
-	
-	Menu addThemeDetailMenuGroup(MyMapHandler myMapHandler) {
-		MenuGroup themeDetail = new MenuGroup("테마 상세 보기");
-		themeDetail.add(new Menu("검색") {
-			@Override
-			public void execute() {
-				while(true) {
-					String input = Prompt.inputString("검색하시오 : ");
-					if(input.length() == 0) {
-						return;
-					}
-					Theme theme = myMapHandler.findByTitle(input);
-					if(myMapHandler.findByTitle(input) == null) {
-						System.out.println("검색된 테마가 없다.");
-						continue;
-					}
-					themeDetail.remove(themeDetail.getMenuByIndex(1));
-					themeDetail.add(makePlaceMenuGroup(input,myMapHandler));
-					return;
-				}
-			}
-		});
-		return themeDetail;
-	}
-	
-	Menu makePlaceMenuGroup(String title,MyMapHandler myMapHandler) {
-		MenuGroup placeDetail = new MenuGroup(title+" 테마");
-		Theme theme = myMapHandler.findByTitle(title);
-		placeDetail.add(new Menu("장소 저장") {
-			@Override
-			public void execute() {
-				myMapHandler.delete();
-			}
-		});
-		placeDetail.add(new Menu("장소 목록") {
-			@Override
-			public void execute() {
-				myMapHandler.delete();
-			}
-		});
-		placeDetail.add(new Menu("장소 삭제") {
-			@Override
-			public void execute() {
-				myMapHandler.delete();
-			}
-		});
-		return placeDetail;
 	}
 }
