@@ -1,10 +1,10 @@
 package com.bitcamp.goodplace;
 
-import java.util.ArrayList;
-
+import com.bitcamp.goodplace.Handler.AuthHandler;
 import com.bitcamp.goodplace.Handler.BookmarkHandler;
+import com.bitcamp.goodplace.Handler.FullThemeHandler;
 import com.bitcamp.goodplace.Handler.MyMapHandler;
-import com.bitcamp.goodplace.domain.Theme;
+import com.bitcamp.goodplace.Handler.PlaceHandler;
 import com.bitcamp.goodplace.domain.User;
 import com.bitcamp.menu.Menu;
 import com.bitcamp.menu.MenuGroup;
@@ -22,12 +22,36 @@ public class App {
 	
 	Menu createMenu() {
 		User user = new User();
-		MyMapHandler myMapHandler = new MyMapHandler(user);
+		PlaceHandler placeHandler = new PlaceHandler(user);
+		MyMapHandler myMapHandler = new MyMapHandler(user,placeHandler);
 		BookmarkHandler bookmarkHandler = new BookmarkHandler(user);
+		FullThemeHandler fullThemeHandler = new FullThemeHandler(user);
+		AuthHandler authHandler = new AuthHandler();
+		
 
 		MenuGroup mg = new MenuGroup("메인 메뉴");
 		mg.setPrevMenuTitle("종료");
 		
+		
+/////////////////////////////////////////////////////////////////////////////////
+		mg.add(new Menu("로그인") {
+			@Override
+			public void execute() {
+				authHandler.login();
+			}
+		});
+		mg.add(new Menu("내 정보") {
+			@Override
+			public void execute() {
+				authHandler.displayLoginUser();
+			}
+		});
+		mg.add(new Menu("로그아웃") {
+			@Override
+			public void execute() {
+				authHandler.logout();
+			}
+		});
 /////////////////////////////////////////////////////////////////////////////////
 		MenuGroup myMap = new MenuGroup("나만의 지도");
 
@@ -59,20 +83,41 @@ public class App {
 		});
 
 		mg.add(myMap);
+///////////////////////////////////////////////////////////////////////////////
+		MenuGroup savePlaceInTheme = new MenuGroup("테마에 장소 추가");
+		savePlaceInTheme.add(new Menu("장소 등록") {
+			@Override
+			public void execute() {
+				placeHandler.add();
+			}
+		});
+		savePlaceInTheme.add(new Menu("장소 목록") {
+			@Override
+			public void execute() {
+				placeHandler.list();
+			}
+		});
+		savePlaceInTheme.add(new Menu("장소 삭제") {
+			@Override
+			public void execute() {
+				placeHandler.delete();
+			}
+		});
+		mg.add(savePlaceInTheme);
 
 ///////////////////////////////////////////////////////////////////////////////
 		MenuGroup fullTheme = new MenuGroup("전체 테마 보기");
 
-		fullTheme.add(new Menu("전체테마 목록조회") {
+		fullTheme.add(new Menu("전체 테마 목록") {
 			@Override
 			public void execute() {
-				bookmarkHandler.list();
+				fullThemeHandler.list();
 			}
 		});
 		fullTheme.add(new Menu("해시태그 검색") {
 			@Override
 			public void execute() {
-				bookmarkHandler.list();
+				fullThemeHandler.searchHashtag();
 			}
 		});
 		mg.add(fullTheme);

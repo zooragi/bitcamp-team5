@@ -8,8 +8,10 @@ import com.bitcamp.util.Prompt;
 
 public class MyMapHandler {
 	User user;
-	public MyMapHandler(User user) {
+	PlaceHandler placeHandler;
+	public MyMapHandler(User user,PlaceHandler placeHandler) {
 		this.user = user;
+		this.placeHandler = placeHandler;
 	}
 
 	public void add() {
@@ -29,6 +31,11 @@ public class MyMapHandler {
 		if (Prompt.inputString("공개 설정 하시겠습니까?(y/N)> ").equalsIgnoreCase("y")) {
 			theme.setPublic(true);
 		}
+		
+		
+		
+		
+		
 		themeList.add(theme);
 	}
 

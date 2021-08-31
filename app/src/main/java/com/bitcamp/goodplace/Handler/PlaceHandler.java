@@ -8,11 +8,9 @@ import com.bitcamp.util.Prompt;
 public class PlaceHandler {
 
   User user;
-  Theme theme;
-
-  public PlaceHandler(User user, Theme theme) {
+  public PlaceHandler(User user) {
     this.user = user;
-    this.theme = theme;
+
   }
 
   public void add() {

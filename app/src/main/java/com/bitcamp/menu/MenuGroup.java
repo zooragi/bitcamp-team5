@@ -24,7 +24,7 @@ public class MenuGroup extends Menu {
 	// 컴파일 오류가 발생한다.
 	// Menu 클래스에는 기본 생성자가 없다.
 	// 따라서 개발자가 직접 생성자를 정의해야 한다.
-	
+
 	public MenuGroup(String title) {
 		super(title);
 	}
@@ -45,7 +45,7 @@ public class MenuGroup extends Menu {
 		}
 		this.childs[this.size++] = child;
 	}
-	
+
 	// 배열에 들어 있는 Menu 객체를 찾아 제거한다.
 	public Menu remove(Menu child) {
 		int index = indexOf(child);
@@ -78,41 +78,42 @@ public class MenuGroup extends Menu {
 		}
 		return null;
 	}
+
 	public Menu getMenuByIndex(int index) {
-		if(index < 0) {
+		if (index < 0) {
 			return null;
 		}
 		return childs[index];
 	}
-	
 
 	@Override
 	public void execute() {
 		while (true) {
 			System.out.printf("\n[%s]\n", title);
+			
 			for (int i = 0; i < this.size; i++) {
 				System.out.printf("%d. %s\n", i + 1, this.childs[i].title);
 			}
 
 			if (!disablePrevMenu) {
 				System.out.printf("0. %s\n", this.prevMenuTitle);
-
+			}
+			try {
 				int menuNo = Prompt.inputInt("선택> ");
 				if (menuNo == 0 && !disablePrevMenu) {
 					// 현재 메뉴에서 나갈 때 스택에서 제거한다.
 					return;
 				}
-
 				if (menuNo < 0 || menuNo > this.size) {
 					System.out.println("무효한 메뉴 번호입니다.");
 					continue;
 				}
-//				if (this.childs[menuNo-1].title.equals("테마 검색")) {
-//					return;
-//				}
 				this.childs[menuNo - 1].execute();
+			} catch (Exception e) {
+				System.out.println("------------------------------------------");
+				System.out.printf("오류 발생: %s\n", e.getClass().getName());
+				System.out.println("------------------------------------------");
 			}
 		}
-
 	}
 }
