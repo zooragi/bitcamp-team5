@@ -1,5 +1,6 @@
 package com.bitcamp.goodplace.domain;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,8 @@ public class User {
 	private String email;
 	private String tel;
 	private String nickName;
+	private Date registeredDate;
+
 	private List<Theme> themeList = new ArrayList<Theme>();
 	private List<Theme> bookMarks = new ArrayList<Theme>();
 
@@ -18,6 +21,14 @@ public class User {
 	public String toString() {
 		return "User [name=" + name + ", id=" + id + ", email=" + email + ", tel=" + tel + ", nickName=" + nickName
 				+ ", themeList=" + themeList + ", bookMarks=" + bookMarks + "]";
+	}
+	
+	public int getNo() {
+		return no;
+	}
+
+	public void setNo(int no) {
+		this.no = no++;
 	}
 
 	public String getName() {
@@ -82,6 +93,14 @@ public class User {
 
 	public void setBookMarks(List<Theme> bookMarks) {
 		this.bookMarks = bookMarks;
+	}
+
+	public Date getRegisteredDate() {
+		return registeredDate;
+	}
+
+	public void setRegisteredDate(Date registeredDate) {
+		this.registeredDate = registeredDate;
 	}
 
 }

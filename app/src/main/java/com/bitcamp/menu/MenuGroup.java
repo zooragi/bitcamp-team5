@@ -2,8 +2,10 @@ package com.bitcamp.menu;
 
 import java.util.ArrayList;
 
-import com.bitcamp.goodplace.domain.Theme;
-import com.bitcamp.goodplace.domain.User;
+import java.util.List;
+import java.util.Stack;
+
+import com.bitcamp.goodplace.Handler.AuthLoginHandler;
 import com.bitcamp.util.Prompt;
 
 // 역할
@@ -11,19 +13,12 @@ import com.bitcamp.util.Prompt;
 // 
 public class MenuGroup extends Menu {
 
-	// 메뉴의 bread crumb 목록 보관
-	// 모든 메뉴가 공유할 객체이기 때문에 스태틱 멤버로 선언한다.
-
+	static Stack<Menu> breadCrumb = new Stack<>();
+	
 	Menu[] childs = new Menu[100];
 	int size;
 	boolean disablePrevMenu;
 	String prevMenuTitle = "이전 메뉴";
-
-	// 생성자를 정의하지 않으면 컴파일러가 기본 생성자를 자동으로 추가해 준다.
-	// 문제는 컴파일러가 추가한 기본 생성자는 수퍼 클래스의 기본 생성자를 호출하기 때문에
-	// 컴파일 오류가 발생한다.
-	// Menu 클래스에는 기본 생성자가 없다.
-	// 따라서 개발자가 직접 생성자를 정의해야 한다.
 
 	public MenuGroup(String title) {
 		super(title);
@@ -88,11 +83,24 @@ public class MenuGroup extends Menu {
 
 	@Override
 	public void execute() {
+		breadCrumb.push(this);
 		while (true) {
-			System.out.printf("\n[%s]\n", title);
+			System.out.printf("\n[%s]\n", getTitleMenus());
+			List<Menu> menuList = new ArrayList<>();
+			for(int i = 0; i < this.size ; i++) {
+				if(childs[i].enableState == Menu.ENABLE_LOGOUT &&
+						AuthLoginHandler.getLoginUser() == null) {
+					menuList.add(childs[i]);
+				} else if(childs[i].enableState == Menu.ENABLE_LOGIN &&
+						AuthLoginHandler.getLoginUser() != null) {
+					menuList.add(childs[i]);
+				} else if(childs[i].enableState == Menu.ENABLE_ALL) {
+					menuList.add(childs[i]);
+				}
+			}
 			
-			for (int i = 0; i < this.size; i++) {
-				System.out.printf("%d. %s\n", i + 1, this.childs[i].title);
+			for (int i = 0; i < menuList.size(); i++) {
+				System.out.printf("%d. %s\n", i + 1, menuList.get(i).title);
 			}
 
 			if (!disablePrevMenu) {
@@ -101,19 +109,30 @@ public class MenuGroup extends Menu {
 			try {
 				int menuNo = Prompt.inputInt("선택> ");
 				if (menuNo == 0 && !disablePrevMenu) {
-					// 현재 메뉴에서 나갈 때 스택에서 제거한다.
+					breadCrumb.pop();
 					return;
 				}
 				if (menuNo < 0 || menuNo > this.size) {
 					System.out.println("무효한 메뉴 번호입니다.");
 					continue;
 				}
-				this.childs[menuNo - 1].execute();
+				menuList.get(menuNo - 1).execute();
 			} catch (Exception e) {
 				System.out.println("------------------------------------------");
 				System.out.printf("오류 발생: %s\n", e.getClass().getName());
 				System.out.println("------------------------------------------");
 			}
 		}
+	}
+	
+	public String getTitleMenus() {
+		String path = "";
+		for(Menu menu : breadCrumb ) {
+			if(path.length() > 0) {
+				path += " / "; 
+			}
+			path += menu.title;
+		}
+		return path;
 	}
 }

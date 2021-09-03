@@ -3,7 +3,7 @@ package com.bitcamp.goodplace.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Theme {
+public class Theme implements Comparable<Theme>{
 	private int no;
 	private String title;
 	private String userName;
@@ -13,6 +13,8 @@ public class Theme {
 	private List<Place> placeList = new ArrayList<Place>();
 	private List<String> hashtags = new ArrayList<String>();
 
+	
+	
 	@Override
 	public String toString() {
 		return "Theme [title=" + title + ", userName=" + userName + ", viewCount=" + viewCount + ", isPublic="
@@ -73,6 +75,11 @@ public class Theme {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	@Override
+	public int compareTo(Theme o) {
+		return o.viewCount - this.viewCount ;
 	}
 
 }
