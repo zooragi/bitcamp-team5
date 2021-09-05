@@ -10,8 +10,21 @@ import com.bitcamp.util.Prompt;
 public class UserAddHandler extends AbstractUserHandler{
 	public UserAddHandler(List<User> userList) {
 		super(userList);
+	    User rootUser = new User();
+	    rootUser.setNo(1);
+	    rootUser.setName("root");
+	    rootUser.setId("root");
+	    rootUser.setEmail("root@gamil.com");
+	    rootUser.setPassword("0000");
+	    rootUser.setTel("010-0000-0000");
+	    rootUser.setNickName("서울바보");
+	    rootUser.setBookMarks(new ArrayList<>());
+	    rootUser.setThemeList(new ArrayList<>());
+
+	    userList.add(rootUser);
+	    
 	    User testUser = new User();
-	    testUser.setNo(1);
+	    testUser.setNo(2);
 	    testUser.setName("111");
 	    testUser.setId("111");
 	    testUser.setEmail("111");
@@ -24,10 +37,10 @@ public class UserAddHandler extends AbstractUserHandler{
 	    userList.add(testUser);
 
 	    User testUser2 = new User();
-	    testUser2.setNo(2);
-	    testUser2.setName("이캠프");
-	    testUser2.setId("bitcamp2");
-	    testUser2.setEmail("test2.com");
+	    testUser2.setNo(3);
+	    testUser2.setName("222");
+	    testUser2.setId("222");
+	    testUser2.setEmail("222.com");
 	    testUser2.setPassword("1111");
 	    testUser2.setTel("010-0000-1111");
 	    testUser2.setNickName("서울촌놈");
@@ -35,6 +48,8 @@ public class UserAddHandler extends AbstractUserHandler{
 	    testUser2.setThemeList(new ArrayList<>());
 
 	    userList.add(testUser2);
+	    
+
 		
 	}
 

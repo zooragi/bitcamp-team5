@@ -2,19 +2,19 @@ package com.bitcamp.menu;
 
 public abstract class Menu {
 
-	public static final int ENABLE_ALL = 0;
-	public static final int ENABLE_LOGOUT = 1;
-	public static final int ENABLE_LOGIN = 2;
+	public static final int ACCESS_LOGOUT = 0x01;
+	public static final int ACCESS_GENERAL = 0x02;
+	public static final int ACCESS_ADMIN = 0x04;
 	
 	String title;
-	int enableState;
+	int accessScope;
 	public Menu(String title) {
-		this.title = title;
+		this(title, ACCESS_LOGOUT | ACCESS_GENERAL | ACCESS_ADMIN);
 	}
 	
-	public Menu(String title,int enableState) {
+	public Menu(String title,int accessScope) {
 		this.title = title;
-		this.enableState = enableState;
+		this.accessScope = accessScope;
 	}
 
 	public abstract void execute();

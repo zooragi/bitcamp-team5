@@ -87,15 +87,9 @@ public class MenuGroup extends Menu {
 		while (true) {
 			System.out.printf("\n[%s]\n", getTitleMenus());
 			List<Menu> menuList = new ArrayList<>();
-			for(int i = 0; i < this.size ; i++) {
-				if(childs[i].enableState == Menu.ENABLE_LOGOUT &&
-						AuthLoginHandler.getLoginUser() == null) {
-					menuList.add(childs[i]);
-				} else if(childs[i].enableState == Menu.ENABLE_LOGIN &&
-						AuthLoginHandler.getLoginUser() != null) {
-					menuList.add(childs[i]);
-				} else if(childs[i].enableState == Menu.ENABLE_ALL) {
-					menuList.add(childs[i]);
+			for(Menu menu : childs) {
+				if((AuthLoginHandler.getUseAccessLevel() & menu.accessScope) > 0) {
+					menuList.add(menu);
 				}
 			}
 			
