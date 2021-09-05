@@ -49,7 +49,6 @@ public class UserAddHandler extends AbstractUserHandler{
 		user.setNickName(Prompt.inputString("닉네임? "));
 		user.setTel(Prompt.inputString("전화? "));
 	    user.setRegisteredDate(new Date(System.currentTimeMillis()));
-	    System.out.println(userList.get(userList.size()-1).getNo());
 	    userNo = userList.get(userList.size()-1).getNo();
 		user.setNo(userNo++);
 

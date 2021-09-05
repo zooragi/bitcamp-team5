@@ -96,11 +96,21 @@ public class App {
 		MenuGroup mg = new MenuGroup("메인 메뉴");
 		mg.setPrevMenuTitle("종료");
 		
-/////////////////////////////////////////////////////////////////////////////////
 		mg.add(new MenuItem("로그인",Menu.ENABLE_LOGOUT,"/auth/login"));
 		mg.add(new MenuItem("내 정보",Menu.ENABLE_LOGIN,"/auth/displayLoginUer"));
 		mg.add(new MenuItem("로그아웃",Menu.ENABLE_LOGIN,"/auth/logout"));
-/////////////////////////////////////////////////////////////////////////////////
+		
+		createUserMenu(mg);
+		createMyMapMenu(mg);
+		createPlaceMenu(mg);
+		createFullThemeMenu(mg);
+		createBookmarkMenu(mg);
+		createRankMenu(mg);
+
+		return mg;
+	}
+	
+	private void createUserMenu(MenuGroup mg) {
 		MenuGroup user = new MenuGroup("회원(회원가입)");
 		user.add(new MenuItem("회원가입",Menu.ENABLE_LOGOUT,"/user/add"));
 		user.add(new MenuItem("회원목록",Menu.ENABLE_LOGIN,"/user/list"));
@@ -109,7 +119,8 @@ public class App {
 		user.add(new MenuItem("회원삭제",Menu.ENABLE_LOGIN,"/user/delete"));
 
 		mg.add(user);
-/////////////////////////////////////////////////////////////////////////////////
+	}
+	private void createMyMapMenu(MenuGroup mg) {
 		MenuGroup myMap = new MenuGroup("나만의 지도");
 
 		myMap.add(new MenuItem("테마 등록",Menu.ENABLE_LOGIN,"/myMap/add"));
@@ -118,7 +129,8 @@ public class App {
 		myMap.add(new MenuItem("테마 삭제",Menu.ENABLE_LOGIN,"/myMap/delete"));
 		
 		mg.add(myMap);
-///////////////////////////////////////////////////////////////////////////////
+	}
+	private void createPlaceMenu(MenuGroup mg) {
 		MenuGroup savePlaceInTheme = new MenuGroup("테마에 장소 추가");
 		
 		savePlaceInTheme.add(new MenuItem("장소 등록",Menu.ENABLE_LOGIN,"/place/add"));
@@ -126,8 +138,8 @@ public class App {
 		savePlaceInTheme.add(new MenuItem("장소 변경",Menu.ENABLE_LOGIN,"/place/list"));
 
 		mg.add(savePlaceInTheme);
-
-///////////////////////////////////////////////////////////////////////////////
+	}
+	private void createFullThemeMenu(MenuGroup mg) {
 		MenuGroup fullTheme = new MenuGroup("전체 테마 보기");
 
 		fullTheme.add(new MenuItem("장소 테마 목록",Menu.ENABLE_ALL,"/fullTheme/add"));
@@ -135,7 +147,8 @@ public class App {
 		fullTheme.add(new MenuItem("지역별 검색",Menu.ENABLE_ALL,"/fullTheme/searchArea"));
 
 		mg.add(fullTheme);
-///////////////////////////////////////////////////////////////////////////////
+	}
+	private void createBookmarkMenu(MenuGroup mg) {
 		MenuGroup bookmark = new MenuGroup("북마크");
 		
 		bookmark.add(new MenuItem("북마크 등록",Menu.ENABLE_LOGIN,"/bookmark/add"));
@@ -143,16 +156,13 @@ public class App {
 		bookmark.add(new MenuItem("북마크 삭제",Menu.ENABLE_LOGIN,"/bookmark/delete"));
 
 		mg.add(bookmark);
-///////////////////////////////////////////////////////////////////////////////
+	}
+	private void createRankMenu(MenuGroup mg) {
 		MenuGroup rank = new MenuGroup("순위");
 		
 		rank.add(new MenuItem("테마 순위",Menu.ENABLE_LOGIN,"/rank/themeRank"));
 		rank.add(new MenuItem("테마 순위",Menu.ENABLE_LOGIN,"/rank/themeRank"));
-
 		
 		mg.add(rank);
-
-///////////////////////////////////////////////////////////////////////////////
-		return mg;
 	}
 }
