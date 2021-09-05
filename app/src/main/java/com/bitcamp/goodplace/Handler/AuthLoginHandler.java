@@ -30,6 +30,9 @@ public class AuthLoginHandler implements Command{
 		
 		if(email.equals("root") && password.equals("0000")) {
 			useAccessLevel = Menu.ACCESS_GENERAL | Menu.ACCESS_ADMIN;
+			loginUser = userList.get(0);
+			System.out.println("root님 환영합니다!");
+			return;
 		}
 		
 		User user = findByEmailPassword(email, password);

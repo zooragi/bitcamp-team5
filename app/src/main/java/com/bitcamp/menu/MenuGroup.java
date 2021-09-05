@@ -15,8 +15,7 @@ public class MenuGroup extends Menu {
 
 	static Stack<Menu> breadCrumb = new Stack<>();
 	
-	Menu[] childs = new Menu[100];
-	int size;
+	ArrayList<Menu> childs = new ArrayList<>();
 	boolean disablePrevMenu;
 	String prevMenuTitle = "이전 메뉴";
 
@@ -24,6 +23,9 @@ public class MenuGroup extends Menu {
 		super(title);
 	}
 
+	public MenuGroup(String title, int accessScope) {
+		super(title,accessScope);
+	}
 	public MenuGroup(String title, boolean disablePrevMenu) {
 		super(title);
 		this.disablePrevMenu = disablePrevMenu;
@@ -35,50 +37,15 @@ public class MenuGroup extends Menu {
 
 	// MenuGroup이 포함하는 하위 Menu를 다룰 수 있도록 메서드를 정의한다.
 	public void add(Menu child) {
-		if (this.size == this.childs.length) {
-			return; // 하위 메뉴를 저장하는 배열이 꽉 찼다면 더이상 저장해서는 안된다.
-		}
-		this.childs[this.size++] = child;
+		childs.add(child);
 	}
 
 	// 배열에 들어 있는 Menu 객체를 찾아 제거한다.
 	public Menu remove(Menu child) {
-		int index = indexOf(child);
-		if (index == -1) {
-			return null;
-		}
-		for (int i = index + 1; i < this.size; i++) {
-			this.childs[i - 1] = this.childs[i];
-		}
-		childs[--this.size] = null;
-		return child;
-	}
-
-	// 배열에 들어 있는 Menu 객체의 인덱스를 알아낸다.
-	public int indexOf(Menu child) {
-		for (int i = 0; i < this.size; i++) {
-			if (this.childs[i] == child) {
-				return i;
-			}
-		}
-		return -1;
-	}
-
-	// 배열에 들어 있는 Menu 객체를 찾는다.
-	public Menu getMenu(String title) {
-		for (int i = 0; i < this.size; i++) {
-			if (this.childs[i].title.equals(title)) {
-				return this.childs[i];
-			}
+		if(childs.remove(child)) {
+			return child;
 		}
 		return null;
-	}
-
-	public Menu getMenuByIndex(int index) {
-		if (index < 0) {
-			return null;
-		}
-		return childs[index];
 	}
 
 	@Override
@@ -106,7 +73,7 @@ public class MenuGroup extends Menu {
 					breadCrumb.pop();
 					return;
 				}
-				if (menuNo < 0 || menuNo > this.size) {
+				if (menuNo < 0 || menuNo > childs.size()) {
 					System.out.println("무효한 메뉴 번호입니다.");
 					continue;
 				}

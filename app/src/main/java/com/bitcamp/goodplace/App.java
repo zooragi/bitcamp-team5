@@ -114,10 +114,10 @@ public class App {
 	private void createUserMenu(MenuGroup mg) {
 		MenuGroup user = new MenuGroup("회원(회원가입)");
 		user.add(new MenuItem("회원가입",Menu.ACCESS_LOGOUT,"/user/add"));
-		user.add(new MenuItem("회원목록",Menu.ACCESS_GENERAL,"/user/list"));
-		user.add(new MenuItem("회원상세",Menu.ACCESS_GENERAL,"/user/detail"));
-		user.add(new MenuItem("회원변경",Menu.ACCESS_GENERAL,"/user/update"));
-		user.add(new MenuItem("회원삭제",Menu.ACCESS_GENERAL,"/user/delete"));
+		user.add(new MenuItem("회원목록",Menu.ACCESS_ADMIN,"/user/list"));
+		user.add(new MenuItem("회원상세",Menu.ACCESS_ADMIN,"/user/detail"));
+		user.add(new MenuItem("회원변경",Menu.ACCESS_ADMIN,"/user/update"));
+		user.add(new MenuItem("회원삭제",Menu.ACCESS_ADMIN,"/user/delete"));
 
 		mg.add(user);
 	}

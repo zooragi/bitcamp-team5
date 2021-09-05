@@ -14,7 +14,7 @@ public class UserAddHandler extends AbstractUserHandler{
 	    rootUser.setNo(1);
 	    rootUser.setName("root");
 	    rootUser.setId("root");
-	    rootUser.setEmail("root@gamil.com");
+	    rootUser.setEmail("root");
 	    rootUser.setPassword("0000");
 	    rootUser.setTel("010-0000-0000");
 	    rootUser.setNickName("서울바보");
