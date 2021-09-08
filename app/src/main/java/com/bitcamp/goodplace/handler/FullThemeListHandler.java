@@ -1,27 +1,26 @@
 package com.bitcamp.goodplace.handler;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import com.bitcamp.goodplace.domain.Theme;
 import com.bitcamp.goodplace.domain.User;
-import com.bitcamp.util.Prompt;
 
-public class FullThemeListHandler implements Command{
+public class FullThemeListHandler extends AbstractFullThemeHandler{
 
+	public FullThemeListHandler(List<User> userList) {
+		super(userList);
+	}
 	public void execute() {
-
 		System.out.println("[전체 테마 목록]");
-
-		if (AuthLoginHandler.getLoginUser().getThemeList().size() == 0) {
-			System.out.println("등록된 테마가 없습니다.");
-		}
-
-		int index = 1;
-		for (Theme list : AuthLoginHandler.getLoginUser().getThemeList()) {
-			System.out.printf("(%d) ", index++);
-			System.out.printf("%s ", list.getTitle());
-			System.out.printf("%s", list.getHashtags().toString());
-			System.out.println();
+		int i = 1;
+		for(User user : userList) {
+			for(Theme theme : user.getThemeList()) {
+				if(!theme.isPublic()) continue;
+				System.out.printf("(%d)\n",i++);
+				System.out.println("테마 이름 : " + theme.getTitle());
+				System.out.println("해시 태그 : " + theme.getHashtags().toString());
+			}
 		}
 	}
 

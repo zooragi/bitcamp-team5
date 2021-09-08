@@ -13,8 +13,8 @@ import com.bitcamp.goodplace.handler.BookmarkDeleteHandler;
 import com.bitcamp.goodplace.handler.BookmarkListHandler;
 import com.bitcamp.goodplace.handler.Command;
 import com.bitcamp.goodplace.handler.FullThemeListHandler;
-import com.bitcamp.goodplace.handler.FullThemeSearchAreaHandler;
 import com.bitcamp.goodplace.handler.FullThemeSearchHashtagHandler;
+import com.bitcamp.goodplace.handler.FullThemeSearchUserHandler;
 import com.bitcamp.goodplace.handler.MyMapAddHandler;
 import com.bitcamp.goodplace.handler.MyMapDeleteHandler;
 import com.bitcamp.goodplace.handler.MyMapListHandler;
@@ -30,8 +30,6 @@ import com.bitcamp.goodplace.handler.UserListHandler;
 import com.bitcamp.goodplace.handler.UserUpdateHandler;
 import com.bitcamp.menu.Menu;
 import com.bitcamp.menu.MenuGroup;
-import com.bitcamp.util.KakaoMapApi;
-import com.bitcamp.util.KakaoVo;
 import com.bitcamp.util.Prompt;
 
 public class App {
@@ -80,9 +78,9 @@ public class App {
 		commandMap.put("/place/delete",new PlaceDeleteHandler());
 		commandMap.put("/place/list",new PlaceListHandler());
 		
-		commandMap.put("/fullTheme/list", new FullThemeListHandler());
-		commandMap.put("/fullTheme/searchArea", new FullThemeSearchAreaHandler());
-		commandMap.put("/fullTheme/searchHashtag", new FullThemeSearchHashtagHandler());
+		commandMap.put("/fullTheme/list", new FullThemeListHandler(userList));
+		commandMap.put("/fullTheme/searchUser", new FullThemeSearchUserHandler(userList));
+		commandMap.put("/fullTheme/searchHashtag", new FullThemeSearchHashtagHandler(userList));
 		
 		commandMap.put("/rank/themeRank", new RankHandler(userList));
 	}
@@ -93,6 +91,9 @@ public class App {
 	void service() {
 //		KakaoMapApi kakao = new KakaoMapApi();
 //		KakaoVo kakaoVo= kakao.searchPlace("강남불백");
+//		System.out.println(kakaoVo.getAddress_name());
+//		System.out.println(kakaoVo.getX());
+//		System.out.println(kakaoVo.getY());
 		createMenu().execute();
 		Prompt.close();
 	}
@@ -116,7 +117,7 @@ public class App {
 	}
 	
 	private void createUserMenu(MenuGroup mg) {
-		MenuGroup user = new MenuGroup("회원(회원가입)",Menu.ACCESS_ADMIN | Menu.ACCESS_LOGOUT);
+		MenuGroup user = new MenuGroup("회원(회원가입)",Menu.ACCESS_LOGOUT | Menu.ACCESS_ADMIN);
 		user.add(new MenuItem("회원가입",Menu.ACCESS_LOGOUT,"/user/add"));
 		user.add(new MenuItem("회원목록",Menu.ACCESS_ADMIN,"/user/list"));
 		user.add(new MenuItem("회원상세",Menu.ACCESS_ADMIN,"/user/detail"));
@@ -126,47 +127,47 @@ public class App {
 		mg.add(user);
 	}
 	private void createMyMapMenu(MenuGroup mg) {
-		MenuGroup myMap = new MenuGroup("나만의 지도");
+		MenuGroup myMap = new MenuGroup("나만의 지도",Menu.ACCESS_ADMIN | Menu.ACCESS_GENERAL);
 
-		myMap.add(new MenuItem("테마 등록",Menu.ACCESS_GENERAL,"/myMap/add"));
-		myMap.add(new MenuItem("테마 목록",Menu.ACCESS_GENERAL,"/myMap/list"));
-		myMap.add(new MenuItem("테마 수정",Menu.ACCESS_GENERAL,"/myMap/update"));
-		myMap.add(new MenuItem("테마 삭제",Menu.ACCESS_GENERAL,"/myMap/delete"));
+		myMap.add(new MenuItem("테마 등록","/myMap/add"));
+		myMap.add(new MenuItem("테마 목록","/myMap/list"));
+		myMap.add(new MenuItem("테마 수정","/myMap/update"));
+		myMap.add(new MenuItem("테마 삭제","/myMap/delete"));
 		
 		mg.add(myMap);
 	}
 	private void createPlaceMenu(MenuGroup mg) {
-		MenuGroup savePlaceInTheme = new MenuGroup("테마에 장소 추가");
+		MenuGroup savePlaceInTheme = new MenuGroup("테마에 장소 추가",Menu.ACCESS_ADMIN | Menu.ACCESS_GENERAL);
 		
-		savePlaceInTheme.add(new MenuItem("장소 등록",Menu.ACCESS_GENERAL,"/place/add"));
-		savePlaceInTheme.add(new MenuItem("장소 목록",Menu.ACCESS_GENERAL,"/place/list"));
-		savePlaceInTheme.add(new MenuItem("장소 삭제",Menu.ACCESS_GENERAL,"/place/delete"));
+		savePlaceInTheme.add(new MenuItem("장소 등록","/place/add"));
+		savePlaceInTheme.add(new MenuItem("장소 목록","/place/list"));
+		savePlaceInTheme.add(new MenuItem("장소 삭제","/place/delete"));
 
 		mg.add(savePlaceInTheme);
 	}
 	private void createFullThemeMenu(MenuGroup mg) {
 		MenuGroup fullTheme = new MenuGroup("전체 테마 보기");
 
-		fullTheme.add(new MenuItem("전체 테마 목록","/fullTheme/add"));
+		fullTheme.add(new MenuItem("전체 테마 목록","/fullTheme/list"));
 		fullTheme.add(new MenuItem("해시태그 검색","/fullTheme/searchHashtag"));
-		fullTheme.add(new MenuItem("지역별 검색","/fullTheme/searchArea"));
+		fullTheme.add(new MenuItem("유저 검색","/fullTheme/searchUser"));
 
 		mg.add(fullTheme);
 	}
 	private void createBookmarkMenu(MenuGroup mg) {
-		MenuGroup bookmark = new MenuGroup("북마크");
+		MenuGroup bookmark = new MenuGroup("북마크",Menu.ACCESS_ADMIN | Menu.ACCESS_GENERAL);
 		
-		bookmark.add(new MenuItem("북마크 등록",Menu.ACCESS_GENERAL,"/bookmark/add"));
-		bookmark.add(new MenuItem("북마크 목록",Menu.ACCESS_GENERAL,"/bookmark/list"));
-		bookmark.add(new MenuItem("북마크 삭제",Menu.ACCESS_GENERAL,"/bookmark/delete"));
+		bookmark.add(new MenuItem("북마크 등록","/bookmark/add"));
+		bookmark.add(new MenuItem("북마크 목록","/bookmark/list"));
+		bookmark.add(new MenuItem("북마크 삭제","/bookmark/delete"));
 
 		mg.add(bookmark);
 	}
 	private void createRankMenu(MenuGroup mg) {
 		MenuGroup rank = new MenuGroup("순위");
 		
-		rank.add(new MenuItem("테마 순위",Menu.ACCESS_GENERAL,"/rank/themeRank"));
-		rank.add(new MenuItem("테마 순위",Menu.ACCESS_GENERAL,"/rank/themeRank"));
+		rank.add(new MenuItem("테마 순위","/rank/themeRank"));
+		rank.add(new MenuItem("테마 순위","/rank/themeRank"));
 		
 		mg.add(rank);
 	}

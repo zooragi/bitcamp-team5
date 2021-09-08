@@ -32,7 +32,7 @@ public class KakaoMapApi {
 		Map<String, String> requestHeaders = new HashMap<>();
 		requestHeaders.put("Authorization", "KakaoAK 5ff9f98d2d56ab0938e988d2c4df0045");
 		String responseBody = get(apiURL, requestHeaders);
-		System.out.println(responseBody);
+//		System.out.println(responseBody);
 		return gson.fromJson(gson.toJson(gson.fromJson(responseBody, KakaoResponseVo.class).documents[0]), KakaoVo.class);
 	}
 

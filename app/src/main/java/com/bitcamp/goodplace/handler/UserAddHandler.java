@@ -40,8 +40,8 @@ public class UserAddHandler extends AbstractUserHandler{
 	    testUser2.setNo(3);
 	    testUser2.setName("222");
 	    testUser2.setId("222");
-	    testUser2.setEmail("222.com");
-	    testUser2.setPassword("1111");
+	    testUser2.setEmail("222");
+	    testUser2.setPassword("222");
 	    testUser2.setTel("010-0000-1111");
 	    testUser2.setNickName("서울촌놈");
 	    testUser2.setBookMarks(new ArrayList<>());
