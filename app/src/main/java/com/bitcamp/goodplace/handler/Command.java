@@ -1,4 +1,4 @@
-package com.bitcamp.goodplace.Handler;
+package com.bitcamp.goodplace.handler;
 
 public interface Command {
 	void execute();

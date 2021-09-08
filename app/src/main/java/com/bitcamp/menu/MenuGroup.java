@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-import com.bitcamp.goodplace.Handler.AuthLoginHandler;
+import com.bitcamp.goodplace.handler.AuthLoginHandler;
 import com.bitcamp.util.Prompt;
 
 // 역할
