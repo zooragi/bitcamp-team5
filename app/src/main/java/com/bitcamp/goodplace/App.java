@@ -91,8 +91,8 @@ public class App {
 		app.service();
 	}
 	void service() {
-		KakaoMapApi kakao = new KakaoMapApi();
-		KakaoVo kakaoVo= kakao.searchPlace("강남불백");
+//		KakaoMapApi kakao = new KakaoMapApi();
+//		KakaoVo kakaoVo= kakao.searchPlace("강남불백");
 		createMenu().execute();
 		Prompt.close();
 	}
@@ -116,7 +116,7 @@ public class App {
 	}
 	
 	private void createUserMenu(MenuGroup mg) {
-		MenuGroup user = new MenuGroup("회원(회원가입)");
+		MenuGroup user = new MenuGroup("회원(회원가입)",Menu.ACCESS_ADMIN | Menu.ACCESS_LOGOUT);
 		user.add(new MenuItem("회원가입",Menu.ACCESS_LOGOUT,"/user/add"));
 		user.add(new MenuItem("회원목록",Menu.ACCESS_ADMIN,"/user/list"));
 		user.add(new MenuItem("회원상세",Menu.ACCESS_ADMIN,"/user/detail"));
@@ -139,15 +139,15 @@ public class App {
 		MenuGroup savePlaceInTheme = new MenuGroup("테마에 장소 추가");
 		
 		savePlaceInTheme.add(new MenuItem("장소 등록",Menu.ACCESS_GENERAL,"/place/add"));
+		savePlaceInTheme.add(new MenuItem("장소 목록",Menu.ACCESS_GENERAL,"/place/list"));
 		savePlaceInTheme.add(new MenuItem("장소 삭제",Menu.ACCESS_GENERAL,"/place/delete"));
-		savePlaceInTheme.add(new MenuItem("장소 변경",Menu.ACCESS_GENERAL,"/place/list"));
 
 		mg.add(savePlaceInTheme);
 	}
 	private void createFullThemeMenu(MenuGroup mg) {
 		MenuGroup fullTheme = new MenuGroup("전체 테마 보기");
 
-		fullTheme.add(new MenuItem("장소 테마 목록","/fullTheme/add"));
+		fullTheme.add(new MenuItem("전체 테마 목록","/fullTheme/add"));
 		fullTheme.add(new MenuItem("해시태그 검색","/fullTheme/searchHashtag"));
 		fullTheme.add(new MenuItem("지역별 검색","/fullTheme/searchArea"));
 
