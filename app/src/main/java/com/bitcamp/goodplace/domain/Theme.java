@@ -78,8 +78,8 @@ public class Theme implements Comparable<Theme>{
 	}
 
 	@Override
-	public int compareTo(Theme o) {
-		return o.viewCount - this.viewCount ;
+	public int compareTo(Theme theme) {
+		return theme.viewCount - this.viewCount ;
 	}
 
 }

@@ -7,9 +7,9 @@ import java.util.List;
 import com.bitcamp.goodplace.domain.Theme;
 import com.bitcamp.goodplace.domain.User;
 
-public class RankHandler implements Command{
+public class RealTimeRankHandler implements Command{
 	List<User> userList;
-	public RankHandler(List<User> userList) {
+	public RealTimeRankHandler(List<User> userList) {
 		this.userList = userList;
 	}
 	

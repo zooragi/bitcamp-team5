@@ -4,7 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class User implements Comparable<User>{
 	private int no;
 	private String name;
 	private String id;
@@ -13,16 +13,27 @@ public class User {
 	private String tel;
 	private String nickName;
 	private Date registeredDate;
+	private int viewCount;
 
 	private List<Theme> themeList = new ArrayList<Theme>();
 	private List<Theme> bookMarks = new ArrayList<Theme>();
 
+
 	@Override
 	public String toString() {
-		return "User [name=" + name + ", id=" + id + ", email=" + email + ", tel=" + tel + ", nickName=" + nickName
-				+ ", themeList=" + themeList + ", bookMarks=" + bookMarks + "]";
+		return "User [no=" + no + ", name=" + name + ", id=" + id + ", password=" + password + ", email=" + email
+				+ ", tel=" + tel + ", nickName=" + nickName + ", registeredDate=" + registeredDate + ", viewCount="
+				+ viewCount + ", themeList=" + themeList + ", bookMarks=" + bookMarks + "]";
 	}
-	
+
+	public int getViewCount() {
+		return viewCount;
+	}
+
+	public void setViewCount(int viewCount) {
+		this.viewCount = viewCount;
+	}
+
 	public int getNo() {
 		return no;
 	}
@@ -101,6 +112,10 @@ public class User {
 
 	public void setRegisteredDate(Date registeredDate) {
 		this.registeredDate = registeredDate;
+	}
+	@Override
+	public int compareTo(User user) {
+		return user.viewCount - this.viewCount ;
 	}
 
 }

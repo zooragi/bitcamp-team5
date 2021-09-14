@@ -4,10 +4,10 @@ import java.util.List;
 
 import com.bitcamp.goodplace.domain.User;
 
-public abstract class AbstractFullThemeHandler implements Command{
+public abstract class AbstractSearchHandler implements Command{
 	List<User> userList;
 	
-	public AbstractFullThemeHandler(List<User> userList) {
+	public AbstractSearchHandler(List<User> userList) {
 		this.userList = userList;
 	}
 }

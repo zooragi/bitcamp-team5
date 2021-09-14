@@ -13,8 +13,6 @@ import com.bitcamp.goodplace.handler.BookmarkDeleteHandler;
 import com.bitcamp.goodplace.handler.BookmarkListHandler;
 import com.bitcamp.goodplace.handler.Command;
 import com.bitcamp.goodplace.handler.FullThemeListHandler;
-import com.bitcamp.goodplace.handler.FullThemeSearchHashtagHandler;
-import com.bitcamp.goodplace.handler.FullThemeSearchUserHandler;
 import com.bitcamp.goodplace.handler.MyMapAddHandler;
 import com.bitcamp.goodplace.handler.MyMapDeleteHandler;
 import com.bitcamp.goodplace.handler.MyMapListHandler;
@@ -22,11 +20,15 @@ import com.bitcamp.goodplace.handler.MyMapUpdateHandler;
 import com.bitcamp.goodplace.handler.PlaceAddHandler;
 import com.bitcamp.goodplace.handler.PlaceDeleteHandler;
 import com.bitcamp.goodplace.handler.PlaceListHandler;
-import com.bitcamp.goodplace.handler.RankHandler;
+import com.bitcamp.goodplace.handler.RealTimeRankHandler;
+import com.bitcamp.goodplace.handler.SearchHashtagHandler;
+import com.bitcamp.goodplace.handler.SearchThemeHandler;
+import com.bitcamp.goodplace.handler.SearchUserHandler;
 import com.bitcamp.goodplace.handler.UserAddHandler;
 import com.bitcamp.goodplace.handler.UserDeleteHandler;
 import com.bitcamp.goodplace.handler.UserDetailHandler;
 import com.bitcamp.goodplace.handler.UserListHandler;
+import com.bitcamp.goodplace.handler.UserRankHandler;
 import com.bitcamp.goodplace.handler.UserUpdateHandler;
 import com.bitcamp.menu.Menu;
 import com.bitcamp.menu.MenuGroup;
@@ -78,11 +80,13 @@ public class App {
 		commandMap.put("/place/delete",new PlaceDeleteHandler());
 		commandMap.put("/place/list",new PlaceListHandler());
 		
-		commandMap.put("/fullTheme/list", new FullThemeListHandler(userList));
-		commandMap.put("/fullTheme/searchUser", new FullThemeSearchUserHandler(userList));
-		commandMap.put("/fullTheme/searchHashtag", new FullThemeSearchHashtagHandler(userList));
+		commandMap.put("/search/list", new FullThemeListHandler(userList));
+		commandMap.put("/search/searchTheme", new SearchThemeHandler(userList));
+		commandMap.put("/search/searchUser", new SearchUserHandler(userList));
+		commandMap.put("/search/searchHashtag", new SearchHashtagHandler(userList));
 		
-		commandMap.put("/rank/themeRank", new RankHandler(userList));
+		commandMap.put("/rank/themeRank", new RealTimeRankHandler(userList));
+		commandMap.put("/rank/userRank", new UserRankHandler(userList));
 	}
 	public static void main(String[] args) {
 		App app = new App();
@@ -109,7 +113,7 @@ public class App {
 		createUserMenu(mg);
 		createMyMapMenu(mg);
 		createPlaceMenu(mg);
-		createFullThemeMenu(mg);
+		createsearchMenu(mg);
 		createBookmarkMenu(mg);
 		createRankMenu(mg);
 
@@ -145,14 +149,15 @@ public class App {
 
 		mg.add(savePlaceInTheme);
 	}
-	private void createFullThemeMenu(MenuGroup mg) {
-		MenuGroup fullTheme = new MenuGroup("전체 테마 보기");
+	private void createsearchMenu(MenuGroup mg) {
+		MenuGroup search = new MenuGroup("검색");
 
-		fullTheme.add(new MenuItem("전체 테마 목록","/fullTheme/list"));
-		fullTheme.add(new MenuItem("해시태그 검색","/fullTheme/searchHashtag"));
-		fullTheme.add(new MenuItem("유저 검색","/fullTheme/searchUser"));
+		search.add(new MenuItem("전체 테마 목록","/search/list"));
+		search.add(new MenuItem("테마 검색","/search/searchTheme"));
+		search.add(new MenuItem("해시태그 검색","/search/searchHashtag"));
+		search.add(new MenuItem("유저 검색","/search/searchUser"));
 
-		mg.add(fullTheme);
+		mg.add(search);
 	}
 	private void createBookmarkMenu(MenuGroup mg) {
 		MenuGroup bookmark = new MenuGroup("북마크",Menu.ACCESS_ADMIN | Menu.ACCESS_GENERAL);
@@ -167,7 +172,7 @@ public class App {
 		MenuGroup rank = new MenuGroup("순위");
 		
 		rank.add(new MenuItem("테마 순위","/rank/themeRank"));
-		rank.add(new MenuItem("테마 순위","/rank/themeRank"));
+		rank.add(new MenuItem("유저 순위","/rank/userRank"));
 		
 		mg.add(rank);
 	}

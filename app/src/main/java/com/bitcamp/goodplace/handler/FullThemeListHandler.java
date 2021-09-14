@@ -6,7 +6,7 @@ import java.util.List;
 import com.bitcamp.goodplace.domain.Theme;
 import com.bitcamp.goodplace.domain.User;
 
-public class FullThemeListHandler extends AbstractFullThemeHandler{
+public class FullThemeListHandler extends AbstractSearchHandler{
 
 	public FullThemeListHandler(List<User> userList) {
 		super(userList);

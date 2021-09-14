@@ -24,6 +24,7 @@ public class MyMapAddHandler extends AbstractMyMapHandler{
 		if (Prompt.inputString("공개 설정 하시겠습니까?(y/N)> ").equalsIgnoreCase("y")) {
 			theme.setPublic(true);
 		}
+		theme.setUserName(AuthLoginHandler.getLoginUser().getName());
 		AuthLoginHandler.getLoginUser().getThemeList().add(theme);
 	}
 }
