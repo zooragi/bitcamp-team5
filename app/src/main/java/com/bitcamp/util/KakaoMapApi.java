@@ -1,6 +1,7 @@
 package com.bitcamp.util;
 
 import java.io.BufferedReader;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -9,7 +10,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +17,7 @@ import java.util.Map;
 import com.google.gson.Gson;
 
 public class KakaoMapApi {
-	public KakaoVo searchPlace(String keyword) {
+	public Object[] searchPlace(String keyword) {
 		Gson gson = new Gson();
 		Map map = new HashMap();
 		try {
@@ -32,8 +32,8 @@ public class KakaoMapApi {
 		Map<String, String> requestHeaders = new HashMap<>();
 		requestHeaders.put("Authorization", "KakaoAK 5ff9f98d2d56ab0938e988d2c4df0045");
 		String responseBody = get(apiURL, requestHeaders);
-//		System.out.println(responseBody);
-		return gson.fromJson(gson.toJson(gson.fromJson(responseBody, KakaoResponseVo.class).documents[0]), KakaoVo.class);
+//		return gson.fromJson(gson.toJson(gson.fromJson(responseBody, KakaoResponseVo.class).documents[0]), KakaoVo.class);
+		return gson.fromJson(responseBody, KakaoResponseVo.class).documents;
 	}
 
 	private String get(String apiUrl, Map<String, String> requestHeaders) {

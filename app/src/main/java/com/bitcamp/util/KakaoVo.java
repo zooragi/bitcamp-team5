@@ -4,7 +4,16 @@ public class KakaoVo {
 	private String address_name;
 	private String x;
 	private String y;
+	private String place_name;
 	
+
+	public String getPlace_name() {
+		return place_name;
+	}
+
+	public void setPlace_name(String place_name) {
+		this.place_name = place_name;
+	}
 
 	public String getX() {
 		return x;

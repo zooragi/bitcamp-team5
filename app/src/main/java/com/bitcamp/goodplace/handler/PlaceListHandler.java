@@ -23,7 +23,9 @@ public class PlaceListHandler extends AbstractPlaceHandler{
     for (Place placeList : theme.getPlaceList()) {
       System.out.printf("(%d)\n", index++);
       System.out.printf("장소 이름> %s\n", placeList.getStoreName());
-      System.out.printf("장소 주소> %s\n", placeList.getAddress());
+      System.out.printf("장소 주소> %s\n", placeList.getAddressName());
+      System.out.printf("위도 > %s\n", placeList.getxCoord());
+      System.out.printf("경도 > %s\n", placeList.getyCoord());
       System.out.printf("장소 후기> %s\n", placeList.getComment().toString());
       System.out.println();
     }

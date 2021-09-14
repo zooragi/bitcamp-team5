@@ -7,19 +7,16 @@ public class Place {
 	private int no;
 	private String theme;
 	private String storeName;
-	private String address;
+	private String addressName;
 	private List<String> photo = new ArrayList<String>();
 	private List<String> comment = new ArrayList<String>();
-	public String jibunAddress;
 	public String xCoord;
 	public String yCoord;
 	
-	
-	
 	@Override
 	public String toString() {
-		return "Place [theme=" + theme + ", storeName=" + storeName + ", address=" + address + ", photo=" + photo
-				+ ", comment=" + comment + ", jibunAddress=" + jibunAddress + ", xCoord=" + xCoord + ", yCoord="
+		return "Place [theme=" + theme + ", storeName=" + storeName + ", addressName=" + addressName + ", photo=" + photo
+				+ ", comment=" + comment + ", xCoord=" + xCoord + ", yCoord="
 				+ yCoord + "]";
 	}
 
@@ -55,14 +52,6 @@ public class Place {
 		this.comment = comment;
 	}
 
-	public String getJibunAddress() {
-		return jibunAddress;
-	}
-
-	public void setJibunAddress(String jibunAddress) {
-		this.jibunAddress = jibunAddress;
-	}
-
 	public String getxCoord() {
 		return xCoord;
 	}
@@ -87,12 +76,12 @@ public class Place {
 		this.storeName = storeName;
 	}
 
-	public String getAddress() {
-		return address;
+	public String getAddressName() {
+		return addressName;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setAddressName(String addressName) {
+		this.addressName = addressName;
 	}
 
 }

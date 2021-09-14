@@ -32,6 +32,8 @@ import com.bitcamp.goodplace.handler.UserRankHandler;
 import com.bitcamp.goodplace.handler.UserUpdateHandler;
 import com.bitcamp.menu.Menu;
 import com.bitcamp.menu.MenuGroup;
+import com.bitcamp.util.KakaoMapApi;
+import com.bitcamp.util.KakaoVo;
 import com.bitcamp.util.Prompt;
 
 public class App {
@@ -93,11 +95,6 @@ public class App {
 		app.service();
 	}
 	void service() {
-//		KakaoMapApi kakao = new KakaoMapApi();
-//		KakaoVo kakaoVo= kakao.searchPlace("강남불백");
-//		System.out.println(kakaoVo.getAddress_name());
-//		System.out.println(kakaoVo.getX());
-//		System.out.println(kakaoVo.getY());
 		createMenu().execute();
 		Prompt.close();
 	}
