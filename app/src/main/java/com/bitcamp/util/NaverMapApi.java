@@ -16,8 +16,8 @@ import java.util.Map;
 import com.bitcamp.goodplace.domain.Theme;
 import com.google.gson.Gson;
 
-public class MapApi {
-	public AddressInfo searchPlace(String keyword) {
+public class NaverMapApi {
+	public NaverAddressInfo searchPlace(String keyword) {
 		Gson gson = new Gson();
 		Map map = new HashMap();
 		try {
@@ -32,7 +32,7 @@ public class MapApi {
 		requestHeaders.put("X-NCP-APIGW-API-KEY-ID", "qa5z3swe3a");
 		requestHeaders.put("X-NCP-APIGW-API-KEY", "WNW8GyfEyDZIR8fIJSGsnBBIr2wPivd1DQCZN6cU");
 		String responseBody = get(apiURL, requestHeaders);
-		return gson.fromJson(gson.toJson(gson.fromJson(responseBody, Address.class).addresses[0]), AddressInfo.class);
+		return gson.fromJson(gson.toJson(gson.fromJson(responseBody, NaverAddress.class).addresses[0]), NaverAddressInfo.class);
 	}
 
 	private String get(String apiUrl, Map<String, String> requestHeaders) {

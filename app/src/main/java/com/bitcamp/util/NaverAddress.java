@@ -1,8 +1,8 @@
 package com.bitcamp.util;
 
-public class Address {
+public class NaverAddress {
 	Object[] addresses;
-	public Address(Object[] addresses) {
+	public NaverAddress(Object[] addresses) {
 		this.addresses = addresses;
 	}
 }
