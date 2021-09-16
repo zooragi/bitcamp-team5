@@ -18,6 +18,7 @@ public class FullThemeListHandler extends AbstractSearchHandler{
 			for(Theme theme : user.getThemeList()) {
 				if(!theme.isPublic()) continue;
 				System.out.printf("(%d)\n",i++);
+				System.out.printf("[%s님의 테마]\n",theme.getUserName() );
 				System.out.println("테마 이름 : " + theme.getTitle());
 				System.out.println("해시 태그 : " + theme.getHashtags().toString());
 			}

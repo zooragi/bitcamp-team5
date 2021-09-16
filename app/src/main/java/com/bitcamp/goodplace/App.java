@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
+import com.bitcamp.goodplace.domain.Theme;
 import com.bitcamp.goodplace.domain.User;
 import com.bitcamp.goodplace.handler.AuthDisplayLoginUserHandler;
 import com.bitcamp.goodplace.handler.AuthLoginHandler;
@@ -109,7 +110,7 @@ public class App {
 
 	void service() {
 		loadObject("user.json",userList,User.class);
-		
+
 		createMenu().execute();
 		Prompt.close();
 		
