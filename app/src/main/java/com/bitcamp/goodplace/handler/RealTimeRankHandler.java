@@ -26,7 +26,7 @@ public class RealTimeRankHandler implements Command{
 		List<Theme> themeList = new ArrayList<>();
 		for(User user : userList) {
 			for(Theme theme : user.getThemeList()) {
-				themeList.add(theme);
+				if(theme.isPublic() == true) themeList.add(theme);
 			}
 		}
 		Collections.sort(themeList);

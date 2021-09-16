@@ -24,9 +24,10 @@ public class PlaceAddHandler extends AbstractPlaceHandler {
 			System.out.println("해당 이름의 테마가 없습니다.");
 			return;
 		}
-
+		
 		Place place = new Place();
 		KakaoVo selectedPlace = new KakaoVo();
+		
 		ArrayList<KakaoVo> filterPlace = new ArrayList<>();
 		while(true) {
 			Object[] SearchedPlaces = kakao.searchPlace(Prompt.inputString("장소 이름을 입력하세요> "));
@@ -65,7 +66,9 @@ public class PlaceAddHandler extends AbstractPlaceHandler {
 		}
 		
 		place.getComment().add(Prompt.inputString("장소 후기를 입력하세요> "));
+		
 		theme.getPlaceList().add(place);
+		
 		System.out.println("장소를 등록하였습니다.");
 	}
 }
