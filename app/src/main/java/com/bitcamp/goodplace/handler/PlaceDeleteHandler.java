@@ -2,15 +2,14 @@ package com.bitcamp.goodplace.handler;
 
 import com.bitcamp.goodplace.domain.Place;
 import com.bitcamp.goodplace.domain.Theme;
-import com.bitcamp.goodplace.domain.User;
 import com.bitcamp.util.Prompt;
 
 public class PlaceDeleteHandler extends AbstractPlaceHandler{
-	
-  public void execute() {
+
+  public void execute(CommandRequest request) {
     System.out.println("[장소 삭제]");
 
-    Theme theme = findByTitle(Prompt.inputString("테마 이름을 입력하세요> "));
+    Theme theme = (Theme) request.getAttribute("searchedTheme");
 
     if (theme == null) {
       System.out.println("해당 이름의 테마가 없습니다.");

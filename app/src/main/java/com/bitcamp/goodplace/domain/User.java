@@ -5,117 +5,104 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User implements Comparable<User>{
-	private int no;
-	private String name;
-	private String id;
-	private String password;
-	private String email;
-	private String tel;
-	private String nickName;
-	private Date registeredDate;
-	private int viewCount;
+  private int no;
+  private String email;
+  private String password;
+  private String nickName;
+  private Date registeredDate;
+  private int viewCount;
 
-	private List<Theme> themeList = new ArrayList<Theme>();
-	private List<Theme> bookMarks = new ArrayList<Theme>();
+  private List<User> followings = new ArrayList<>();
+  private List<Theme> themeList = new ArrayList<Theme>();
+  private List<Theme> bookMarks = new ArrayList<Theme>();
 
 
-	@Override
-	public String toString() {
-		return "User [no=" + no + ", name=" + name + ", id=" + id + ", password=" + password + ", email=" + email
-				+ ", tel=" + tel + ", nickName=" + nickName + ", registeredDate=" + registeredDate + ", viewCount="
-				+ viewCount + ", themeList=" + themeList + ", bookMarks=" + bookMarks + "]";
-	}
+  @Override
+  public String toString() {
+    return "User [no=" + no + ", email=" + email + ", password=" + password + ", nickName="
+        + nickName + ", registeredDate=" + registeredDate + ", viewCount=" + viewCount + ", follow="
+        + followings + ", themeList=" + themeList + ", bookMarks=" + bookMarks + "]";
+  }
 
-	public int getViewCount() {
-		return viewCount;
-	}
+  public int getNo() {
+    return no;
+  }
 
-	public void setViewCount(int viewCount) {
-		this.viewCount = viewCount;
-	}
+  public void setNo(int no) {
+    this.no = no;
+  }
 
-	public int getNo() {
-		return no;
-	}
+  public String getEmail() {
+    return email;
+  }
 
-	public void setNo(int no) {
-		this.no = no++;
-	}
+  public void setEmail(String email) {
+    this.email = email;
+  }
 
-	public String getName() {
-		return name;
-	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
+  public String getPassword() {
+    return password;
+  }
 
-	public String getId() {
-		return id;
-	}
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+  public String getNickName() {
+    return nickName;
+  }
 
-	public String getPassword() {
-		return password;
-	}
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+  public void setNickName(String nickName) {
+    this.nickName = nickName;
+  }
 
-	public String getEmail() {
-		return email;
-	}
+  public Date getRegisteredDate() {
+    return registeredDate;
+  }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+  public void setRegisteredDate(Date registeredDate) {
+    this.registeredDate = registeredDate;
+  }
 
-	public String getTel() {
-		return tel;
-	}
+  public int getViewCount() {
+    return viewCount;
+  }
 
-	public void setTel(String tel) {
-		this.tel = tel;
-	}
+  public void setViewCount(int viewCount) {
+    this.viewCount = viewCount;
+  }
 
-	public String getNickName() {
-		return nickName;
-	}
+  public List<Theme> getThemeList() {
+    return themeList;
+  }
 
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
-	}
+  public void setThemeList(List<Theme> themeList) {
+    this.themeList = themeList;
+  }
 
-	public List<Theme> getThemeList() {
-		return themeList;
-	}
+  public List<Theme> getBookMarks() {
+    return bookMarks;
+  }
 
-	public void setThemeList(List<Theme> themeList) {
-		this.themeList = themeList;
-	}
+  public void setBookMarks(List<Theme> bookMarks) {
+    this.bookMarks = bookMarks;
+  }
 
-	public List<Theme> getBookMarks() {
-		return bookMarks;
-	}
 
-	public void setBookMarks(List<Theme> bookMarks) {
-		this.bookMarks = bookMarks;
-	}
+  @Override
+  public int compareTo(User user) {
+    return user.viewCount - this.viewCount ;
+  }
 
-	public Date getRegisteredDate() {
-		return registeredDate;
-	}
+  public List<User> getFollowings() {
+    return followings;
+  }
 
-	public void setRegisteredDate(Date registeredDate) {
-		this.registeredDate = registeredDate;
-	}
-	@Override
-	public int compareTo(User user) {
-		return user.viewCount - this.viewCount ;
-	}
+  public void setFollowings(List<User> followers) {
+    this.followings = followers;
+  }
+
 
 }

@@ -4,82 +4,90 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Theme implements Comparable<Theme>{
-	private int no;
-	private String title;
-	private String userName;
-	private int viewCount;
-	private boolean isPublic;
-	private boolean isShare;
-	private List<Place> placeList = new ArrayList<Place>();
-	private List<String> hashtags = new ArrayList<String>();
+  private int no;
+  private String title;
+  private String userName;
+  private int viewCount;
+  private boolean isPublic;
+  private boolean isShare;
+  private List<Place> placeList = new ArrayList<Place>();
+  private List<String> hashtags = new ArrayList<String>();
+  private String category; 
 
-	
-	
-	@Override
-	public String toString() {
-		return "Theme [title=" + title + ", userName=" + userName + ", viewCount=" + viewCount + ", isPublic="
-				+ isPublic + ", placeList=" + placeList + ", hashtags=" + hashtags + "]";
-	}
 
-	public String getTitle() {
-		return title;
-	}
+  public String getCategory() {
+    return category;
+  }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+  public void setCategory(String category) {
+    this.category = category;
+  }
 
-	public List<String> getHashtags() {
-		return hashtags;
-	}
+  @Override
+  public String toString() {
+    return "Theme [title=" + title + ", userName=" + userName + ", viewCount=" + viewCount + ", isPublic="
+        + isPublic + ", placeList=" + placeList + ", hashtags=" + hashtags + "]";
+  }
 
-	public void setHashtags(List<String> hashtag) {
-		this.hashtags = hashtag;
-	}
+  public String getTitle() {
+    return title;
+  }
 
-	public boolean isPublic() {
-		return isPublic;
-	}
+  public void setTitle(String title) {
+    this.title = title;
+  }
 
-	public void setPublic(boolean isPublic) {
-		this.isPublic = isPublic;
-	}
+  public List<String> getHashtags() {
+    return hashtags;
+  }
 
-	public int getViewCount() {
-		return viewCount;
-	}
+  public void setHashtags(List<String> hashtag) {
+    this.hashtags = hashtag;
+  }
 
-	public void setViewCount(int viewCount) {
-		this.viewCount = viewCount;
-	}
+  public boolean isPublic() {
+    return isPublic;
+  }
 
-	public List<Place> getPlaceList() {
-		return placeList;
-	}
+  public void setPublic(boolean isPublic) {
+    this.isPublic = isPublic;
+  }
 
-	public void setPlaceList(List<Place> placeList) {
-		this.placeList = placeList;
-	}
+  public int getViewCount() {
+    return viewCount;
+  }
 
-	public boolean isShare() {
-		return isShare;
-	}
+  public void setViewCount(int viewCount) {
+    this.viewCount = viewCount;
+  }
 
-	public void setShare(boolean isShare) {
-		this.isShare = isShare;
-	}
+  public List<Place> getPlaceList() {
+    return placeList;
+  }
 
-	public String getUserName() {
-		return userName;
-	}
+  public void setPlaceList(List<Place> placeList) {
+    this.placeList = placeList;
+  }
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+  public boolean isShare() {
+    return isShare;
+  }
 
-	@Override
-	public int compareTo(Theme theme) {
-		return theme.viewCount - this.viewCount ;
-	}
+  public void setShare(boolean isShare) {
+    this.isShare = isShare;
+  }
+
+  public String getUserName() {
+    return userName;
+  }
+
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
+
+  @Override
+  public int compareTo(Theme theme) {
+    return theme.viewCount - this.viewCount ;
+  }
 
 }
