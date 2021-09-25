@@ -1,71 +1,107 @@
 package com.bitcamp.goodplace.domain;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
-  private String name;
-  private String id;
-  private String password;
+public class User implements Comparable<User>{
+  private int no;
   private String email;
-  private String tel;
+  private String password;
   private String nickName;
-  private List<Theme> themeList; 
-  private List<Theme> bookMarks;
+  private Date registeredDate;
+  private int viewCount;
 
-  public String getName() {
-    return name;
+  private List<User> followings = new ArrayList<>();
+  private List<Theme> themeList = new ArrayList<Theme>();
+  private List<Theme> bookMarks = new ArrayList<Theme>();
+
+
+  @Override
+  public String toString() {
+    return "User [no=" + no + ", email=" + email + ", password=" + password + ", nickName="
+        + nickName + ", registeredDate=" + registeredDate + ", viewCount=" + viewCount + ", follow="
+        + followings + ", themeList=" + themeList + ", bookMarks=" + bookMarks + "]";
   }
-  public void setName(String name) {
-    this.name = name;
+
+  public int getNo() {
+    return no;
   }
-  public String getId() {
-    return id;
+
+  public void setNo(int no) {
+    this.no = no;
   }
-  public void setId(String id) {
-    this.id = id;
-  }
-  public String getPassword() {
-    return password;
-  }
-  public void setPassword(String password) {
-    this.password = password;
-  }
+
   public String getEmail() {
     return email;
   }
+
   public void setEmail(String email) {
     this.email = email;
   }
-  public String getTel() {
-    return tel;
+
+
+  public String getPassword() {
+    return password;
   }
-  public void setTel(String tel) {
-    this.tel = tel;
+
+  public void setPassword(String password) {
+    this.password = password;
   }
+
   public String getNickName() {
     return nickName;
   }
+
+
   public void setNickName(String nickName) {
     this.nickName = nickName;
   }
+
+  public Date getRegisteredDate() {
+    return registeredDate;
+  }
+
+  public void setRegisteredDate(Date registeredDate) {
+    this.registeredDate = registeredDate;
+  }
+
+  public int getViewCount() {
+    return viewCount;
+  }
+
+  public void setViewCount(int viewCount) {
+    this.viewCount = viewCount;
+  }
+
   public List<Theme> getThemeList() {
-    if(this.themeList == null) {
-      setThemeList(new ArrayList<Theme>());
-    }
     return themeList;
   }
+
   public void setThemeList(List<Theme> themeList) {
     this.themeList = themeList;
   }
+
   public List<Theme> getBookMarks() {
-    if(this.bookMarks == null) {
-      setBookMarks(new ArrayList<Theme>());
-    }
     return bookMarks;
   }
+
   public void setBookMarks(List<Theme> bookMarks) {
     this.bookMarks = bookMarks;
+  }
+
+
+  @Override
+  public int compareTo(User user) {
+    return user.viewCount - this.viewCount ;
+  }
+
+  public List<User> getFollowings() {
+    return followings;
+  }
+
+  public void setFollowings(List<User> followers) {
+    this.followings = followers;
   }
 
 
