@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+
 import com.bitcamp.goodplace.domain.User;
 import com.bitcamp.goodplace.handler.AuthDisplayLoginUserHandler;
 import com.bitcamp.goodplace.handler.AuthLoginHandler;
@@ -19,7 +20,6 @@ import com.bitcamp.goodplace.handler.BookmarkAddHandler;
 import com.bitcamp.goodplace.handler.BookmarkDeleteHandler;
 import com.bitcamp.goodplace.handler.BookmarkListHandler;
 import com.bitcamp.goodplace.handler.Command;
-import com.bitcamp.goodplace.handler.CommandRequest;
 import com.bitcamp.goodplace.handler.FullThemeListHandler;
 import com.bitcamp.goodplace.handler.MyMapAddHandler;
 import com.bitcamp.goodplace.handler.MyMapDeleteHandler;
@@ -43,6 +43,7 @@ import com.bitcamp.goodplace.handler.UserRankHandler;
 import com.bitcamp.goodplace.handler.UserUpdateHandler;
 import com.bitcamp.menu.Menu;
 import com.bitcamp.menu.MenuGroup;
+import com.bitcamp.menu.MenuItem;
 import com.bitcamp.util.Prompt;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -50,32 +51,6 @@ import com.google.gson.reflect.TypeToken;
 public class App {
   List<User> userList = new ArrayList<>();
   HashMap<String, Command> commandMap = new HashMap<>();
-
-  class MenuItem extends Menu {
-    String menuId;
-
-    public MenuItem(String title, String menuId) {
-      super(title);
-      this.menuId = menuId;
-    }
-
-    public MenuItem(String title, int enableState, String menuId) {
-      super(title, enableState);
-      this.menuId = menuId;
-    }
-
-    @Override
-    public void execute() {
-      Command command = commandMap.get(menuId);
-      try {
-        command.execute(new CommandRequest(commandMap));
-      } catch (Exception e) {
-        System.out.printf("%s 명령을 실행하는 중 오류 발생!", menuId);
-        e.printStackTrace();
-      } 
-    }
-
-  }
 
   public App() {
     commandMap.put("/auth/login", new AuthLoginHandler(userList));
@@ -166,9 +141,9 @@ public class App {
     MenuGroup mg = new MenuGroup("메인 메뉴");
     mg.setPrevMenuTitle("종료");
 
-    mg.add(new MenuItem("로그인", Menu.ACCESS_LOGOUT, "/auth/login"));
-    mg.add(new MenuItem("내 정보", Menu.ACCESS_GENERAL, "/auth/displayLoginUer"));
-    mg.add(new MenuItem("로그아웃", Menu.ACCESS_GENERAL, "/auth/logout"));
+    mg.add(new MenuItem("로그인", commandMap, Menu.ACCESS_LOGOUT, "/auth/login"));
+    mg.add(new MenuItem("내 정보", commandMap, Menu.ACCESS_GENERAL, "/auth/displayLoginUer"));
+    mg.add(new MenuItem("로그아웃", commandMap, Menu.ACCESS_GENERAL, "/auth/logout"));
 
     createUserMenu(mg);
     createMyMapMenu(mg);
@@ -183,11 +158,11 @@ public class App {
 
   private Menu createUserMenu(MenuGroup mg) {
     MenuGroup user = new MenuGroup("회원(회원가입)", Menu.ACCESS_LOGOUT | Menu.ACCESS_ADMIN);
-    user.add(new MenuItem("회원가입", Menu.ACCESS_LOGOUT, "/user/add"));
-    user.add(new MenuItem("회원목록", Menu.ACCESS_ADMIN, "/user/list"));
-    user.add(new MenuItem("회원상세", Menu.ACCESS_ADMIN, "/user/detail"));
-    user.add(new MenuItem("회원변경", Menu.ACCESS_ADMIN, "/user/update"));
-    user.add(new MenuItem("회원삭제", Menu.ACCESS_ADMIN, "/user/delete"));
+    user.add(new MenuItem("회원가입", commandMap, Menu.ACCESS_LOGOUT, "/user/add"));
+    user.add(new MenuItem("회원목록", commandMap, Menu.ACCESS_ADMIN, "/user/list"));
+    user.add(new MenuItem("회원상세", commandMap, Menu.ACCESS_ADMIN, "/user/detail"));
+    user.add(new MenuItem("회원변경", commandMap, Menu.ACCESS_ADMIN, "/user/update"));
+    user.add(new MenuItem("회원삭제", commandMap, Menu.ACCESS_ADMIN, "/user/delete"));
 
     mg.add(user);
     return user;
@@ -196,11 +171,11 @@ public class App {
   private void createMyMapMenu(MenuGroup mg) {
     MenuGroup myMap = new MenuGroup("나만의 지도", Menu.ACCESS_ADMIN | Menu.ACCESS_GENERAL);
 
-    myMap.add(new MenuItem("테마 등록", "/myMap/add"));
-    myMap.add(new MenuItem("테마 목록", "/myMap/list"));
-    myMap.add(new MenuItem("테마 상세보기", "/myMap/detail"));
-    myMap.add(new MenuItem("테마 수정", "/myMap/update"));
-    myMap.add(new MenuItem("테마 삭제", "/myMap/delete"));
+    myMap.add(new MenuItem("테마 등록", commandMap, "/myMap/add"));
+    myMap.add(new MenuItem("테마 목록", commandMap, "/myMap/list"));
+    myMap.add(new MenuItem("테마 상세보기", commandMap, "/myMap/detail"));
+//    myMap.add(new MenuItem("테마 수정", commandMap, "/myMap/update"));
+    myMap.add(new MenuItem("테마 삭제", commandMap, "/myMap/delete"));
 
     mg.add(myMap);
   }
@@ -218,10 +193,10 @@ public class App {
   private void createsearchMenu(MenuGroup mg) {
     MenuGroup search = new MenuGroup("검색");
 
-    search.add(new MenuItem("전체 테마 목록", "/search/list"));
-    search.add(new MenuItem("테마 검색", "/search/searchTheme"));
-    search.add(new MenuItem("해시태그 검색", "/search/searchHashtag"));
-    search.add(new MenuItem("유저 검색", "/search/searchUser"));
+    search.add(new MenuItem("전체 테마 목록", commandMap, "/search/list"));
+    search.add(new MenuItem("테마 검색", commandMap, "/search/searchTheme"));
+    search.add(new MenuItem("해시태그 검색", commandMap, "/search/searchHashtag"));
+    search.add(new MenuItem("유저 검색", commandMap, "/search/searchUser"));
 
 
     mg.add(search);
@@ -230,9 +205,9 @@ public class App {
   private void createBookmarkMenu(MenuGroup mg) {
     MenuGroup bookmark = new MenuGroup("북마크", Menu.ACCESS_ADMIN | Menu.ACCESS_GENERAL);
 
-    bookmark.add(new MenuItem("북마크 등록", "/bookmark/add"));
-    bookmark.add(new MenuItem("북마크 목록", "/bookmark/list"));
-    bookmark.add(new MenuItem("북마크 삭제", "/bookmark/delete"));
+    bookmark.add(new MenuItem("북마크 등록", commandMap, "/bookmark/add"));
+    bookmark.add(new MenuItem("북마크 목록", commandMap, "/bookmark/list"));
+    bookmark.add(new MenuItem("북마크 삭제", commandMap, "/bookmark/delete"));
 
     mg.add(bookmark);
   }
@@ -240,16 +215,16 @@ public class App {
   private void createRankMenu(MenuGroup mg) {
     MenuGroup rank = new MenuGroup("순위");
 
-    rank.add(new MenuItem("테마 순위", "/rank/themeRank"));
-    rank.add(new MenuItem("유저 순위", "/rank/userRank"));
+    rank.add(new MenuItem("테마 순위", commandMap, "/rank/themeRank"));
+    rank.add(new MenuItem("유저 순위", commandMap, "/rank/userRank"));
 
     mg.add(rank);
   }
 
   private void createFollowMenu(MenuGroup mg) {
     MenuGroup follow = new MenuGroup("팔로우");
-    follow.add(new MenuItem("팔로우 추가", "/following/add"));
-    follow.add(new MenuItem("팔로잉 목록 ", "/following/list"));
+    follow.add(new MenuItem("팔로우 추가", commandMap, "/following/add"));
+    follow.add(new MenuItem("팔로잉 목록 ", commandMap, "/following/list"));
 
     mg.add(follow);
   }
