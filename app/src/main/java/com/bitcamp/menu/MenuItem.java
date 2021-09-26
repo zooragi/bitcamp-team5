@@ -9,19 +9,19 @@ public class MenuItem extends Menu{
     String menuId;
     HashMap<String, Command> commandMap;
     
-    public MenuItem(String title, HashMap<String, Command> commandMap,String menuId) {
+    public MenuItem(String title,String menuId) {
       super(title);
       this.menuId = menuId;
       this.commandMap = commandMap;
     }
-    public MenuItem(String title, HashMap<String, Command> commandMap, int enableState, String menuId) {
+    public MenuItem(String title, int enableState, String menuId) {
         super(title, enableState);
         this.menuId = menuId;
         this.commandMap = commandMap;
       }
 
     @Override
-    public void execute() {
+    public void execute(HashMap<String, Command> commandMap) {
       Command command = commandMap.get(menuId);
       try {
         command.execute(new CommandRequest(commandMap));
