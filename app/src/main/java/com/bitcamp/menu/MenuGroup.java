@@ -50,7 +50,7 @@ public class MenuGroup extends Menu {
 	}
 
 	@Override
-	public void execute(HashMap<String, Command> commandMap) {
+	public void execute() {
 		breadCrumb.push(this);
 		while (true) {
 			System.out.printf("\n[%s]\n", getTitleMenus());
@@ -78,7 +78,7 @@ public class MenuGroup extends Menu {
 					System.out.println("무효한 메뉴 번호입니다.");
 					continue;
 				}
-				menuList.get(menuNo - 1).execute(commandMap);
+				menuList.get(menuNo - 1).execute();
 			} catch (Exception e) {
 				System.out.println("------------------------------------------");
 				System.out.printf("오류 발생: %s\n", e.getClass().getName());

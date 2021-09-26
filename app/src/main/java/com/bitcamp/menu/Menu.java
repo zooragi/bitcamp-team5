@@ -21,5 +21,5 @@ public abstract class Menu {
 		this.accessScope = accessScope;
 	}
 
-	public abstract void execute(HashMap<String, Command> commandMap);
+	public abstract void execute();
 }
