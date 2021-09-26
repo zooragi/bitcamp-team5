@@ -1,6 +1,7 @@
 package com.bitcamp.goodplace.handler;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.bitcamp.goodplace.domain.Place;
@@ -14,27 +15,64 @@ public class MyMapDetailHandler extends AbstractMyMapHandler {
 	public MyMapDetailHandler(){
 		controlThemeMenu.put("pa", "/place/add");
 		controlThemeMenu.put("pd", "/place/delete");
-		controlThemeMenu.put("ta", "/myMap/update");
-		controlThemeMenu.put("td", "/myMap/delete");
+		controlThemeMenu.put("tu", "/myMap/update");
 	}
 	@Override
 	public void execute(CommandRequest request) throws Exception {
-
+		
+		List<Theme> currentTheme = AuthLoginHandler.getLoginUser().getThemeList();
+		Theme searchedTheme;
+		String input;
+		
 		System.out.println("[테마 상세보기]");
-		int index = 1;
-		String input = Prompt.inputString("테마 이름을 입력하세요!");
-		Theme searchedTheme = findByTitle(input);
-		if (searchedTheme == null) {
-			System.out.println("해당 이름의 테마가 없습니다.");
+		System.out.println();
+		
+		showThemeList();
+		searchedTheme = chooseTheme();
+		
+		User user = AuthLoginHandler.getLoginUser();
+		if (!user.getNickName().equals(searchedTheme.getUserName()) && user.getEmail().equals("root@test.com")) {
 			return;
 		}
 
-		System.out.printf("테마 제목 : %s\n", searchedTheme.getTitle());
-		System.out.printf("카테고리 : %s\n", searchedTheme.getCategory());
-		System.out.printf("해시 태그 : %s\n", searchedTheme.getHashtags().toString());
-		System.out.printf("조회수 : %d\n", searchedTheme.getViewCount());
-		System.out.println();
-
+		request.setAttrubute("searchedTheme", searchedTheme);
+		
+		while (true) {
+			input =Prompt.inputString("지도 관리(1), 테마 관리(2), 이전 메뉴(0) ");
+			System.out.println();
+			if(Integer.parseInt(input) == 0) {
+				return;
+			} else if(Integer.parseInt(input) == 1) {
+				showPlaceList(searchedTheme);
+				input = Prompt.inputString("장소 추가(pa), 장소 삭제(pd), 이전메뉴(0)");
+				if(input.equals("0")) return;
+				request.getRequestDispatcher(controlThemeMenu.get(input.toLowerCase())).forword(request);
+				return;
+			} else if ( Integer.parseInt(input) == 2 ) {
+				input = Prompt.inputString("테마 수정(tu), 이전메뉴(0)");
+				if(input == "0") return;
+				request.getRequestDispatcher(controlThemeMenu.get(input.toLowerCase())).forword(request);
+				return;
+			} else {
+				System.out.println("명령어가 올바르지 않습니다!");
+				continue;
+			}
+		}
+		
+	}
+	private void showThemeList() {
+		int index = 1;
+		for(Theme theme : AuthLoginHandler.getLoginUser().getThemeList()) {
+			System.out.printf("(%d)\n", index++);
+			System.out.printf("테마 제목 : %s\n", theme.getTitle());
+			System.out.printf("카테고리 : %s\n", theme.getCategory());
+			System.out.printf("해시 태그 : %s\n", theme.getHashtags().toString());
+			System.out.printf("조회수 : %d\n", theme.getViewCount());
+			System.out.println();
+		}
+	}
+	private void showPlaceList(Theme searchedTheme) {
+		int index = 1;
 		for (Place placeList : searchedTheme.getPlaceList()) {
 			System.out.printf("(%d)\n", index++);
 			System.out.printf("장소 이름 > %s\n", placeList.getStoreName());
@@ -44,29 +82,22 @@ public class MyMapDetailHandler extends AbstractMyMapHandler {
 			System.out.printf("장소 후기 > %s\n", placeList.getComment().toString());
 			System.out.println();
 		}
-
-		User user = AuthLoginHandler.getLoginUser();
-		if (!user.getNickName().equals(searchedTheme.getUserName()) && user.getEmail().equals("root@test.com")) {
-			return;
-		}
-
-		request.setAttrubute("searchedTheme", searchedTheme);
-		while (true) {
-			input =Prompt.inputString("지도 관리(1), 테마 관리(2), 이전 메뉴(0)");
-			if(Integer.parseInt(input) == 1) {
-				input = Prompt.inputString("장소 추가(pa), 장소 삭제(pd), 이전메뉴(0)");
-				if(input == "0") return;
-				request.getRequestDispatcher(controlThemeMenu.get(input.toLowerCase())).forword(request);
-				return;
-			} else if ( Integer.parseInt(input) == 2 ) {
-				input = Prompt.inputString("테마 업데이트(ta), 테마 삭제(td), 이전메뉴(0)");
-				if(input == "0") return;
-				request.getRequestDispatcher(controlThemeMenu.get(input.toLowerCase())).forword(request);
-				return;
-			} else {
-				System.out.println("명령어가 올바르지 않습니다!");
-				return;
+	}
+	private Theme chooseTheme() {
+		while(true) {
+			try {
+				int inputNum = Prompt.inputInt("번호를 입력하세요! ");
+				if(inputNum > AuthLoginHandler.getLoginUser().getThemeList().size() || inputNum < 0) {
+					System.out.println("무효한 번호 입니다");
+					continue;
+				}
+				return AuthLoginHandler.getLoginUser().getThemeList().get(inputNum-1);
+			}catch (Exception e) {
+				System.out.println("------------------------------------------");
+				System.out.printf("오류 발생: %s\n", e.getClass().getName());
+				System.out.println("------------------------------------------");
 			}
+				
 		}
 	}
 	

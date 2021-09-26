@@ -9,9 +9,8 @@ public class MyMapUpdateHandler extends AbstractMyMapHandler{
 
   public void execute(CommandRequest request) {
     System.out.println("[테마 변경]");
-    String title = Prompt.inputString("수정할 테마 제목? ");
 
-    Theme theme = findByTitle(title);
+    Theme theme = (Theme) request.getAttribute("searchedTheme");
 
     if (theme == null) {
       System.out.println("해당 이름의 테마가 없습니다.");
