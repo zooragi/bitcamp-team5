@@ -38,20 +38,15 @@ public class MyMapDetailHandler extends AbstractMyMapHandler {
 
 		while (true) {
 			System.out.println();
-			
-			ArrayList<String> controlMenuListOfKeys = new ArrayList<>(controlMenu.keySet());
-			Collections.swap(controlMenuListOfKeys, controlMenuListOfKeys.indexOf("이전 메뉴"), controlMenuListOfKeys.size()-1);
-			int selectedNum = chooseNum(controlMenuListOfKeys);
 
-			Map<String, String> detailMenu = controlMenu.get(controlMenuListOfKeys.get(selectedNum - 1));
+			Map<String, String> detailMenu = showManagementMenu();
 			if(detailMenu == null) return;
 			
 			ArrayList<String> detailMenuListOfKeys = new ArrayList<>(detailMenu.keySet());
-			selectedNum = chooseNum(detailMenuListOfKeys);
+			int selectedNum = listChooseNum(detailMenuListOfKeys);
 			if(detailMenu.get(detailMenuListOfKeys.get(selectedNum-1)).equals("0")) return;
 			
 			request.getRequestDispatcher(detailMenu.get(detailMenuListOfKeys.get(selectedNum-1))).forword(request);
-			
 		}
 
 	}
@@ -67,7 +62,15 @@ public class MyMapDetailHandler extends AbstractMyMapHandler {
 			System.out.println();
 		}
 	}
+	
+	private Map<String, String> showManagementMenu(){
+		ArrayList<String> controlMenuListOfKeys = new ArrayList<>(controlMenu.keySet());
+		Collections.swap(controlMenuListOfKeys, controlMenuListOfKeys.indexOf("이전 메뉴"), controlMenuListOfKeys.size()-1);
+		int selectedNum = listChooseNum(controlMenuListOfKeys);
 
+		return controlMenu.get(controlMenuListOfKeys.get(selectedNum - 1));
+	}
+	
 	private Theme chooseTheme() {
 		while (true) {
 			try {
@@ -85,7 +88,8 @@ public class MyMapDetailHandler extends AbstractMyMapHandler {
 
 		}
 	}
-	private int chooseNum(List<String> list) {
+	
+	private int listChooseNum(List<String> list) {
 		int i = 1;
 		int selectedNum;
 		while(true) {
@@ -100,13 +104,14 @@ public class MyMapDetailHandler extends AbstractMyMapHandler {
 					continue;
 				}
 				return selectedNum;
-			}catch(Exception e) {
+			} catch(Exception e) {
 				System.out.println("------------------------------------------");
 				System.out.printf("오류 발생: %s\n", e.getClass().getName());
 				System.out.println("------------------------------------------");
 			}
 		}
 	}
+	
 	private void addPlaceDetailMapValue() {
 		Map<String, String> placeMenu = new HashMap<>();
 		placeMenu.put("장소 목록", "/place/list");
@@ -122,4 +127,5 @@ public class MyMapDetailHandler extends AbstractMyMapHandler {
 		themeMenu.put("이전 메뉴", "0");
 		controlMenu.put("테마관리", themeMenu);
 	}
+	
 }
