@@ -4,9 +4,9 @@ import java.util.List;
 import com.bitcamp.goodplace.domain.User;
 import com.bitcamp.util.Prompt;
 
-public class UserFollowAddHandler extends AbstractUserHandler {
+public class UserFollowingAddHandler extends AbstractUserHandler {
 
-  public UserFollowAddHandler(List<User> userList) {
+  public UserFollowingAddHandler(List<User> userList) {
     super(userList);
   }
 

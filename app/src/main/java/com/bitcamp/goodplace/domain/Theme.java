@@ -13,7 +13,16 @@ public class Theme implements Comparable<Theme>{
   private List<Place> placeList = new ArrayList<Place>();
   private List<String> hashtags = new ArrayList<String>();
   private String category; 
+  private int warning = 0;
 
+
+
+  @Override
+  public String toString() {
+    return "Theme [no=" + no + ", title=" + title + ", userName=" + userName + ", viewCount="
+        + viewCount + ", isPublic=" + isPublic + ", isShare=" + isShare + ", placeList=" + placeList
+        + ", hashtags=" + hashtags + ", category=" + category + ", warning=" + warning + "]";
+  }
 
   public String getCategory() {
     return category;
@@ -21,12 +30,6 @@ public class Theme implements Comparable<Theme>{
 
   public void setCategory(String category) {
     this.category = category;
-  }
-
-  @Override
-  public String toString() {
-    return "Theme [title=" + title + ", userName=" + userName + ", viewCount=" + viewCount + ", isPublic="
-        + isPublic + ", placeList=" + placeList + ", hashtags=" + hashtags + "]";
   }
 
   public String getTitle() {
@@ -88,6 +91,22 @@ public class Theme implements Comparable<Theme>{
   @Override
   public int compareTo(Theme theme) {
     return theme.viewCount - this.viewCount ;
+  }
+
+  public int getNo() {
+    return no;
+  }
+
+  public void setNo(int no) {
+    this.no = no;
+  }
+
+  public int getWarning() {
+    return warning;
+  }
+
+  public void setWarning(int warning) {
+    this.warning = warning;
   }
 
 }

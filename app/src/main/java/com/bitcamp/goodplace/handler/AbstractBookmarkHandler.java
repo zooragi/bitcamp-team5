@@ -4,15 +4,16 @@ import java.util.List;
 import com.bitcamp.goodplace.domain.Theme;
 import com.bitcamp.goodplace.domain.User;
 
-public abstract class AbstractMyMapHandler implements Command{
+public abstract class AbstractBookmarkHandler implements Command {
 
   List<User> userList;
 
-  public AbstractMyMapHandler(List<User> userList) {
+  public AbstractBookmarkHandler(List<User> userList) {
     this.userList = userList;
   }
 
-  protected Theme findByTitle(String themeTitle) {
+
+  protected Theme findByTheme(String themeTitle) {
     for(User user : userList) {
       for (Theme theme : user.getThemeList()) {
         if (theme.getTitle().equals(themeTitle)) {

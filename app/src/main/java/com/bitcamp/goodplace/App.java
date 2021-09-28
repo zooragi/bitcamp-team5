@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import com.bitcamp.goodplace.domain.Board;
 import com.bitcamp.goodplace.domain.User;
 import com.bitcamp.goodplace.handler.AuthDisplayLoginUserHandler;
 import com.bitcamp.goodplace.handler.AuthLoginHandler;
@@ -30,14 +31,18 @@ import com.bitcamp.goodplace.handler.PlaceAddHandler;
 import com.bitcamp.goodplace.handler.PlaceDeleteHandler;
 import com.bitcamp.goodplace.handler.PlaceListHandler;
 import com.bitcamp.goodplace.handler.RealTimeRankHandler;
+import com.bitcamp.goodplace.handler.ReporBoardtListHandler;
+import com.bitcamp.goodplace.handler.ReportBoardAddHandler;
+import com.bitcamp.goodplace.handler.ReportMyMapHandler;
 import com.bitcamp.goodplace.handler.SearchHashtagHandler;
 import com.bitcamp.goodplace.handler.SearchThemeHandler;
 import com.bitcamp.goodplace.handler.SearchUserHandler;
 import com.bitcamp.goodplace.handler.UserAddHandler;
 import com.bitcamp.goodplace.handler.UserDeleteHandler;
 import com.bitcamp.goodplace.handler.UserDetailHandler;
-import com.bitcamp.goodplace.handler.UserFollowAddHandler;
-import com.bitcamp.goodplace.handler.UserFollowersListHandler;
+import com.bitcamp.goodplace.handler.UserFollowingAddHandler;
+import com.bitcamp.goodplace.handler.UserFollowingDeleteHandler;
+import com.bitcamp.goodplace.handler.UserFollowingListHandler;
 import com.bitcamp.goodplace.handler.UserListHandler;
 import com.bitcamp.goodplace.handler.UserRankHandler;
 import com.bitcamp.goodplace.handler.UserUpdateHandler;
@@ -50,6 +55,7 @@ import com.google.gson.reflect.TypeToken;
 public class App {
   List<User> userList = new ArrayList<>();
   HashMap<String, Command> commandMap = new HashMap<>();
+  List<Board> boardList = new ArrayList<>();
 
   class MenuItem extends Menu {
     String menuId;
@@ -65,6 +71,7 @@ public class App {
     }
 
     @Override
+
     public void execute() {
       Command command = commandMap.get(menuId);
       try {
@@ -88,14 +95,14 @@ public class App {
     commandMap.put("/user/list", new UserListHandler(userList));
     commandMap.put("/user/update", new UserUpdateHandler(userList));
 
-    commandMap.put("/myMap/add", new MyMapAddHandler());
-    commandMap.put("/myMap/delete", new MyMapDeleteHandler());
-    commandMap.put("/myMap/list", new MyMapListHandler());
-    commandMap.put("/myMap/detail", new MyMapDetailHandler());
-    commandMap.put("/myMap/update", new MyMapUpdateHandler());
+    commandMap.put("/myMap/add", new MyMapAddHandler(userList));
+    commandMap.put("/myMap/delete", new MyMapDeleteHandler(userList));
+    commandMap.put("/myMap/list", new MyMapListHandler(userList));
+    commandMap.put("/myMap/detail", new MyMapDetailHandler(userList));
+    commandMap.put("/myMap/update", new MyMapUpdateHandler(userList));
 
-    commandMap.put("/bookmark/add", new BookmarkAddHandler());
-    commandMap.put("/bookmark/delete", new BookmarkDeleteHandler());
+    commandMap.put("/bookmark/add", new BookmarkAddHandler(userList));
+    commandMap.put("/bookmark/delete", new BookmarkDeleteHandler(userList));
     commandMap.put("/bookmark/list", new BookmarkListHandler());
 
     commandMap.put("/place/add", new PlaceAddHandler());
@@ -107,11 +114,16 @@ public class App {
     commandMap.put("/search/searchUser", new SearchUserHandler(userList));
     commandMap.put("/search/searchHashtag", new SearchHashtagHandler(userList));
 
-    commandMap.put("/following/add", new UserFollowAddHandler(userList));
-    commandMap.put("/following/list", new UserFollowersListHandler(userList));
+    commandMap.put("/following/add", new UserFollowingAddHandler(userList));
+    commandMap.put("/following/list", new UserFollowingListHandler(userList));
+    commandMap.put("/following/delete", new UserFollowingDeleteHandler());
 
     commandMap.put("/rank/themeRank", new RealTimeRankHandler(userList));
     commandMap.put("/rank/userRank", new UserRankHandler(userList));
+
+    commandMap.put("/report/theme", new ReportMyMapHandler(userList,boardList));
+    commandMap.put("/board/add", new ReportBoardAddHandler(boardList));
+    commandMap.put("/board/list", new ReporBoardtListHandler(boardList));
   }
 
   public static void main(String[] args) {
@@ -177,6 +189,8 @@ public class App {
     createBookmarkMenu(mg);
     createRankMenu(mg);
     createFollowMenu(mg);
+    createQnaMenu(mg);
+
 
     return mg;
   }
@@ -247,10 +261,22 @@ public class App {
   }
 
   private void createFollowMenu(MenuGroup mg) {
-    MenuGroup follow = new MenuGroup("팔로우");
-    follow.add(new MenuItem("팔로우 추가", "/following/add"));
+    MenuGroup follow = new MenuGroup("팔로우", Menu.ACCESS_GENERAL);
+    follow.add(new MenuItem("팔로우 등록", "/following/add"));
     follow.add(new MenuItem("팔로잉 목록 ", "/following/list"));
+    follow.add(new MenuItem("팔로잉 삭제 ", "/following/delete"));
 
     mg.add(follow);
   }
+
+  private void createQnaMenu(MenuGroup mg) {
+    MenuGroup qna = new MenuGroup("문의사항", Menu.ACCESS_GENERAL);
+    //    qna.add(new MenuItem("테마 신고", "/report/theme"));
+    qna.add(new MenuItem("문의사항 등록", "/board/add"));
+    qna.add(new MenuItem("문의사항 목록", "/board/list"));
+
+    mg.add(qna);
+  }
+
+
 }

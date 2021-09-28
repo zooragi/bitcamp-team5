@@ -1,17 +1,31 @@
 package com.bitcamp.goodplace.handler;
 
 import java.util.ArrayList;
+import java.util.List;
 import com.bitcamp.goodplace.domain.Theme;
+import com.bitcamp.goodplace.domain.User;
 import com.bitcamp.util.Prompt;
 
 public class MyMapAddHandler extends AbstractMyMapHandler{
+
+  public MyMapAddHandler(List<User> userList) {
+    super(userList);
+  }
 
   public void execute(CommandRequest request) {
     Theme theme = new Theme();
     ArrayList<String> hashtagList = (ArrayList<String>) theme.getHashtags();
     System.out.println("나의 테마 등록");
 
+
     theme.setTitle(Prompt.inputString("테마 이름을 입력하세요> "));
+    if(AuthLoginHandler.getLoginUser().getThemeList().size()==0) {
+      theme.setNo(1);
+    } else {
+      int themeNo = AuthLoginHandler.getLoginUser().getThemeList().get(
+          AuthLoginHandler.getLoginUser().getThemeList().size()-1).getNo();
+      theme.setNo(++themeNo);
+    }
 
     while (true) {
       System.out.println("1.food 2.cafe 3.life 4.culture ");

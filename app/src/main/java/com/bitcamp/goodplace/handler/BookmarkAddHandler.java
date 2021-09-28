@@ -1,9 +1,15 @@
 package com.bitcamp.goodplace.handler;
 
+import java.util.List;
 import com.bitcamp.goodplace.domain.Theme;
+import com.bitcamp.goodplace.domain.User;
 import com.bitcamp.util.Prompt;
 
-public class BookmarkAddHandler extends AbstactBookmarkHandler{
+public class BookmarkAddHandler extends AbstractBookmarkHandler{
+
+  public BookmarkAddHandler(List<User> userList) {
+    super(userList);
+  }
 
   public void execute(CommandRequest request) {
     int viewCount = 0;

@@ -27,28 +27,19 @@ public class AuthLoginHandler implements Command{
     String email = Prompt.inputString("이메일? ");
     String password = Prompt.inputString("암호?");
 
-    if(email.equals("root@test.com") && password.equals("0000")) {
-      //      User user = new User();
-      //      user.setNo(0);
-      //      user.setNickName("서울지기");
-      //      user.setEmail("root@test.com");
-      //      user.setPassword("0000");
-      //      loginUser = user;
-      loginUser = userList.get(0);
-      useAccessLevel = Menu.ACCESS_GENERAL | Menu.ACCESS_ADMIN;
-      System.out.println("관리자님 환영합니다!");
-      return;
-    }
+
 
     User user = findByEmailPassword(email, password);
-
+    loginUser = userList.get(userList.indexOf(user));
     if (user == null) {
       System.out.println("이메일과 암호가 일치하는 회원을 찾을 수 없습니다.");
+    } else if(user.getEmail().equals("root@test.com")) {
+      useAccessLevel = Menu.ACCESS_GENERAL | Menu.ACCESS_ADMIN;
     } else {
-      System.out.printf("%s님 환영합니다!\n", user.getNickName());
       useAccessLevel = Menu.ACCESS_GENERAL;
     }
 
+    System.out.printf("%s님 환영합니다!\n", user.getNickName());
     loginUser = user;
   }
 

@@ -1,18 +1,24 @@
 package com.bitcamp.goodplace.handler;
 
+import java.util.List;
 import com.bitcamp.goodplace.domain.Theme;
+import com.bitcamp.goodplace.domain.User;
 
 public class MyMapListHandler extends AbstractMyMapHandler{
 
+  public MyMapListHandler(List<User> userList) {
+    super(userList);
+  }
+
   public void execute(CommandRequest request) {
-    int index = 1;
+    //    int index = 1;
     System.out.println("[테마 목록 조회]");
     if (AuthLoginHandler.getLoginUser().getThemeList().size() == 0) {
       System.out.println("등록된 테마가 없습니다.");
       return;
     }
     for (Theme list : AuthLoginHandler.getLoginUser().getThemeList()) {
-      System.out.printf("(%d)\n", index++);
+      System.out.printf("(%d)\n", list.getNo());
       System.out.printf("테마 제목 : %s\n", list.getTitle());
       System.out.printf("카테고리 : %s\n" , list.getCategory());
       System.out.printf("해시 태그 : %s\n", list.getHashtags().toString());

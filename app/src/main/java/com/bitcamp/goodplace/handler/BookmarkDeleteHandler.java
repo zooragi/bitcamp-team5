@@ -1,9 +1,15 @@
 package com.bitcamp.goodplace.handler;
 
+import java.util.List;
 import com.bitcamp.goodplace.domain.Theme;
+import com.bitcamp.goodplace.domain.User;
 import com.bitcamp.util.Prompt;
 
-public class BookmarkDeleteHandler extends AbstactBookmarkHandler{
+public class BookmarkDeleteHandler extends AbstractBookmarkHandler{
+
+  public BookmarkDeleteHandler(List<User> userList) {
+    super(userList);
+  }
 
   public void execute(CommandRequest request) {
     System.out.println("[북마크 삭제]");

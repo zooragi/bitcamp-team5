@@ -4,84 +4,85 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Place {
-	private int no;
-	private String theme;
-	private String storeName;
-	private String addressName;
-	private List<String> photo = new ArrayList<String>();
-	private List<String> comment = new ArrayList<String>();
-	public String xCoord;
-	public String yCoord;
-	
-	@Override
-	public String toString() {
-		return "Place [theme=" + theme + ", storeName=" + storeName + ", addressName=" + addressName + ", photo=" + photo
-				+ ", comment=" + comment + ", xCoord=" + xCoord + ", yCoord="
-				+ yCoord + "]";
-	}
+  private int no;
+  private String theme;
+  private String storeName;
+  private String addressName;
+  private List<String> photo = new ArrayList<String>();
+  private List<String> comment = new ArrayList<String>();
+  public String xCoord;
+  public String yCoord;
 
-	public int getNo() {
-		return no;
-	}
 
-	public void setNo(int no) {
-		this.no = no;
-	}
+  @Override
+  public String toString() {
+    return "Place [no=" + no + ", theme=" + theme + ", storeName=" + storeName + ", addressName="
+        + addressName + ", photo=" + photo + ", comment=" + comment + ", xCoord=" + xCoord
+        + ", yCoord=" + yCoord + "]";
+  }
 
-	public String getTheme() {
-		return theme;
-	}
+  public int getNo() {
+    return no;
+  }
 
-	public void setTheme(String theme) {
-		this.theme = theme;
-	}
+  public void setNo(int no) {
+    this.no = no;
+  }
 
-	public List<String> getPhoto() {
-		return photo;
-	}
+  public String getTheme() {
+    return theme;
+  }
 
-	public void setPhoto(List<String> photo) {
-		this.photo = photo;
-	}
+  public void setTheme(String theme) {
+    this.theme = theme;
+  }
 
-	public List<String> getComment() {
-		return comment;
-	}
+  public List<String> getPhoto() {
+    return photo;
+  }
 
-	public void setComment(List<String> comment) {
-		this.comment = comment;
-	}
+  public void setPhoto(List<String> photo) {
+    this.photo = photo;
+  }
 
-	public String getxCoord() {
-		return xCoord;
-	}
+  public List<String> getComment() {
+    return comment;
+  }
 
-	public void setxCoord(String xCoord) {
-		this.xCoord = xCoord;
-	}
+  public void setComment(List<String> comment) {
+    this.comment = comment;
+  }
 
-	public String getyCoord() {
-		return yCoord;
-	}
+  public String getxCoord() {
+    return xCoord;
+  }
 
-	public void setyCoord(String yCoord) {
-		this.yCoord = yCoord;
-	}
+  public void setxCoord(String xCoord) {
+    this.xCoord = xCoord;
+  }
 
-	public String getStoreName() {
-		return storeName;
-	}
+  public String getyCoord() {
+    return yCoord;
+  }
 
-	public void setStoreName(String storeName) {
-		this.storeName = storeName;
-	}
+  public void setyCoord(String yCoord) {
+    this.yCoord = yCoord;
+  }
 
-	public String getAddressName() {
-		return addressName;
-	}
+  public String getStoreName() {
+    return storeName;
+  }
 
-	public void setAddressName(String addressName) {
-		this.addressName = addressName;
-	}
+  public void setStoreName(String storeName) {
+    this.storeName = storeName;
+  }
+
+  public String getAddressName() {
+    return addressName;
+  }
+
+  public void setAddressName(String addressName) {
+    this.addressName = addressName;
+  }
 
 }

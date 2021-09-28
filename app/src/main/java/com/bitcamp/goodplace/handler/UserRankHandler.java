@@ -15,7 +15,8 @@ public class UserRankHandler implements Command{
     System.out.println("[유저 랭킹]");
     Collections.sort(userList);
     for(User user : userList) {
-      System.out.printf("%d. %s\n",i,user.getNickName());			
+      if(user.getNickName().equals("관리자")) continue;
+      System.out.printf("%d위. %s\n",i,user.getNickName());			
       i++;
     }
   }

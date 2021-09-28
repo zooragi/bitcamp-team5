@@ -3,9 +3,9 @@ package com.bitcamp.goodplace.handler;
 import java.util.List;
 import com.bitcamp.goodplace.domain.User;
 
-public class UserFollowersListHandler extends AbstractUserHandler {
+public class UserFollowingListHandler extends AbstractUserHandler {
 
-  public UserFollowersListHandler(List<User> userList) {
+  public UserFollowingListHandler(List<User> userList) {
     super(userList);
   }
 

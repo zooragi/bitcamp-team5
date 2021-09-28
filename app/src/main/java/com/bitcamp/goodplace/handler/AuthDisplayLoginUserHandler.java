@@ -13,5 +13,6 @@ public class AuthDisplayLoginUserHandler implements Command{
     System.out.printf("이메일: %s\n", AuthLoginHandler.loginUser.getEmail());
     System.out.printf("닉네임: %s\n", AuthLoginHandler.loginUser.getNickName());
     System.out.printf("등록일: %s\n", AuthLoginHandler.loginUser.getRegisteredDate());
+    System.out.printf("팔로잉: %s\n", AuthLoginHandler.loginUser.getFollowings().size());
   }
 }
