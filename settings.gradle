@@ -9,3 +9,5 @@
 
 rootProject.name = 'good-place'
 include('app')
+include('app-client')
+include('app-server')

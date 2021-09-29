@@ -1,11 +1,18 @@
 package com.bitcamp.goodplace.handler;
 
+import java.util.List;
+
 import com.bitcamp.goodplace.domain.Theme;
+import com.bitcamp.goodplace.domain.User;
 import com.bitcamp.util.Prompt;
 
 public class MyMapDeleteHandler extends AbstractMyMapHandler{
 
-  public void execute(CommandRequest request) {
+  public MyMapDeleteHandler(List<User> userList) {
+		super(userList);
+	}
+
+public void execute(CommandRequest request) {
     System.out.println("[테마 삭제]");
     String title = Prompt.inputString("테마 이름을 입력하세요> ");
 

@@ -13,7 +13,8 @@ import com.bitcamp.util.Prompt;
 public class MyMapDetailHandler extends AbstractMyMapHandler {
 	Map<String, Map<String, String>> controlMenu = new HashMap<>();
 
-	public MyMapDetailHandler() {
+	public MyMapDetailHandler(List<User> userList) {
+		super(userList);
 		addPlaceDetailMapValue();
 		addThemeDetailMapValue();
 		controlMenu.put("이전 메뉴",null);
