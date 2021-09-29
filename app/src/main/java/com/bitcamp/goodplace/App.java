@@ -12,7 +12,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-import com.bitcamp.goodplace.domain.Board;
+import com.bitcamp.goodplace.domain.Report;
 import com.bitcamp.goodplace.domain.User;
 import com.bitcamp.goodplace.handler.AuthDisplayLoginUserHandler;
 import com.bitcamp.goodplace.handler.AuthLoginHandler;
@@ -32,8 +32,9 @@ import com.bitcamp.goodplace.handler.PlaceAddHandler;
 import com.bitcamp.goodplace.handler.PlaceDeleteHandler;
 import com.bitcamp.goodplace.handler.PlaceListHandler;
 import com.bitcamp.goodplace.handler.RealTimeRankHandler;
-import com.bitcamp.goodplace.handler.ReportThemeHandler;
-import com.bitcamp.goodplace.handler.ReportUserHandler;
+import com.bitcamp.goodplace.handler.ReportAddThemeHandler;
+import com.bitcamp.goodplace.handler.ReportAddUserHandler;
+import com.bitcamp.goodplace.handler.ReportListHandler;
 import com.bitcamp.goodplace.handler.SearchHashtagHandler;
 import com.bitcamp.goodplace.handler.SearchThemeHandler;
 import com.bitcamp.goodplace.handler.SearchUserHandler;
@@ -55,7 +56,7 @@ import com.google.gson.reflect.TypeToken;
 public class App {
   List<User> userList = new ArrayList<>();
   HashMap<String, Command> commandMap = new HashMap<>();
-  List<Board> boardList = new ArrayList<>();
+  List<Report> reportList = new ArrayList<>();
 
   class MenuItem extends Menu {
     String menuId;
@@ -121,7 +122,9 @@ public class App {
     commandMap.put("/rank/themeRank", new RealTimeRankHandler(userList));
     commandMap.put("/rank/userRank", new UserRankHandler(userList));
 
-    commandMap.put("/report/theme", new ReportThemeHandler(userList,boardList));
+    commandMap.put("/report/theme", new ReportAddThemeHandler(userList,reportList));
+    commandMap.put("/report/user", new ReportAddUserHandler(userList,reportList));
+    commandMap.put("/report/list", new ReportListHandler(userList,reportList));
 //    commandMap.put("/report/user", new ReportUserHandler(userList,boardList));
   }
 
@@ -272,6 +275,7 @@ public class App {
     MenuGroup qna = new MenuGroup("신고", Menu.ACCESS_GENERAL);
     qna.add(new MenuItem("테마 신고", "/report/theme"));
     qna.add(new MenuItem("유저 신고", "/report/user"));
+    qna.add(new MenuItem("신고 목록", "/report/list"));
 
     mg.add(qna);
   }
