@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+
 import com.bitcamp.goodplace.domain.Board;
 import com.bitcamp.goodplace.domain.User;
 import com.bitcamp.goodplace.handler.AuthDisplayLoginUserHandler;
@@ -31,9 +32,8 @@ import com.bitcamp.goodplace.handler.PlaceAddHandler;
 import com.bitcamp.goodplace.handler.PlaceDeleteHandler;
 import com.bitcamp.goodplace.handler.PlaceListHandler;
 import com.bitcamp.goodplace.handler.RealTimeRankHandler;
-import com.bitcamp.goodplace.handler.ReporBoardtListHandler;
-import com.bitcamp.goodplace.handler.ReportBoardAddHandler;
-import com.bitcamp.goodplace.handler.ReportMyMapHandler;
+import com.bitcamp.goodplace.handler.ReportThemeHandler;
+import com.bitcamp.goodplace.handler.ReportUserHandler;
 import com.bitcamp.goodplace.handler.SearchHashtagHandler;
 import com.bitcamp.goodplace.handler.SearchThemeHandler;
 import com.bitcamp.goodplace.handler.SearchUserHandler;
@@ -121,9 +121,8 @@ public class App {
     commandMap.put("/rank/themeRank", new RealTimeRankHandler(userList));
     commandMap.put("/rank/userRank", new UserRankHandler(userList));
 
-    commandMap.put("/report/theme", new ReportMyMapHandler(userList,boardList));
-    commandMap.put("/board/add", new ReportBoardAddHandler(boardList));
-    commandMap.put("/board/list", new ReporBoardtListHandler(boardList));
+    commandMap.put("/report/theme", new ReportThemeHandler(userList,boardList));
+//    commandMap.put("/report/user", new ReportUserHandler(userList,boardList));
   }
 
   public static void main(String[] args) {
@@ -270,10 +269,9 @@ public class App {
   }
 
   private void createQnaMenu(MenuGroup mg) {
-    MenuGroup qna = new MenuGroup("문의사항", Menu.ACCESS_GENERAL);
-    //    qna.add(new MenuItem("테마 신고", "/report/theme"));
-    qna.add(new MenuItem("문의사항 등록", "/board/add"));
-    qna.add(new MenuItem("문의사항 목록", "/board/list"));
+    MenuGroup qna = new MenuGroup("신고", Menu.ACCESS_GENERAL);
+    qna.add(new MenuItem("테마 신고", "/report/theme"));
+    qna.add(new MenuItem("유저 신고", "/report/user"));
 
     mg.add(qna);
   }

@@ -7,10 +7,10 @@ import com.bitcamp.goodplace.domain.Theme;
 import com.bitcamp.goodplace.domain.User;
 import com.bitcamp.util.Prompt;
 
-public class ReportMyMapHandler extends AbstractMyMapHandler {
+public class ReportThemeHandler extends AbstractMyMapHandler {
 
   List<Board> boardList;
-  public ReportMyMapHandler(List<User> userList, List<Board> boardList) {
+  public ReportThemeHandler(List<User> userList, List<Board> boardList) {
     super(userList);
     this.boardList = boardList;
   }
