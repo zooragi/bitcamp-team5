@@ -7,7 +7,7 @@ public class Report {
 	public static final String WAITING = "대기중";
 	public static final String CHECKING = "확인중";
 	public static final String COMPLETE = "완료";
-	
+
   private int no;
   private String content;
   private User writer;
