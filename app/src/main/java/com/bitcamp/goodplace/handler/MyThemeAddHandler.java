@@ -7,9 +7,9 @@ import com.bitcamp.goodplace.domain.Theme;
 import com.bitcamp.goodplace.domain.User;
 import com.bitcamp.util.Prompt;
 
-public class MyMapAddHandler extends AbstractMyMapHandler {
+public class MyThemeAddHandler extends AbstractMyMapHandler {
 
-	public MyMapAddHandler(List<User> userList) {
+	public MyThemeAddHandler(List<User> userList) {
 		super(userList);
 	}
 

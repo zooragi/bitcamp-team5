@@ -10,10 +10,10 @@ import com.bitcamp.goodplace.domain.Theme;
 import com.bitcamp.goodplace.domain.User;
 import com.bitcamp.util.Prompt;
 
-public class MyMapDetailHandler extends AbstractMyMapHandler {
+public class MyThemeDetailHandler extends AbstractMyMapHandler {
 	Map<String, Map<String, String>> controlMenu = new HashMap<>();
 
-	public MyMapDetailHandler(List<User> userList) {
+	public MyThemeDetailHandler(List<User> userList) {
 		super(userList);
 		addPlaceDetailMapValue();
 		addThemeDetailMapValue();

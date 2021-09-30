@@ -5,9 +5,9 @@ import java.util.List;
 import com.bitcamp.goodplace.domain.Theme;
 import com.bitcamp.goodplace.domain.User;
 
-public class MyMapListHandler extends AbstractMyMapHandler {
+public class MyThemeListHandler extends AbstractMyMapHandler {
 
-	public MyMapListHandler(List<User> userList) {
+	public MyThemeListHandler(List<User> userList) {
 		super(userList);
 	}
 

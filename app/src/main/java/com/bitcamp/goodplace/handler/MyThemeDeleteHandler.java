@@ -6,9 +6,9 @@ import com.bitcamp.goodplace.domain.Theme;
 import com.bitcamp.goodplace.domain.User;
 import com.bitcamp.util.Prompt;
 
-public class MyMapDeleteHandler extends AbstractMyMapHandler{
+public class MyThemeDeleteHandler extends AbstractMyMapHandler{
 
-  public MyMapDeleteHandler(List<User> userList) {
+  public MyThemeDeleteHandler(List<User> userList) {
 		super(userList);
 	}
 
