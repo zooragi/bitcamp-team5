@@ -55,8 +55,8 @@ import com.google.gson.reflect.TypeToken;
 
 public class App {
   List<User> userList = new ArrayList<>();
-  HashMap<String, Command> commandMap = new HashMap<>();
   List<Report> reportList = new ArrayList<>();
+  HashMap<String, Command> commandMap = new HashMap<>();
 
   class MenuItem extends Menu {
     String menuId;
@@ -135,11 +135,13 @@ public class App {
 
   void service() {
     loadObject("user.json",userList,User.class);
+    loadObject("report.json",reportList,Report.class);
 
     createMenu().execute();
     Prompt.close();
 
     saveObjects("user.json",userList);
+    saveObjects("report.json",reportList);
   }
 
   public <E> void loadObject(String fileName, List<E> list, Class<E> domainType) {

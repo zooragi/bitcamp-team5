@@ -28,14 +28,9 @@ public class AuthLoginHandler implements Command{
     String password = Prompt.inputString("암호?");
 
     if(email.equals("root@test.com") && password.equals("0000")) {
-      //      User user = new User();
-      //      user.setNo(0);
-      //      user.setNickName("서울지기");
-      //      user.setEmail("root@test.com");
-      //      user.setPassword("0000");
-      //      loginUser = user;
       loginUser = userList.get(0);
       useAccessLevel = Menu.ACCESS_GENERAL | Menu.ACCESS_ADMIN;
+      System.out.println(useAccessLevel);
       System.out.println("관리자님 환영합니다!");
       return;
     }
