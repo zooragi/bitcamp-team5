@@ -33,10 +33,16 @@ public class ReportAddThemeHandler implements Command{
     ReportTheme reportTheme = new ReportTheme();
    
     String themeTitle = Prompt.inputString("신고할 테마의 이름을 입력해주세요");
+    
     if(findByTitle(themeTitle) == null) {
     	System.out.println("해당하는 테마가 없습니다");
     	return;
     }
+    if(findByTitle(themeTitle).getUserName().equals(AuthLoginHandler.getLoginUser().getNickName())) {
+    	System.out.println("자신의 테마를 신고할 수 없습니다.");
+    	return;
+    }
+    
     reportTheme.setTheme(findByTitle(themeTitle));
     
     System.out.println();

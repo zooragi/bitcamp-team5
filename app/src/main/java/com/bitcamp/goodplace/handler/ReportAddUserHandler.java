@@ -37,6 +37,12 @@ public class ReportAddUserHandler implements Command {
 			System.out.println("해당하는 유저가 없습니다");
 			return;
 		}
+		
+		if(userNickName.equals(AuthLoginHandler.getLoginUser().getNickName())) {
+    	System.out.println("자신을 신고할 수 없습니다.");
+    	return;
+    }
+		
 		reportUser.setUser(findByName(userNickName));
 
 		System.out.println();

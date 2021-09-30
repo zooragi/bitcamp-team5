@@ -23,11 +23,11 @@ import com.bitcamp.goodplace.handler.BookmarkListHandler;
 import com.bitcamp.goodplace.handler.Command;
 import com.bitcamp.goodplace.handler.CommandRequest;
 import com.bitcamp.goodplace.handler.FullThemeListHandler;
-import com.bitcamp.goodplace.handler.MyMapAddHandler;
-import com.bitcamp.goodplace.handler.MyMapDeleteHandler;
-import com.bitcamp.goodplace.handler.MyMapDetailHandler;
-import com.bitcamp.goodplace.handler.MyMapListHandler;
-import com.bitcamp.goodplace.handler.MyMapUpdateHandler;
+import com.bitcamp.goodplace.handler.MyThemeAddHandler;
+import com.bitcamp.goodplace.handler.MyThemeDeleteHandler;
+import com.bitcamp.goodplace.handler.MyThemeDetailHandler;
+import com.bitcamp.goodplace.handler.MyThemeListHandler;
+import com.bitcamp.goodplace.handler.MyThemeUpdateHandler;
 import com.bitcamp.goodplace.handler.PlaceAddHandler;
 import com.bitcamp.goodplace.handler.PlaceDeleteHandler;
 import com.bitcamp.goodplace.handler.PlaceListHandler;
@@ -35,6 +35,7 @@ import com.bitcamp.goodplace.handler.RealTimeRankHandler;
 import com.bitcamp.goodplace.handler.ReportAddThemeHandler;
 import com.bitcamp.goodplace.handler.ReportAddUserHandler;
 import com.bitcamp.goodplace.handler.ReportListHandler;
+import com.bitcamp.goodplace.handler.ReportProcessHandler;
 import com.bitcamp.goodplace.handler.SearchHashtagHandler;
 import com.bitcamp.goodplace.handler.SearchThemeHandler;
 import com.bitcamp.goodplace.handler.SearchUserHandler;
@@ -96,11 +97,11 @@ public class App {
     commandMap.put("/user/list", new UserListHandler(userList));
     commandMap.put("/user/update", new UserUpdateHandler(userList));
 
-    commandMap.put("/myMap/add", new MyMapAddHandler(userList));
-    commandMap.put("/myMap/delete", new MyMapDeleteHandler(userList));
-    commandMap.put("/myMap/list", new MyMapListHandler(userList));
-    commandMap.put("/myMap/detail", new MyMapDetailHandler(userList));
-    commandMap.put("/myMap/update", new MyMapUpdateHandler(userList));
+    commandMap.put("/myMap/add", new MyThemeAddHandler(userList));
+    commandMap.put("/myMap/delete", new MyThemeDeleteHandler(userList));
+    commandMap.put("/myMap/list", new MyThemeListHandler(userList));
+    commandMap.put("/myMap/detail", new MyThemeDetailHandler(userList));
+    commandMap.put("/myMap/update", new MyThemeUpdateHandler(userList));
 
     commandMap.put("/bookmark/add", new BookmarkAddHandler(userList));
     commandMap.put("/bookmark/delete", new BookmarkDeleteHandler(userList));
@@ -125,7 +126,7 @@ public class App {
     commandMap.put("/report/theme", new ReportAddThemeHandler(userList,reportList));
     commandMap.put("/report/user", new ReportAddUserHandler(userList,reportList));
     commandMap.put("/report/list", new ReportListHandler(userList,reportList));
-//    commandMap.put("/report/user", new ReportUserHandler(userList,boardList));
+    commandMap.put("/report/process", new ReportProcessHandler(userList,reportList));
   }
 
   public static void main(String[] args) {
@@ -183,6 +184,7 @@ public class App {
     mg.setPrevMenuTitle("종료");
 
     mg.add(new MenuItem("로그인", Menu.ACCESS_LOGOUT, "/auth/login"));
+    mg.add(new MenuItem("회원가입", Menu.ACCESS_LOGOUT, "/user/add"));
     mg.add(new MenuItem("내 정보", Menu.ACCESS_GENERAL, "/auth/displayLoginUer"));
     mg.add(new MenuItem("로그아웃", Menu.ACCESS_GENERAL, "/auth/logout"));
 
@@ -199,9 +201,9 @@ public class App {
     return mg;
   }
 
+  
   private Menu createUserMenu(MenuGroup mg) {
-    MenuGroup user = new MenuGroup("회원(회원가입)", Menu.ACCESS_LOGOUT | Menu.ACCESS_ADMIN);
-    user.add(new MenuItem("회원가입", Menu.ACCESS_LOGOUT, "/user/add"));
+    MenuGroup user = new MenuGroup("회원관리",Menu.ACCESS_ADMIN);
     user.add(new MenuItem("회원목록", Menu.ACCESS_ADMIN, "/user/list"));
     user.add(new MenuItem("회원상세", Menu.ACCESS_ADMIN, "/user/detail"));
     user.add(new MenuItem("회원변경", Menu.ACCESS_ADMIN, "/user/update"));
@@ -212,7 +214,7 @@ public class App {
   }
 
   private void createMyMapMenu(MenuGroup mg) {
-    MenuGroup myMap = new MenuGroup("나만의 지도", Menu.ACCESS_ADMIN | Menu.ACCESS_GENERAL);
+    MenuGroup myMap = new MenuGroup("나의 테마", Menu.ACCESS_ADMIN | Menu.ACCESS_GENERAL);
 
     myMap.add(new MenuItem("테마 등록", "/myMap/add"));
     myMap.add(new MenuItem("테마 목록", "/myMap/list"));
@@ -278,6 +280,7 @@ public class App {
     qna.add(new MenuItem("테마 신고", "/report/theme"));
     qna.add(new MenuItem("유저 신고", "/report/user"));
     qna.add(new MenuItem("신고 목록", "/report/list"));
+    qna.add(new MenuItem("신고 처리", Menu.ACCESS_ADMIN,"/report/process"));
 
     mg.add(qna);
   }

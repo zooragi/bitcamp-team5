@@ -13,6 +13,7 @@ public class UserFollowingDeleteHandler implements Command {
     for( User user : AuthLoginHandler.getLoginUser().getFollowings()) {
       if(user.getNickName().equals(input)) {
         AuthLoginHandler.getLoginUser().getFollowings().remove(user);
+        System.out.println("팔로우를 취소하였습니다.");
         break;
       }
     }

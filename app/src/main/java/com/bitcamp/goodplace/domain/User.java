@@ -15,8 +15,6 @@ public class User implements Comparable<User> {
 	private List<User> followings = new ArrayList<>();
 	private List<Theme> themeList = new ArrayList<Theme>();
 	private List<Theme> bookMarks = new ArrayList<Theme>();
-	private List<Report> MyReport = new ArrayList<Report>();
-	
 
 	@Override
 	public String toString() {

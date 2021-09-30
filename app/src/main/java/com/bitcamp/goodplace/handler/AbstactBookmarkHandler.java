@@ -10,14 +10,17 @@ public abstract class AbstactBookmarkHandler implements Command {
 	List<User> userList;
 
 	public AbstactBookmarkHandler(List<User> userList) {
-	    this.userList = userList;
-	  }
+		this.userList = userList;
+	}
 
 	protected Theme findByTheme(String themeTitle) {
-		for (Theme theme : AuthLoginHandler.getLoginUser().getThemeList()) {
-			if (theme.getTitle().equals(themeTitle)) {
-				return theme;
+		for (User user : userList) {
+			for (Theme theme : user.getThemeList()) {
+				if (theme.getTitle().equals(themeTitle)) {
+					return theme;
+				}
 			}
+
 		}
 		return null;
 	}
