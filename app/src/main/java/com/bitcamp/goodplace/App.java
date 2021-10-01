@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.bitcamp.context.ApplicationContextListener;
+import com.bitcamp.context.UserContextListener;
 import com.bitcamp.goodplace.domain.Report;
 import com.bitcamp.goodplace.domain.ReportTheme;
 import com.bitcamp.goodplace.domain.ReportUser;
@@ -45,6 +46,7 @@ import com.bitcamp.goodplace.handler.UserListHandler;
 import com.bitcamp.goodplace.handler.UserRankHandler;
 import com.bitcamp.goodplace.handler.UserUpdateHandler;
 import com.bitcamp.goodplace.listener.FileListener;
+import com.bitcamp.goodplace.listener.LoginListener;
 import com.bitcamp.menu.Menu;
 import com.bitcamp.menu.MenuGroup;
 import com.bitcamp.util.Prompt;
@@ -57,6 +59,8 @@ public class App {
   HashMap<String, Command> commandMap = new HashMap<>();
 
   List<ApplicationContextListener> listeners = new ArrayList<>();
+  List<UserContextListener> userListeners = new ArrayList<>();
+  
 
   public void addApplicationContextListener(ApplicationContextListener listener) {
     this.listeners.add(listener);
@@ -64,6 +68,14 @@ public class App {
 
   public void removeApplicationContextListener(ApplicationContextListener listener) {
     this.listeners.remove(listener);
+  }
+  
+  public void addUserContextListener(UserContextListener userListener) {
+    this.userListeners.add(userListener);
+  }
+
+  public void removeUserContextListener(UserContextListener userListener) {
+    this.userListeners.remove(userListener);
   }
   
   class MenuItem extends Menu {
@@ -94,8 +106,8 @@ public class App {
   }
 
   public App() {
-    commandMap.put("/auth/login", new AuthLoginHandler(userList));
-    commandMap.put("/auth/logout", new AuthLogoutHandler());
+    commandMap.put("/auth/login", new AuthLoginHandler(userList, userListeners));
+    commandMap.put("/auth/logout", new AuthLogoutHandler(userListeners));
     commandMap.put("/auth/displayLoginUer", new AuthDisplayLoginUserHandler());
 
     commandMap.put("/user/add", new UserAddHandler(userList));
@@ -141,6 +153,8 @@ public class App {
     App app = new App();
     
     app.addApplicationContextListener(new FileListener());
+    app.addUserContextListener(new LoginListener());
+    
     
     app.service();
   }

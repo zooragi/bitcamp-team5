@@ -1,6 +1,11 @@
 package com.bitcamp.goodplace.handler;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import com.bitcamp.context.ApplicationContextListener;
+import com.bitcamp.context.UserContextListener;
 import com.bitcamp.goodplace.domain.User;
 import com.bitcamp.menu.Menu;
 import com.bitcamp.util.Prompt;
@@ -10,6 +15,9 @@ public class AuthLoginHandler implements Command{
   List<User> userList;
   static User loginUser;
   static int useAccessLevel = Menu.ACCESS_LOGOUT;
+  List<UserContextListener> userListeners = new ArrayList<>();
+  User user;
+  
   public static User getLoginUser() {
     return loginUser;
   }
@@ -17,8 +25,9 @@ public class AuthLoginHandler implements Command{
     return useAccessLevel;
   }
 
-  public AuthLoginHandler(List<User> userList) {
+  public AuthLoginHandler(List<User> userList,List<UserContextListener> userListeners) {
     this.userList = userList;
+    this.userListeners = userListeners;
   }
 
   public void execute(CommandRequest request) {
@@ -35,13 +44,15 @@ public class AuthLoginHandler implements Command{
       return;
     }
 
-    User user = findByEmailPassword(email, password);
+    user = findByEmailPassword(email, password);
 
     if (user == null) {
       System.out.println("이메일과 암호가 일치하는 회원을 찾을 수 없습니다.");
     } else {
-      System.out.printf("%s님 환영합니다!\n", user.getNickName());
-      System.out.printf("%d번의 경고\n", user.getWarningCount());
+//      System.out.printf("%s님 환영합니다!\n", user.getNickName());
+    	
+      notifyOnLogin();
+      
       useAccessLevel = Menu.ACCESS_GENERAL;
     }
 
@@ -55,5 +66,15 @@ public class AuthLoginHandler implements Command{
       }
     }
     return null;
+  }
+  
+  private void notifyOnLogin() {
+  	HashMap<String,Object> params = new HashMap<>();
+  	
+  	params.put("currentUser", user);
+  	
+    for (UserContextListener listener : userListeners) {
+      listener.contextLogin(params);
+    }
   }
 }
