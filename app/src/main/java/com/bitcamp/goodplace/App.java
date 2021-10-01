@@ -155,7 +155,6 @@ public class App {
     app.addApplicationContextListener(new FileListener());
     app.addUserContextListener(new LoginListener());
     
-    
     app.service();
   }
 

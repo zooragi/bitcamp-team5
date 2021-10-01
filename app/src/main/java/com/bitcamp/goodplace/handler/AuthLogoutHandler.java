@@ -1,5 +1,6 @@
 package com.bitcamp.goodplace.handler;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.bitcamp.context.UserContextListener;
@@ -17,7 +18,13 @@ public class AuthLogoutHandler implements Command{
 
     AuthLoginHandler.loginUser = null;
     AuthLoginHandler.useAccessLevel = Menu.ACCESS_LOGOUT;
-    System.out.println("로그아웃 하였습니다.");
+    notifyOnLogout();
   }
+  private void notifyOnLogout() {
+		HashMap<String, Object> params = new HashMap<>();
 
+		for (UserContextListener listener : userListeners) {
+			listener.contextLogout(params);
+		}
+	}
 }
