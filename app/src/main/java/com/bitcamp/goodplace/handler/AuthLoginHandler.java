@@ -41,6 +41,7 @@ public class AuthLoginHandler implements Command{
       System.out.println("이메일과 암호가 일치하는 회원을 찾을 수 없습니다.");
     } else {
       System.out.printf("%s님 환영합니다!\n", user.getNickName());
+      System.out.printf("%d번의 경고\n", user.getWarningCount());
       useAccessLevel = Menu.ACCESS_GENERAL;
     }
 

@@ -1,17 +1,10 @@
 package com.bitcamp.goodplace;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.PrintWriter;
-import java.lang.reflect.Type;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
+import com.bitcamp.context.ApplicationContextListener;
 import com.bitcamp.goodplace.domain.Report;
 import com.bitcamp.goodplace.domain.ReportTheme;
 import com.bitcamp.goodplace.domain.ReportUser;
@@ -51,11 +44,10 @@ import com.bitcamp.goodplace.handler.UserFollowingListHandler;
 import com.bitcamp.goodplace.handler.UserListHandler;
 import com.bitcamp.goodplace.handler.UserRankHandler;
 import com.bitcamp.goodplace.handler.UserUpdateHandler;
+import com.bitcamp.goodplace.listener.FileListener;
 import com.bitcamp.menu.Menu;
 import com.bitcamp.menu.MenuGroup;
 import com.bitcamp.util.Prompt;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 public class App {
   List<User> userList = new ArrayList<>();
@@ -64,6 +56,16 @@ public class App {
   List<ReportUser> reportUserList = new ArrayList<>();
   HashMap<String, Command> commandMap = new HashMap<>();
 
+  List<ApplicationContextListener> listeners = new ArrayList<>();
+
+  public void addApplicationContextListener(ApplicationContextListener listener) {
+    this.listeners.add(listener);
+  }
+
+  public void removeApplicationContextListener(ApplicationContextListener listener) {
+    this.listeners.remove(listener);
+  }
+  
   class MenuItem extends Menu {
     String menuId;
 
@@ -137,54 +139,43 @@ public class App {
 
   public static void main(String[] args) {
     App app = new App();
+    
+    app.addApplicationContextListener(new FileListener());
+    
     app.service();
   }
 
+  private void notifyOnApplicationStarted() {
+    HashMap<String,Object> params = new HashMap<>();
+    params.put("userList", userList);
+    params.put("reportThemeList", reportThemeList);
+    params.put("reportUserList", reportUserList);
+
+    for (ApplicationContextListener listener : listeners) {
+      listener.contextInitialized(params);
+    }
+  }
+
+  private void notifyOnApplicationEnded() {
+    HashMap<String,Object> params = new HashMap<>();
+    params.put("userList", userList);
+    params.put("reportThemeList", reportThemeList);
+    params.put("reportUserList", reportUserList);
+
+    for (ApplicationContextListener listener : listeners) {
+      listener.contextDestroyed(params);
+    }
+  }
+  
   void service() {
-    loadObject("user.json",userList,User.class);
-    loadObject("reportTheme.json",reportThemeList,ReportTheme.class);
-    loadObject("reportUser.json",reportUserList,ReportUser.class);
+  	notifyOnApplicationStarted();
     reportList.addAll(reportThemeList);
     reportList.addAll(reportUserList);
     
+    
     createMenu().execute();
     Prompt.close();
-    saveObjects("user.json",userList);
-    saveObjects("reportTheme.json",reportThemeList);
-    saveObjects("reportUser.json",reportUserList);
-  }
-
-  public <E> void loadObject(String fileName, List<E> list, Class<E> domainType) {
-    try (BufferedReader in = new BufferedReader(new FileReader(fileName, Charset.forName("UTF-8")))) {
-
-      StringBuilder strBuilder = new StringBuilder();
-      String str;
-      while ((str = in.readLine()) != null) {
-        strBuilder.append(str);
-      }
-      Type type = TypeToken.getParameterized(Collection.class, domainType).getType();
-      Collection<E> collection = new Gson().fromJson(strBuilder.toString(), type);
-
-      list.addAll(collection);
-
-      System.out.printf("%s 데이터 로딩 완료!\n", fileName);
-
-    } catch (Exception e) {
-      System.out.printf("%s 데이터 로딩 오류!\n", fileName);
-    }
-  }
-
-  private void saveObjects(String filepath, List<?> list) {
-    try (PrintWriter out = new PrintWriter(
-        new BufferedWriter(new FileWriter(filepath, Charset.forName("UTF-8"))))) {
-      out.print(new Gson().toJson(list));
-
-      System.out.printf("%s 데이터 출력 완료!\n", filepath);
-
-    } catch (Exception e) {
-      System.out.printf("%s 데이터 출력 오류!\n", filepath);
-      e.printStackTrace();
-    }
+    notifyOnApplicationEnded();
   }
 
   Menu createMenu() {

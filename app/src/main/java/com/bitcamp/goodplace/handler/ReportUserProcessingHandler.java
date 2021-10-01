@@ -22,6 +22,7 @@ public class ReportUserProcessingHandler implements Command {
 	public void execute(CommandRequest request) throws Exception {
 
 		List<User> reportedUsers = new ArrayList<>();
+		User selectedUser;
 		int index = 1;
 
 		System.out.println("[유저] 신고 처리]");
@@ -36,13 +37,15 @@ public class ReportUserProcessingHandler implements Command {
 		for (User user : reportedUsers) {
 			System.out.printf("%d. [%d회] %s \n", index++, user.getReportedCount(), user.getNickName());
 		}
-
+		
 		while (true) {
 			String selected = Prompt.inputString("처리할 유저(빈 문자열 : 취소) : ");
 			if (selected.length() == 0)
 				return;
-
+			
 			int selectedNum = Integer.parseInt(selected);
+			
+			selectedUser = reportedUsers.get(selectedNum-1);
 			if (selectedNum > reportedUsers.size() || selectedNum < 0) {
 				System.out.println("잘못된 번호이다");
 				continue;
@@ -54,7 +57,9 @@ public class ReportUserProcessingHandler implements Command {
 		}
 		while (true) {
 			String isWaring = Prompt.inputString("경고를 주시겠습니까?(y/N) : ");
+			int count = selectedUser.getWarningCount();
 			if (isWaring.equalsIgnoreCase("y")) {
+				selectedUser.setWarningCount(++count);
 				return;
 			} else if (isWaring.equalsIgnoreCase("n")) {
 				return;

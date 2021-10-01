@@ -1,6 +1,7 @@
 package com.bitcamp.goodplace.handler;
 
 import java.util.ArrayList;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class ReportThemeProcessingHandler implements Command {
 	public void execute(CommandRequest request) throws Exception {
 
 		List<Theme> reportedThemes = new ArrayList<>();
+		User selectedUser;
 		int index = 1;
 		
 		System.out.println("[테마 신고 처리]");
@@ -44,6 +46,8 @@ public class ReportThemeProcessingHandler implements Command {
 			if(selected.length() == 0) return;
 			
 			int selectedNum = Integer.parseInt(selected);
+			selectedUser = findUserByUserName(reportedThemes.get(selectedNum-1).getUserName());
+			
 			if(selectedNum > reportedThemes.size() || selectedNum < 0) {
 				System.out.println("잘못된 번호이다");
 				continue;
@@ -54,7 +58,10 @@ public class ReportThemeProcessingHandler implements Command {
 		}
 		while(true) {
 			String isWaring = Prompt.inputString("경고를 주시겠습니까?(y/N) : ");
+			int count = selectedUser.getWarningCount();
+
 			if(isWaring.equalsIgnoreCase("y")) {
+				selectedUser.setWarningCount(++count);
 				return;
 			} else if (isWaring.equalsIgnoreCase("n")) {
 				return;
@@ -92,6 +99,14 @@ public class ReportThemeProcessingHandler implements Command {
 				System.out.println("신고 상태 : " + report.getState());
 			}
 		}
+		
 	}
-	
+	private User findUserByUserName(String userName) {
+		for(User user : userList) {
+			if(user.getNickName().equals(userName)) {
+				return user;
+			}
+		}
+		return null;
+	}
 }

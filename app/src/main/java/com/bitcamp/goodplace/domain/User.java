@@ -12,6 +12,7 @@ public class User implements Comparable<User> {
 	private Date registeredDate;
 	private int viewCount;
 	private int reportedCount = 0;
+	private int warningCount = 0;
 
 	private List<User> followings = new ArrayList<>();
 	private List<Theme> themeList = new ArrayList<Theme>();
@@ -22,6 +23,14 @@ public class User implements Comparable<User> {
 		return "User [no=" + no + ", email=" + email + ", password=" + password + ", nickName=" + nickName
 				+ ", registeredDate=" + registeredDate + ", viewCount=" + viewCount + ", reportedCount=" + reportedCount
 				+ ", followings=" + followings + ", themeList=" + themeList + ", bookMarks=" + bookMarks + "]";
+	}
+
+	public int getWarningCount() {
+		return warningCount;
+	}
+
+	public void setWarningCount(int warningCount) {
+		this.warningCount = warningCount;
 	}
 
 	public int getReportedCount() {
