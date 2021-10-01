@@ -1,23 +1,23 @@
 package com.bitcamp.goodplace.domain;
 
 public class ReportUser extends Report{
-	User user;
-	int reportedCount;
-	
-	public User getUser() {
-		return user;
-	}
+  User reportedUser;
+  int reportedCount;
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+  public User getReportedUser() {
+    return reportedUser;
+  }
 
-	public int getReportedCount() {
-		return reportedCount;
-	}
+  public void setReportedUser(User user) {
+    this.reportedUser = user;
+  }
 
-	public void setReportedCount(int reportedCount) {
-		this.reportedCount = reportedCount;
-	}
-	
+  public int getReportedCount() {
+    return reportedCount;
+  }
+
+  public void setReportedCount(int reportedCount) {
+    this.reportedCount = reportedCount;
+  }
+
 }

@@ -1,7 +1,6 @@
 package com.bitcamp.goodplace.handler;
 
 import java.util.List;
-
 import com.bitcamp.goodplace.domain.Theme;
 import com.bitcamp.goodplace.domain.User;
 import com.bitcamp.util.Prompt;
@@ -9,35 +8,34 @@ import com.bitcamp.util.Prompt;
 public class MyThemeDeleteHandler extends AbstractMyMapHandler{
 
   public MyThemeDeleteHandler(List<User> userList) {
-		super(userList);
-	}
+    super(userList);
+  }
 
-public void execute(CommandRequest request) {
-    System.out.println("[테마 삭제]");
-    String title = Prompt.inputString("테마 이름을 입력하세요> ");
+  public void execute(CommandRequest request) {
+    System.out.println("[테마 삭제하기]");
+    String title = Prompt.inputString("테마 이름(취소 : 엔터) > ");
+
+    if(title.equals("")) {
+      System.out.println("나의 테마 삭제 취소!");
+      return;
+    }
 
     Theme theme = findByTitle(title);
 
     if (theme == null) {
-      System.out.println("해당 이름의 테마가 없습니다.");
+      System.out.println("등록된 테마 없음!");
       return;
     }
 
-    String input = Prompt.inputString("정말 삭제하시겠습니까?(y/N)> ");
+    String input = Prompt.inputString("삭제하기(y/N) > ");
     if (input.equalsIgnoreCase("n") || input.length() == 0) {
-      System.out.println("테마 삭제를 취소하였습니다.");
+      System.out.println("테마 삭제 취소!");
       return;
     }
 
     AuthLoginHandler.getLoginUser().getThemeList().remove(theme);
 
-    System.out.println("테마를 삭제하였습니다.");
+    System.out.println("테마 삭제 완료!");
   }
 
-  public Theme findByTitle(String themeTitle) {
-    for(Theme theme : AuthLoginHandler.getLoginUser().getThemeList()) {
-      if(theme.getTitle().equals(themeTitle)) return theme;
-    }
-    return null;
-  }
 }

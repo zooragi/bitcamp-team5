@@ -11,9 +11,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-
 import com.bitcamp.goodplace.domain.Report;
+import com.bitcamp.goodplace.domain.Theme;
 import com.bitcamp.goodplace.domain.User;
+import com.bitcamp.goodplace.handler.AllThemeListHandler;
 import com.bitcamp.goodplace.handler.AuthDisplayLoginUserHandler;
 import com.bitcamp.goodplace.handler.AuthLoginHandler;
 import com.bitcamp.goodplace.handler.AuthLogoutHandler;
@@ -22,7 +23,6 @@ import com.bitcamp.goodplace.handler.BookmarkDeleteHandler;
 import com.bitcamp.goodplace.handler.BookmarkListHandler;
 import com.bitcamp.goodplace.handler.Command;
 import com.bitcamp.goodplace.handler.CommandRequest;
-import com.bitcamp.goodplace.handler.FullThemeListHandler;
 import com.bitcamp.goodplace.handler.MyThemeAddHandler;
 import com.bitcamp.goodplace.handler.MyThemeDeleteHandler;
 import com.bitcamp.goodplace.handler.MyThemeDetailHandler;
@@ -58,6 +58,7 @@ public class App {
   List<User> userList = new ArrayList<>();
   List<Report> reportList = new ArrayList<>();
   HashMap<String, Command> commandMap = new HashMap<>();
+  List<Theme> themeList = new ArrayList<>();
 
   class MenuItem extends Menu {
     String menuId;
@@ -90,6 +91,9 @@ public class App {
     commandMap.put("/auth/login", new AuthLoginHandler(userList));
     commandMap.put("/auth/logout", new AuthLogoutHandler());
     commandMap.put("/auth/displayLoginUer", new AuthDisplayLoginUserHandler());
+    commandMap.put("/theme/all", new AllThemeListHandler(userList));
+
+    // 회원 탈퇴 메뉴 추가
 
     commandMap.put("/user/add", new UserAddHandler(userList));
     commandMap.put("/user/delete", new UserDeleteHandler(userList));
@@ -97,28 +101,28 @@ public class App {
     commandMap.put("/user/list", new UserListHandler(userList));
     commandMap.put("/user/update", new UserUpdateHandler(userList));
 
-    commandMap.put("/myMap/add", new MyThemeAddHandler(userList));
-    commandMap.put("/myMap/delete", new MyThemeDeleteHandler(userList));
-    commandMap.put("/myMap/list", new MyThemeListHandler(userList));
-    commandMap.put("/myMap/detail", new MyThemeDetailHandler(userList));
-    commandMap.put("/myMap/update", new MyThemeUpdateHandler(userList));
+    commandMap.put("/myTheme/add", new MyThemeAddHandler(userList,themeList));
+    commandMap.put("/myTheme/delete", new MyThemeDeleteHandler(userList));
+    commandMap.put("/myTheme/list", new MyThemeListHandler(userList));
+    commandMap.put("/myTheme/detail", new MyThemeDetailHandler(userList));
+    commandMap.put("/myTheme/update", new MyThemeUpdateHandler(userList));
 
-    commandMap.put("/bookmark/add", new BookmarkAddHandler(userList));
-    commandMap.put("/bookmark/delete", new BookmarkDeleteHandler(userList));
-    commandMap.put("/bookmark/list", new BookmarkListHandler());
+    commandMap.put("/like/add", new BookmarkAddHandler(userList));
+    commandMap.put("/like/delete", new BookmarkDeleteHandler(userList));
+    commandMap.put("/like/list", new BookmarkListHandler());
 
     commandMap.put("/place/add", new PlaceAddHandler());
     commandMap.put("/place/delete", new PlaceDeleteHandler());
     commandMap.put("/place/list", new PlaceListHandler());
 
-    commandMap.put("/search/list", new FullThemeListHandler(userList));
+
     commandMap.put("/search/searchTheme", new SearchThemeHandler(userList));
     commandMap.put("/search/searchUser", new SearchUserHandler(userList));
     commandMap.put("/search/searchHashtag", new SearchHashtagHandler(userList));
 
-    commandMap.put("/following/add", new UserFollowingAddHandler(userList));
-    commandMap.put("/following/list", new UserFollowingListHandler(userList));
-    commandMap.put("/following/delete", new UserFollowingDeleteHandler());
+    commandMap.put("/follow/add", new UserFollowingAddHandler(userList));
+    commandMap.put("/follow/list", new UserFollowingListHandler(userList));
+    commandMap.put("/follow/delete", new UserFollowingDeleteHandler());
 
     commandMap.put("/rank/themeRank", new RealTimeRankHandler(userList));
     commandMap.put("/rank/userRank", new UserRankHandler(userList));
@@ -184,30 +188,32 @@ public class App {
     mg.setPrevMenuTitle("종료");
 
     mg.add(new MenuItem("로그인", Menu.ACCESS_LOGOUT, "/auth/login"));
-    mg.add(new MenuItem("회원가입", Menu.ACCESS_LOGOUT, "/user/add"));
+    mg.add(new MenuItem("회원 가입하기", Menu.ACCESS_LOGOUT, "/user/add"));
     mg.add(new MenuItem("내 정보", Menu.ACCESS_GENERAL, "/auth/displayLoginUer"));
+    // 회원 탈퇴 만들기
     mg.add(new MenuItem("로그아웃", Menu.ACCESS_GENERAL, "/auth/logout"));
+    mg.add(new MenuItem("전체 테마 보기", "/theme/all"));
 
     createUserMenu(mg);
     createMyMapMenu(mg);
     //    createPlaceMenu(mg);
     createsearchMenu(mg);
-    createBookmarkMenu(mg);
-    createRankMenu(mg);
+    createLikeMenu(mg);
     createFollowMenu(mg);
-    createQnaMenu(mg);
+    createRankMenu(mg);
+    createReportMenu(mg);
 
 
     return mg;
   }
 
-  
+
   private Menu createUserMenu(MenuGroup mg) {
     MenuGroup user = new MenuGroup("회원관리",Menu.ACCESS_ADMIN);
-    user.add(new MenuItem("회원목록", Menu.ACCESS_ADMIN, "/user/list"));
-    user.add(new MenuItem("회원상세", Menu.ACCESS_ADMIN, "/user/detail"));
-    user.add(new MenuItem("회원변경", Menu.ACCESS_ADMIN, "/user/update"));
-    user.add(new MenuItem("회원삭제", Menu.ACCESS_ADMIN, "/user/delete"));
+    user.add(new MenuItem("회원 목록보기", Menu.ACCESS_ADMIN, "/user/list"));
+    user.add(new MenuItem("회원 상세보기", Menu.ACCESS_ADMIN, "/user/detail"));
+    user.add(new MenuItem("회원 수정하기", Menu.ACCESS_ADMIN, "/user/update"));
+    user.add(new MenuItem("회원 삭제하기", Menu.ACCESS_ADMIN, "/user/delete"));
 
     mg.add(user);
     return user;
@@ -216,11 +222,11 @@ public class App {
   private void createMyMapMenu(MenuGroup mg) {
     MenuGroup myMap = new MenuGroup("나의 테마", Menu.ACCESS_ADMIN | Menu.ACCESS_GENERAL);
 
-    myMap.add(new MenuItem("테마 등록", "/myMap/add"));
-    myMap.add(new MenuItem("테마 목록", "/myMap/list"));
-    myMap.add(new MenuItem("테마 상세보기", "/myMap/detail"));
-    myMap.add(new MenuItem("테마 수정", "/myMap/update"));
-    myMap.add(new MenuItem("테마 삭제", "/myMap/delete"));
+    myMap.add(new MenuItem("테마 만들기", "/myTheme/add"));
+    myMap.add(new MenuItem("테마 목록보기", "/myTheme/list"));
+    myMap.add(new MenuItem("테마 상세보기", "/myTheme/detail"));
+    //    myMap.add(new MenuItem("테마 수정하기", "/myTheme/update"));
+    myMap.add(new MenuItem("테마 삭제하기", "/myTheme/delete"));
 
     mg.add(myMap);
   }
@@ -236,53 +242,54 @@ public class App {
   //  }
 
   private void createsearchMenu(MenuGroup mg) {
-    MenuGroup search = new MenuGroup("검색");
+    MenuGroup search = new MenuGroup("검색하기");
 
-    search.add(new MenuItem("전체 테마 목록", "/search/list"));
-    search.add(new MenuItem("테마 검색", "/search/searchTheme"));
-    search.add(new MenuItem("해시태그 검색", "/search/searchHashtag"));
-    search.add(new MenuItem("유저 검색", "/search/searchUser"));
+
+    search.add(new MenuItem("테마 검색하기", "/search/searchTheme"));
+    // 장소 이쁘게 출력하기 수정필요
+    search.add(new MenuItem("유저 검색하기", "/search/searchUser"));
+    search.add(new MenuItem("해시태그 검색하기", "/search/searchHashtag"));
 
 
     mg.add(search);
   }
 
-  private void createBookmarkMenu(MenuGroup mg) {
-    MenuGroup bookmark = new MenuGroup("북마크", Menu.ACCESS_ADMIN | Menu.ACCESS_GENERAL);
+  private void createLikeMenu(MenuGroup mg) {
+    MenuGroup like = new MenuGroup("좋아하는 테마", Menu.ACCESS_ADMIN | Menu.ACCESS_GENERAL);
 
-    bookmark.add(new MenuItem("북마크 등록", "/bookmark/add"));
-    bookmark.add(new MenuItem("북마크 목록", "/bookmark/list"));
-    bookmark.add(new MenuItem("북마크 삭제", "/bookmark/delete"));
+    like.add(new MenuItem("좋아요 등록하기", "/like/add"));
+    like.add(new MenuItem("좋아요 목록보기", "/like/list"));
+    like.add(new MenuItem("좋아요 삭제하기", "/like/delete"));
 
-    mg.add(bookmark);
+    mg.add(like);
   }
 
   private void createRankMenu(MenuGroup mg) {
     MenuGroup rank = new MenuGroup("순위");
 
-    rank.add(new MenuItem("테마 순위", "/rank/themeRank"));
-    rank.add(new MenuItem("유저 순위", "/rank/userRank"));
+    rank.add(new MenuItem("테마 순위보기", "/rank/themeRank")); // 전체 테마 검색 기준 조횟수 증가
+    rank.add(new MenuItem("유저 순위보기", "/rank/userRank")); // 유저 검색 기준 조횟수 증가
 
     mg.add(rank);
   }
 
   private void createFollowMenu(MenuGroup mg) {
     MenuGroup follow = new MenuGroup("팔로우", Menu.ACCESS_GENERAL);
-    follow.add(new MenuItem("팔로우 등록", "/following/add"));
-    follow.add(new MenuItem("팔로잉 목록 ", "/following/list"));
-    follow.add(new MenuItem("팔로잉 삭제 ", "/following/delete"));
+    follow.add(new MenuItem("팔로우 등록하기", "/follow/add"));
+    follow.add(new MenuItem("팔로우 목록보기", "/follow/list"));
+    follow.add(new MenuItem("팔로우 삭제하기", "/follow/delete"));
 
     mg.add(follow);
   }
 
-  private void createQnaMenu(MenuGroup mg) {
-    MenuGroup qna = new MenuGroup("신고", Menu.ACCESS_GENERAL);
-    qna.add(new MenuItem("테마 신고", "/report/theme"));
-    qna.add(new MenuItem("유저 신고", "/report/user"));
-    qna.add(new MenuItem("신고 목록", "/report/list"));
-    qna.add(new MenuItem("신고 처리", Menu.ACCESS_ADMIN,"/report/process"));
+  private void createReportMenu(MenuGroup mg) {
+    MenuGroup report = new MenuGroup("신고하기", Menu.ACCESS_GENERAL);
+    report.add(new MenuItem("테마 신고하기", "/report/theme"));
+    report.add(new MenuItem("유저 신고하기", "/report/user"));
+    report.add(new MenuItem("신고 목록보기", "/report/list"));
+    report.add(new MenuItem("신고 처리하기", Menu.ACCESS_ADMIN,"/report/process"));
 
-    mg.add(qna);
+    mg.add(report);
   }
 
 

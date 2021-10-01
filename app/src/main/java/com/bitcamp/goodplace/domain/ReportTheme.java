@@ -1,23 +1,23 @@
 package com.bitcamp.goodplace.domain;
 
 public class ReportTheme extends Report{
-	Theme theme;
-	int reportedCount;
-	
-	public Theme getTheme() {
-		return theme;
-	}
+  Theme reportedTheme;
+  int reportedCount;
 
-	public void setTheme(Theme theme) {
-		this.theme = theme;
-	}
+  public Theme getReportedTheme() {
+    return reportedTheme;
+  }
 
-	public int getReportedCount() {
-		return reportedCount;
-	}
+  public void setReportedTheme(Theme theme) {
+    this.reportedTheme = theme;
+  }
 
-	public void setReportedCount(int reportedCount) {
-		this.reportedCount = reportedCount;
-	}
-	
+  public int getReportedCount() {
+    return reportedCount;
+  }
+
+  public void setReportedCount(int reportedCount) {
+    this.reportedCount = reportedCount;
+  }
+
 }
