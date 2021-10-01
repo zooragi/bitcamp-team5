@@ -12,13 +12,14 @@ public class Report {
   private String content;
   private User writer;
   private String state;
-  private Date registeredDate;
+  private Date registeredDate;  
   
-  @Override
+	@Override
 	public String toString() {
-		return "Board [no=" + no + ", content=" + content + ", writer=" + writer + ", state=" + state + ", registeredDate="
-				+ registeredDate + "]";
+		return "Report [no=" + no + ", content=" + content + ", writer=" + writer + ", state=" + state + ", registeredDate="
+				+ registeredDate + ", reportedCount=" + "]";
 	}
+
 	public String getState() {
 		return state;
 	}

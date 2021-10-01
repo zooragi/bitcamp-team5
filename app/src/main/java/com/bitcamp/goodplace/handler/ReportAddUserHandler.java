@@ -3,6 +3,7 @@ package com.bitcamp.goodplace.handler;
 import java.sql.Date;
 import java.util.List;
 
+import com.bitcamp.goodplace.App;
 import com.bitcamp.goodplace.domain.Report;
 import com.bitcamp.goodplace.domain.ReportUser;
 import com.bitcamp.goodplace.domain.Theme;
@@ -11,11 +12,11 @@ import com.bitcamp.util.Prompt;
 
 public class ReportAddUserHandler implements Command {
 
-	List<Report> reportList;
+	List<ReportUser> reportUserList;
 	List<User> userList;
 
-	public ReportAddUserHandler(List<User> userList, List<Report> reportList) {
-		this.reportList = reportList;
+	public ReportAddUserHandler(List<User> userList, List<ReportUser> reportUserList) {
+		this.reportUserList = reportUserList;
 		this.userList = userList;
 	}
 
@@ -24,10 +25,10 @@ public class ReportAddUserHandler implements Command {
 
 		System.out.println("[유저 신고]");
 		int count;
-		if (reportList.size() == 0) {
+		if (reportUserList.size() == 0) {
 			count = 0;
 		} else {
-			count = reportList.get(reportList.size() - 1).getNo();
+			count = reportUserList.get(reportUserList.size() - 1).getNo();
 		}
 
 		ReportUser reportUser = new ReportUser();
@@ -43,7 +44,7 @@ public class ReportAddUserHandler implements Command {
     	return;
     }
 		
-		reportUser.setUser(findByName(userNickName));
+		reportUser.setUserName(findByName(userNickName).getNickName());
 
 		System.out.println();
 
@@ -53,7 +54,10 @@ public class ReportAddUserHandler implements Command {
 		reportUser.setRegisteredDate(new Date(System.currentTimeMillis()));
 		reportUser.setWriter(AuthLoginHandler.getLoginUser());
 		reportUser.setState(Report.WAITING);
-		reportList.add(reportUser);
+		count = findByName(userNickName).getReportedCount();
+		findByName(userNickName).setReportedCount(++count);
+		reportUserList.add(reportUser);
+		App.reportList.add(reportUser);
 		System.out.println("테마 신고가 완료되었습니다.");
 
 	}

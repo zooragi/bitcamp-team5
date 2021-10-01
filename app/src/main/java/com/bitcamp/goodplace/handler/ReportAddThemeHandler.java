@@ -3,6 +3,7 @@ package com.bitcamp.goodplace.handler;
 import java.sql.Date;
 import java.util.List;
 
+import com.bitcamp.goodplace.App;
 import com.bitcamp.goodplace.domain.Report;
 import com.bitcamp.goodplace.domain.ReportTheme;
 import com.bitcamp.goodplace.domain.Theme;
@@ -11,11 +12,11 @@ import com.bitcamp.util.Prompt;
 
 public class ReportAddThemeHandler implements Command{
   
-	List<Report> reportList;
+	List<ReportTheme> reportThemeList;
   List<User> userList;
 	
-	public ReportAddThemeHandler(List<User> userList, List<Report> reportList) {
-    this.reportList = reportList;
+	public ReportAddThemeHandler(List<User> userList, List<ReportTheme> reportThemeList) {
+    this.reportThemeList = reportThemeList;
     this.userList = userList;
   }
   
@@ -24,10 +25,10 @@ public class ReportAddThemeHandler implements Command{
 
     System.out.println("[테마 신고]");
     int count;
-    if(reportList.size() == 0) {
+    if(reportThemeList.size() == 0) {
     	count = 0;
     } else {
-    	count = reportList.get(reportList.size()-1).getNo();
+    	count = reportThemeList.get(reportThemeList.size()-1).getNo();
     }
     
     ReportTheme reportTheme = new ReportTheme();
@@ -43,7 +44,7 @@ public class ReportAddThemeHandler implements Command{
     	return;
     }
     
-    reportTheme.setTheme(findByTitle(themeTitle));
+    reportTheme.setThemeTitle(findByTitle(themeTitle).getTitle());
     
     System.out.println();
 
@@ -53,7 +54,10 @@ public class ReportAddThemeHandler implements Command{
     reportTheme.setRegisteredDate(new Date(System.currentTimeMillis()));
     reportTheme.setWriter(AuthLoginHandler.getLoginUser());
     reportTheme.setState(Report.WAITING);
-    reportList.add(reportTheme);
+		count = findByTitle(themeTitle).getReportedCount();
+		findByTitle(themeTitle).setReportedCount(++count);
+    reportThemeList.add(reportTheme);
+    App.reportList.add(reportTheme);
     System.out.println("테마 신고가 완료되었습니다.");
 
   }

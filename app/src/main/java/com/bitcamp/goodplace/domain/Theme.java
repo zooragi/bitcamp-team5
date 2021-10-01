@@ -1,6 +1,7 @@
 package com.bitcamp.goodplace.domain;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 public class Theme implements Comparable<Theme>{
@@ -13,18 +14,26 @@ public class Theme implements Comparable<Theme>{
   private List<Place> placeList = new ArrayList<Place>();
   private List<String> hashtags = new ArrayList<String>();
   private String category; 
-  private int warning = 0;
+  private int reportedCount = 0;
 
 
 
   @Override
-  public String toString() {
-    return "Theme [no=" + no + ", title=" + title + ", userName=" + userName + ", viewCount="
-        + viewCount + ", isPublic=" + isPublic + ", isShare=" + isShare + ", placeList=" + placeList
-        + ", hashtags=" + hashtags + ", category=" + category + ", warning=" + warning + "]";
-  }
+	public String toString() {
+		return "Theme [no=" + no + ", title=" + title + ", userName=" + userName + ", viewCount=" + viewCount
+				+ ", isPublic=" + isPublic + ", isShare=" + isShare + ", placeList=" + placeList + ", hashtags=" + hashtags
+				+ ", category=" + category + ", reportedCount=" + reportedCount + "]";
+	}
 
-  public String getCategory() {
+	public int getReportedCount() {
+		return reportedCount;
+	}
+
+	public void setReportedCount(int reportedCount) {
+		this.reportedCount = reportedCount;
+	}
+
+	public String getCategory() {
     return category;
   }
 
@@ -99,14 +108,6 @@ public class Theme implements Comparable<Theme>{
 
   public void setNo(int no) {
     this.no = no;
-  }
-
-  public int getWarning() {
-    return warning;
-  }
-
-  public void setWarning(int warning) {
-    this.warning = warning;
   }
 
 }

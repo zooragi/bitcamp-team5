@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.bitcamp.goodplace.domain.Report;
+import com.bitcamp.goodplace.domain.ReportTheme;
+import com.bitcamp.goodplace.domain.ReportUser;
 import com.bitcamp.goodplace.domain.User;
 import com.bitcamp.goodplace.handler.AuthDisplayLoginUserHandler;
 import com.bitcamp.goodplace.handler.AuthLoginHandler;
@@ -34,8 +36,9 @@ import com.bitcamp.goodplace.handler.PlaceListHandler;
 import com.bitcamp.goodplace.handler.RealTimeRankHandler;
 import com.bitcamp.goodplace.handler.ReportAddThemeHandler;
 import com.bitcamp.goodplace.handler.ReportAddUserHandler;
-import com.bitcamp.goodplace.handler.ReportListHandler;
-import com.bitcamp.goodplace.handler.ReportProcessHandler;
+import com.bitcamp.goodplace.handler.ReportMyListHandler;
+import com.bitcamp.goodplace.handler.ReportThemeProcessingHandler;
+import com.bitcamp.goodplace.handler.ReportUserProcessingHandler;
 import com.bitcamp.goodplace.handler.SearchHashtagHandler;
 import com.bitcamp.goodplace.handler.SearchThemeHandler;
 import com.bitcamp.goodplace.handler.SearchUserHandler;
@@ -56,7 +59,9 @@ import com.google.gson.reflect.TypeToken;
 
 public class App {
   List<User> userList = new ArrayList<>();
-  List<Report> reportList = new ArrayList<>();
+  public static List<Report> reportList = new ArrayList<>();
+  List<ReportTheme> reportThemeList = new ArrayList<>();
+  List<ReportUser> reportUserList = new ArrayList<>();
   HashMap<String, Command> commandMap = new HashMap<>();
 
   class MenuItem extends Menu {
@@ -123,10 +128,11 @@ public class App {
     commandMap.put("/rank/themeRank", new RealTimeRankHandler(userList));
     commandMap.put("/rank/userRank", new UserRankHandler(userList));
 
-    commandMap.put("/report/theme", new ReportAddThemeHandler(userList,reportList));
-    commandMap.put("/report/user", new ReportAddUserHandler(userList,reportList));
-    commandMap.put("/report/list", new ReportListHandler(userList,reportList));
-    commandMap.put("/report/process", new ReportProcessHandler(userList,reportList));
+    commandMap.put("/report/theme", new ReportAddThemeHandler(userList,reportThemeList));
+    commandMap.put("/report/user", new ReportAddUserHandler(userList,reportUserList));
+    commandMap.put("/report/list", new ReportMyListHandler(reportList));
+    commandMap.put("/report/themeProcess", new ReportThemeProcessingHandler(userList,reportThemeList));
+    commandMap.put("/report/userProcess", new ReportUserProcessingHandler(userList,reportUserList));
   }
 
   public static void main(String[] args) {
@@ -136,13 +142,16 @@ public class App {
 
   void service() {
     loadObject("user.json",userList,User.class);
-    loadObject("report.json",reportList,Report.class);
-
+    loadObject("reportTheme.json",reportThemeList,ReportTheme.class);
+    loadObject("reportUser.json",reportUserList,ReportUser.class);
+    reportList.addAll(reportThemeList);
+    reportList.addAll(reportUserList);
+    
     createMenu().execute();
     Prompt.close();
-
     saveObjects("user.json",userList);
-    saveObjects("report.json",reportList);
+    saveObjects("reportTheme.json",reportThemeList);
+    saveObjects("reportUser.json",reportUserList);
   }
 
   public <E> void loadObject(String fileName, List<E> list, Class<E> domainType) {
@@ -168,7 +177,6 @@ public class App {
   private void saveObjects(String filepath, List<?> list) {
     try (PrintWriter out = new PrintWriter(
         new BufferedWriter(new FileWriter(filepath, Charset.forName("UTF-8"))))) {
-
       out.print(new Gson().toJson(list));
 
       System.out.printf("%s 데이터 출력 완료!\n", filepath);
@@ -190,7 +198,6 @@ public class App {
 
     createUserMenu(mg);
     createMyMapMenu(mg);
-    //    createPlaceMenu(mg);
     createsearchMenu(mg);
     createBookmarkMenu(mg);
     createRankMenu(mg);
@@ -224,16 +231,6 @@ public class App {
 
     mg.add(myMap);
   }
-
-  //  private void createPlaceMenu(MenuGroup mg) {
-  //    MenuGroup savePlaceInTheme = new MenuGroup("테마에 장소 추가", Menu.ACCESS_ADMIN | Menu.ACCESS_GENERAL);
-  //
-  //    savePlaceInTheme.add(new MenuItem("장소 등록", "/place/add"));
-  //    savePlaceInTheme.add(new MenuItem("장소 목록", "/place/list"));
-  //    savePlaceInTheme.add(new MenuItem("장소 삭제", "/place/delete"));
-  //
-  //    mg.add(savePlaceInTheme);
-  //  }
 
   private void createsearchMenu(MenuGroup mg) {
     MenuGroup search = new MenuGroup("검색");
@@ -279,8 +276,9 @@ public class App {
     MenuGroup qna = new MenuGroup("신고", Menu.ACCESS_GENERAL);
     qna.add(new MenuItem("테마 신고", "/report/theme"));
     qna.add(new MenuItem("유저 신고", "/report/user"));
-    qna.add(new MenuItem("신고 목록", "/report/list"));
-    qna.add(new MenuItem("신고 처리", Menu.ACCESS_ADMIN,"/report/process"));
+    qna.add(new MenuItem("나의 신고 목록", "/report/list"));
+    qna.add(new MenuItem("테마 신고 처리", Menu.ACCESS_ADMIN,"/report/themeProcess"));
+    qna.add(new MenuItem("유저 신고 처리", Menu.ACCESS_ADMIN,"/report/userProcess"));
 
     mg.add(qna);
   }

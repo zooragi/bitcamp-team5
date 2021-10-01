@@ -55,7 +55,11 @@ public class UserAddHandler extends AbstractUserHandler{
     user.setNickName(Prompt.inputString("닉네임? "));
     user.setPassword(Prompt.inputString("암호? "));
     user.setRegisteredDate(new Date(System.currentTimeMillis()));
-    userNo = userList.get(userList.size()-1).getNo();
+    if(userList.size() == 0) {
+    	userNo =0;
+    } else {
+    	userNo = userList.get(userList.size()-1).getNo();	
+    }
     user.setNo(++userNo);
 
     userList.add(user);

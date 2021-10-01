@@ -11,16 +11,25 @@ public class User implements Comparable<User> {
 	private String nickName;
 	private Date registeredDate;
 	private int viewCount;
+	private int reportedCount = 0;
 
 	private List<User> followings = new ArrayList<>();
 	private List<Theme> themeList = new ArrayList<Theme>();
 	private List<Theme> bookMarks = new ArrayList<Theme>();
-
+	
 	@Override
 	public String toString() {
 		return "User [no=" + no + ", email=" + email + ", password=" + password + ", nickName=" + nickName
-				+ ", registeredDate=" + registeredDate + ", viewCount=" + viewCount + ", follow=" + followings
-				+ ", themeList=" + themeList + ", bookMarks=" + bookMarks + "]";
+				+ ", registeredDate=" + registeredDate + ", viewCount=" + viewCount + ", reportedCount=" + reportedCount
+				+ ", followings=" + followings + ", themeList=" + themeList + ", bookMarks=" + bookMarks + "]";
+	}
+
+	public int getReportedCount() {
+		return reportedCount;
+	}
+
+	public void setReportedCount(int reportedCount) {
+		this.reportedCount = reportedCount;
 	}
 
 	public int getNo() {
