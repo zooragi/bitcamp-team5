@@ -31,23 +31,28 @@ public class MyThemeDetailHandler extends AbstractMyMapHandler {
     searchedTheme = chooseTheme();
 
     User user = AuthLoginHandler.getLoginUser();
-    if (!user.getUserNickName().equals(searchedTheme.getUserNickName()) && user.getEmail().equals("root@test.com")) {
+    if (!user.getNickName().equals(searchedTheme.getThemeOwnerName()) && user.getEmail().equals("root@test.com")) {
       return;
     }
 
-    request.setAttrubute("searchedTheme", searchedTheme);
+    request.setAttribute("searchedTheme", searchedTheme);
 
     while (true) {
       System.out.println();
 
-      Map<String, String> detailMenu = showManagementMenu();
+      ArrayList<String> controlMenuListOfKeys = new ArrayList<>(controlMenu.keySet());
+      Collections.swap(controlMenuListOfKeys, controlMenuListOfKeys.indexOf("이전 메뉴"), controlMenuListOfKeys.size()-1);
+      int selectedNum = listChooseNum(controlMenuListOfKeys);
+
+      Map<String, String> detailMenu = controlMenu.get(controlMenuListOfKeys.get(selectedNum - 1));
+
       if(detailMenu == null) return;
 
       ArrayList<String> detailMenuListOfKeys = new ArrayList<>(detailMenu.keySet());
-      int selectedNum = listChooseNum(detailMenuListOfKeys);
+      selectedNum = listChooseNum(detailMenuListOfKeys);
       if(detailMenu.get(detailMenuListOfKeys.get(selectedNum-1)).equals("0")) return;
 
-      request.getRequestDispatcher(detailMenu.get(detailMenuListOfKeys.get(selectedNum-1))).forword(request);
+      request.getRequestDispatcher(detailMenu.get(detailMenuListOfKeys.get(selectedNum-1))).forward(request);
     }
 
   }
@@ -63,14 +68,6 @@ public class MyThemeDetailHandler extends AbstractMyMapHandler {
       }
       System.out.println();
     }
-  }
-
-  private Map<String, String> showManagementMenu(){
-    ArrayList<String> controlMenuListOfKeys = new ArrayList<>(controlMenu.keySet());
-    Collections.swap(controlMenuListOfKeys, controlMenuListOfKeys.indexOf("이전 메뉴"), controlMenuListOfKeys.size()-1);
-    int selectedNum = listChooseNum(controlMenuListOfKeys);
-
-    return controlMenu.get(controlMenuListOfKeys.get(selectedNum - 1));
   }
 
   private Theme chooseTheme() {

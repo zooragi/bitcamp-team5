@@ -12,11 +12,11 @@ public class UserAddHandler extends AbstractUserHandler{
     //    rootUser.setNo(0);
     //    rootUser.setEmail("root@test.com");
     //    rootUser.setPassword("0000");
-    //    rootUser.setUserNickName("제주정승🍊");
+    //    rootUser.setNickName("제주정승🍊");
     //    rootUser.setRegisteredDate(new Date(System.currentTimeMillis()));
     //
     //    userList.add(rootUser);
-    //	    
+
     //	    User testUser = new User();
     //	    testUser.setNo(2);
     //	    testUser.setName("111");
@@ -48,19 +48,22 @@ public class UserAddHandler extends AbstractUserHandler{
   }
 
   public void execute(CommandRequest request) {
+
+    System.out.println("[회원 가입하기]");
+
     User user = new User();
     int userNo = 0;
 
-    user.setEmail(Prompt.inputString("이메일? "));
-    user.setUserNickName(Prompt.inputString("닉네임? "));
-    user.setPassword(Prompt.inputString("암호? "));
+    user.setEmail(Prompt.inputString("이메일 > "));
+    user.setNickName(Prompt.inputString("닉네임 > "));
+    user.setPassword(Prompt.inputString("암호 > "));
     user.setRegisteredDate(new Date(System.currentTimeMillis()));
     userNo = userList.get(userList.size()-1).getNo();
     user.setNo(++userNo);
 
     userList.add(user);
 
-    System.out.println("회원가입이 완료되었습니다.");
+    System.out.println("회원 가입 완료!");
   }
 
 }

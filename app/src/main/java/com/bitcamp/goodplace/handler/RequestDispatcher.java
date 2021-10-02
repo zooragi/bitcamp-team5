@@ -8,7 +8,7 @@ public class RequestDispatcher {
     this.command = command;
   }
 
-  public void forword(CommandRequest request) throws Exception {
+  public void forward(CommandRequest request) throws Exception {
     command.execute(request);
   }
 

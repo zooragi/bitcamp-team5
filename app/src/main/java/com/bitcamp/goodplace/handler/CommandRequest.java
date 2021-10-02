@@ -12,7 +12,7 @@ public class CommandRequest {
     this.commandMap = commandMap;
   }
 
-  public void setAttrubute(String name, Object value) {
+  public void setAttribute(String name, Object value) {
     paraMap.put(name, value);
   }
 
