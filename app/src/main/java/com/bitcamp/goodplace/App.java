@@ -42,9 +42,9 @@ import com.bitcamp.goodplace.handler.SearchUserHandler;
 import com.bitcamp.goodplace.handler.UserAddHandler;
 import com.bitcamp.goodplace.handler.UserDeleteHandler;
 import com.bitcamp.goodplace.handler.UserDetailHandler;
-import com.bitcamp.goodplace.handler.UserFollowingAddHandler;
-import com.bitcamp.goodplace.handler.UserFollowingDeleteHandler;
-import com.bitcamp.goodplace.handler.UserFollowingListHandler;
+import com.bitcamp.goodplace.handler.UserFollowAddHandler;
+import com.bitcamp.goodplace.handler.UserFollowDeleteHandler;
+import com.bitcamp.goodplace.handler.UserFollowListHandler;
 import com.bitcamp.goodplace.handler.UserListHandler;
 import com.bitcamp.goodplace.handler.UserRankHandler;
 import com.bitcamp.goodplace.handler.UserUpdateHandler;
@@ -120,9 +120,9 @@ public class App {
     commandMap.put("/search/searchUser", new SearchUserHandler(userList));
     commandMap.put("/search/searchHashtag", new SearchHashtagHandler(userList));
 
-    commandMap.put("/follow/add", new UserFollowingAddHandler(userList));
-    commandMap.put("/follow/list", new UserFollowingListHandler(userList));
-    commandMap.put("/follow/delete", new UserFollowingDeleteHandler());
+    commandMap.put("/follow/add", new UserFollowAddHandler(userList));
+    commandMap.put("/follow/list", new UserFollowListHandler(userList));
+    commandMap.put("/follow/delete", new UserFollowDeleteHandler());
 
     commandMap.put("/rank/themeRank", new RealTimeRankHandler(userList));
     commandMap.put("/rank/userRank", new UserRankHandler(userList));
@@ -265,7 +265,7 @@ public class App {
   }
 
   private void createRankMenu(MenuGroup mg) {
-    MenuGroup rank = new MenuGroup("순위");
+    MenuGroup rank = new MenuGroup("순위보기");
 
     rank.add(new MenuItem("테마 순위보기", "/rank/themeRank")); // 전체 테마 검색 기준 조횟수 증가
     rank.add(new MenuItem("유저 순위보기", "/rank/userRank")); // 유저 검색 기준 조횟수 증가
