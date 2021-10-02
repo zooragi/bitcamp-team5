@@ -11,36 +11,48 @@ public class UserFollowAddHandler extends AbstractUserHandler {
   }
 
   public void execute(CommandRequest request) {
-    System.out.println("[유저 팔로우]");
+    System.out.println("[팔로우 등록하기]");
     while(true) {
-      String input = Prompt.inputString("닉네임을 입력하세요(취소 : 빈 문자열) : ");
-      if(input.length()==0) return;
-      for(User user : userList) {
-        if(user.getNickName().equals(input)) {
-          if(input.equals(AuthLoginHandler.getLoginUser().getNickName())) {
-            System.out.println("본인은 팔로우 할 수 없습니다.");
-            return;
-          }
+      String input = Prompt.inputString("팔로우 할 유저의 닉네임(취소 : 엔터) > ");
+      if(input.length()==0) {
+        System.out.println("팔로우 등록 취소!");
+        return;
+      }
 
-          for(User followingUser : AuthLoginHandler.getLoginUser().getFollowings()) {
-            if(followingUser.getNickName().equals(input)) {
-              System.out.println("이미 팔로우 한 유저입니다.");
-              return;
-            }
-          }
+      User user = findByUserNickName(input);
 
-          input = Prompt.inputString(String.format("[%s]님을 팔로우 하시겠습니까? (y/N)",
-              user.getNickName()));
-          if(input.equalsIgnoreCase("y")) {
-            AuthLoginHandler.getLoginUser().getFollowings().add(user);
-          }
-          return;
+      if(user == AuthLoginHandler.getLoginUser()) {
+        System.out.println("본인은 팔로우 불가!");
+        continue;
+      }
+
+      for(User followUser : AuthLoginHandler.getLoginUser().getLikedUsers()) {
+        if(followUser.getUserNickName().equals(input)) {
+          System.out.println("이미 팔로우 한 유저!");
+          continue;
         }
       }
-      System.out.println("해당 이름의 유저가 없습니다.");
-    }
 
+      if(user == null) {
+        System.out.println("등록된 유저 없음!");
+        continue;
+      }
+
+      AuthLoginHandler.getLoginUser().getLikedUsers().add(user);
+      System.out.println("팔로우 등록 완료!");
+      break;
+    }
+  }
+
+  private User findByUserNickName(String userNickName) {
+    for(User user : userList) {
+      if(user.getUserNickName().equals(userNickName)) {
+        return user;
+      }
+    }
+    return null;
   }
 
 
 }
+

@@ -12,7 +12,7 @@ public class UserAddHandler extends AbstractUserHandler{
     //    rootUser.setNo(0);
     //    rootUser.setEmail("root@test.com");
     //    rootUser.setPassword("0000");
-    //    rootUser.setNickName("관리자");
+    //    rootUser.setUserNickName("제주정승🍊");
     //    rootUser.setRegisteredDate(new Date(System.currentTimeMillis()));
     //
     //    userList.add(rootUser);
@@ -52,7 +52,7 @@ public class UserAddHandler extends AbstractUserHandler{
     int userNo = 0;
 
     user.setEmail(Prompt.inputString("이메일? "));
-    user.setNickName(Prompt.inputString("닉네임? "));
+    user.setUserNickName(Prompt.inputString("닉네임? "));
     user.setPassword(Prompt.inputString("암호? "));
     user.setRegisteredDate(new Date(System.currentTimeMillis()));
     userNo = userList.get(userList.size()-1).getNo();
