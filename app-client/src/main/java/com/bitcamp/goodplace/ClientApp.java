@@ -1,9 +1,5 @@
 package com.bitcamp.goodplace;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.Socket;
 import java.sql.Date;
 
 import com.bitcamp.goodplace.domain.User;
@@ -11,41 +7,40 @@ import com.bitcamp.request.RequestAgent;
 import com.bitcamp.util.Prompt;
 
 public class ClientApp {
-
 	static RequestAgent requestAgent;
-
-	public static void main(String[] args) throws Exception {
-		System.out.println("[PMS 클라이언트]");
-
-		requestAgent = new RequestAgent("127.0.0.1", 8888);
-
-		while (true) {
-			String command = Prompt.inputString("명령 > ");
-
-			if (command.equals("/user/add")) {
+	
+	public static void main(String[] args) throws Exception{
+		
+		requestAgent = new RequestAgent("127.0.0.1",8888);
+		
+		while(true) {
+			String input = Prompt.inputString("명령 > ");
+			
+			if(input.startsWith("user.")) {
 				addUser();
-			} else if (command.equals("/user/detail")) {
-//    		detailUser();
 			} else {
-				requestAgent.request(command, null);
-
-				if (requestAgent.getStatus().equals(RequestAgent.SUCCESS)) {
-					String result = requestAgent.getObject(String.class);
-					System.out.println("응답 > " + result);
+				requestAgent.request(input, null);
+				
+				if(requestAgent.getStatus().equals(RequestAgent.SUCCESS)) {
+					System.out.println(">>> " + requestAgent.getObject(String.class));
 				} else {
 					System.out.println("요청 실패");
 				}
 			}
-			if(command.equalsIgnoreCase("quit")) {
+			
+			if(input.equals("quit")) {
 				break;
 			}
+			
 		}
-
-		System.out.println("2) 서버와의 접속을 끊음");
+		
 		requestAgent.close();
+		
+		Prompt.close();
+		
 	}
 
-	private static void addUser() throws Exception {
+	private static void addUser() throws Exception{
 		User user = new User();
 
 		user.setNo(1);
@@ -58,6 +53,5 @@ public class ClientApp {
 		user.setWarningCount(0);
 
 		requestAgent.request("/user/insert", user);
-
 	}
 }
