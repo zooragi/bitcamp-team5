@@ -9,7 +9,7 @@ public class PlaceListHandler extends AbstractPlaceHandler{
   public void execute(CommandRequest request) {
     System.out.println("[장소 목록]");
 
-    Theme theme = findByTitle(Prompt.inputString("테마 이름을 입력하세요> "));
+    Theme theme = (Theme) request.getAttribute("searchedTheme");
 
     if (theme == null) {
       System.out.println("해당 이름의 테마가 없습니다.");

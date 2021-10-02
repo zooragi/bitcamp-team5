@@ -1,5 +1,9 @@
 package com.bitcamp.menu;
 
+import java.util.HashMap;
+
+import com.bitcamp.goodplace.handler.Command;
+
 public abstract class Menu {
 
 	public static final int ACCESS_LOGOUT = 0x01;

@@ -28,8 +28,6 @@ public class SearchUserHandler extends AbstractSearchHandler{
       System.out.println("해당 이름의 유저가 없습니다.");
     }
 
-
-
   }
 
 }

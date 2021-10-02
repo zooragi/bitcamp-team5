@@ -6,12 +6,12 @@ public class AuthDisplayLoginUserHandler implements Command{
     System.out.println("[내정보]");
 
     if (AuthLoginHandler.loginUser == null) {
-      System.out.println("로그인 하지 않았습니다.");
+      System.out.println("로그인하지 않았습니다!");
       return;
     }
 
-    System.out.printf("이메일: %s\n", AuthLoginHandler.loginUser.getEmail());
-    System.out.printf("닉네임: %s\n", AuthLoginHandler.loginUser.getNickName());
-    System.out.printf("등록일: %s\n", AuthLoginHandler.loginUser.getRegisteredDate());
+    System.out.printf("이메일 > %s\n", AuthLoginHandler.loginUser.getEmail());
+    System.out.printf("닉네임 > %s\n", AuthLoginHandler.loginUser.getUserNickName());
+    System.out.printf("등록일 > %s\n", AuthLoginHandler.loginUser.getRegisteredDate());
   }
 }
