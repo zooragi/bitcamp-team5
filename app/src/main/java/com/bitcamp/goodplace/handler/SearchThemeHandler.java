@@ -5,33 +5,38 @@ import com.bitcamp.goodplace.domain.Theme;
 import com.bitcamp.goodplace.domain.User;
 import com.bitcamp.util.Prompt;
 
-public class SearchThemeHandler extends AbstractSearchHandler{
+public class SearchThemeHandler extends AbstractSearchHandler {
 
-  public SearchThemeHandler(List<User> userList) {
+  List<Theme> themeList;
+
+  public SearchThemeHandler(List<User> userList, List<Theme> themeList) {
     super(userList);
-  }
-  public void execute(CommandRequest request) {
-    while(true) {
-      String title = Prompt.inputString("테마를 검색하세요(취소 : 빈 문자열) : ");
-      if(title.length() == 0) return;
+    this.themeList = themeList;
+  } 
 
-      for(User user : userList) {
-        for(Theme theme : user.getThemeList()) {
-          if(theme.getTitle().contains(title)) {
-            if(!theme.isPublic()) continue;
-            System.out.printf("[%s]\n", theme.getTitle());
-            System.out.printf("<%s 님의 테마>\n", theme.getUserName());
-            System.out.printf("해시태그 : %s\n", theme.getHashtags().toString());
-            System.out.printf("장소 : %s\n", theme.getPlaceList().toString());
-            System.out.printf("조회수 : %d \n", theme.getViewCount() + 1);						
-            theme.setViewCount(theme.getViewCount()+1);
-            return;
-          }
+  public void execute(CommandRequest request) {
+
+    System.out.println("[테마 검색하기]");
+
+    while (true) {
+      String input = Prompt.inputString("테마 이름(취소 : 엔터) > ");
+      if(input.equals("")) {
+        System.out.println("테마 검색 취소!");
+        return;
+      }
+      for (Theme theme : themeList) {
+        if (theme.getTitle().contains(input) && theme.isPublic()) {
+          System.out.printf("테마 제목 > %s\n", theme.getTitle());
+          System.out.printf("[%s 님의 테마]\n", theme.getUserNickName().getUserNickName());
+          System.out.printf("해시 태그 > %s\n", theme.getHashtags().toString());
+          System.out.printf("장소 > %s\n", theme.getPlaceList().toString());
+          System.out.printf("조회수 > %d\n", theme.getViewCount() + 1);						
+          theme.setViewCount(theme.getViewCount()+1);
+          System.out.println();
+          return;
         }
       }
-      System.out.println("해당 이름의 테마가 없습니다.");
+      System.out.println("등록된 테마 없음!");
     }
   }
-
-
 }
