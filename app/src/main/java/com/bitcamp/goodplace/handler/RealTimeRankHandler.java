@@ -14,9 +14,9 @@ public class RealTimeRankHandler implements Command{
 
   public void execute(CommandRequest request) {
     int i = 1;
-    System.out.println("[실시간 테마 랭킹]");
+    System.out.println("[실시간 테마 순위 보기]");
     for(Theme theme : rank()) {
-      System.out.printf("%d위. %s (조회수 : %d)\n",i,theme.getTitle(),theme.getViewCount());
+      System.out.printf("%d위. %s (조회수 : %d) > \n",i,theme.getTitle(),theme.getViewCount());
       i++;
     }
   }

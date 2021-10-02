@@ -1,28 +1,27 @@
 package com.bitcamp.goodplace;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.PrintWriter;
-import java.lang.reflect.Type;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import com.bitcamp.context.ApplicationContextListener;
+import com.bitcamp.context.UserContextListener;
 import com.bitcamp.goodplace.domain.Report;
+import com.bitcamp.goodplace.domain.ReportTheme;
+import com.bitcamp.goodplace.domain.ReportUser;
 import com.bitcamp.goodplace.domain.Theme;
 import com.bitcamp.goodplace.domain.User;
 import com.bitcamp.goodplace.handler.AllThemeListHandler;
 import com.bitcamp.goodplace.handler.AuthDisplayLoginUserHandler;
 import com.bitcamp.goodplace.handler.AuthLoginHandler;
 import com.bitcamp.goodplace.handler.AuthLogoutHandler;
-import com.bitcamp.goodplace.handler.BookmarkAddHandler;
-import com.bitcamp.goodplace.handler.BookmarkDeleteHandler;
-import com.bitcamp.goodplace.handler.BookmarkListHandler;
 import com.bitcamp.goodplace.handler.Command;
 import com.bitcamp.goodplace.handler.CommandRequest;
+import com.bitcamp.goodplace.handler.LikedThemeAddHandler;
+import com.bitcamp.goodplace.handler.LikedThemeDeleteHandler;
+import com.bitcamp.goodplace.handler.LikedThemeListHandler;
+import com.bitcamp.goodplace.handler.LikedUserAddHandler;
+import com.bitcamp.goodplace.handler.LikedUserDeleteHandler;
+import com.bitcamp.goodplace.handler.LikedUserListHandler;
 import com.bitcamp.goodplace.handler.MyThemeAddHandler;
 import com.bitcamp.goodplace.handler.MyThemeDeleteHandler;
 import com.bitcamp.goodplace.handler.MyThemeDetailHandler;
@@ -34,31 +33,53 @@ import com.bitcamp.goodplace.handler.PlaceListHandler;
 import com.bitcamp.goodplace.handler.RealTimeRankHandler;
 import com.bitcamp.goodplace.handler.ReportAddThemeHandler;
 import com.bitcamp.goodplace.handler.ReportAddUserHandler;
-import com.bitcamp.goodplace.handler.ReportListHandler;
-import com.bitcamp.goodplace.handler.ReportProcessHandler;
+import com.bitcamp.goodplace.handler.ReportMyListHandler;
+import com.bitcamp.goodplace.handler.ReportThemeProcessingHandler;
+import com.bitcamp.goodplace.handler.ReportUserProcessingHandler;
 import com.bitcamp.goodplace.handler.SearchHashtagHandler;
 import com.bitcamp.goodplace.handler.SearchThemeHandler;
 import com.bitcamp.goodplace.handler.SearchUserHandler;
 import com.bitcamp.goodplace.handler.UserAddHandler;
 import com.bitcamp.goodplace.handler.UserDeleteHandler;
 import com.bitcamp.goodplace.handler.UserDetailHandler;
-import com.bitcamp.goodplace.handler.UserFollowAddHandler;
-import com.bitcamp.goodplace.handler.UserFollowDeleteHandler;
-import com.bitcamp.goodplace.handler.UserFollowListHandler;
+import com.bitcamp.goodplace.handler.UserEditHandler;
 import com.bitcamp.goodplace.handler.UserListHandler;
 import com.bitcamp.goodplace.handler.UserRankHandler;
+import com.bitcamp.goodplace.handler.UserUnregisterHandler;
 import com.bitcamp.goodplace.handler.UserUpdateHandler;
+import com.bitcamp.goodplace.listener.FileListener;
+import com.bitcamp.goodplace.listener.LoginListener;
 import com.bitcamp.menu.Menu;
 import com.bitcamp.menu.MenuGroup;
 import com.bitcamp.util.Prompt;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 public class App {
   List<User> userList = new ArrayList<>();
-  List<Report> reportList = new ArrayList<>();
+  public static List<Report> reportList = new ArrayList<>();
+  List<ReportTheme> reportThemeList = new ArrayList<>();
+  List<ReportUser> reportUserList = new ArrayList<>();
   HashMap<String, Command> commandMap = new HashMap<>();
   List<Theme> themeList = new ArrayList<>();
+
+  List<ApplicationContextListener> listeners = new ArrayList<>();
+  List<UserContextListener> userListeners = new ArrayList<>();
+
+
+  public void addApplicationContextListener(ApplicationContextListener listener) {
+    this.listeners.add(listener);
+  }
+
+  public void removeApplicationContextListener(ApplicationContextListener listener) {
+    this.listeners.remove(listener);
+  }
+
+  public void addUserContextListener(UserContextListener userListener) {
+    this.userListeners.add(userListener);
+  }
+
+  public void removeUserContextListener(UserContextListener userListener) {
+    this.userListeners.remove(userListener);
+  }
 
   class MenuItem extends Menu {
     String menuId;
@@ -88,10 +109,12 @@ public class App {
   }
 
   public App() {
-    commandMap.put("/auth/login", new AuthLoginHandler(userList));
-    commandMap.put("/auth/logout", new AuthLogoutHandler());
+    commandMap.put("/auth/login", new AuthLoginHandler(userList, userListeners));
+    commandMap.put("/auth/logout", new AuthLogoutHandler(userListeners));
     commandMap.put("/auth/displayLoginUer", new AuthDisplayLoginUserHandler());
     commandMap.put("/theme/all", new AllThemeListHandler(userList));
+    commandMap.put("/auth/unregistered", new UserUnregisterHandler(userList));
+    commandMap.put("/auth/edit", new UserEditHandler());
 
     // 회원 탈퇴 메뉴 추가
 
@@ -107,81 +130,74 @@ public class App {
     commandMap.put("/myTheme/detail", new MyThemeDetailHandler(userList));
     commandMap.put("/myTheme/update", new MyThemeUpdateHandler(userList));
 
-    commandMap.put("/like/add", new BookmarkAddHandler(userList));
-    commandMap.put("/like/delete", new BookmarkDeleteHandler(userList));
-    commandMap.put("/like/list", new BookmarkListHandler());
+    commandMap.put("/likedTheme/add", new LikedThemeAddHandler(userList));
+    commandMap.put("/likedTheme/delete", new LikedThemeDeleteHandler(userList));
+    commandMap.put("/likedTheme/list", new LikedThemeListHandler());
 
     commandMap.put("/place/add", new PlaceAddHandler());
     commandMap.put("/place/delete", new PlaceDeleteHandler());
     commandMap.put("/place/list", new PlaceListHandler());
 
 
-    commandMap.put("/search/searchTheme", new SearchThemeHandler(userList));
+    commandMap.put("/search/searchTheme", new SearchThemeHandler(userList, themeList));
     commandMap.put("/search/searchUser", new SearchUserHandler(userList));
-    commandMap.put("/search/searchHashtag", new SearchHashtagHandler(userList));
+    commandMap.put("/search/searchHashtag", new SearchHashtagHandler(userList, themeList));
 
-    commandMap.put("/follow/add", new UserFollowAddHandler(userList));
-    commandMap.put("/follow/list", new UserFollowListHandler(userList));
-    commandMap.put("/follow/delete", new UserFollowDeleteHandler());
+    commandMap.put("/likedUser/add", new LikedUserAddHandler(userList));
+    commandMap.put("/likedUser/list", new LikedUserListHandler(userList));
+    commandMap.put("/likedUser/delete", new LikedUserDeleteHandler());
 
     commandMap.put("/rank/themeRank", new RealTimeRankHandler(userList));
     commandMap.put("/rank/userRank", new UserRankHandler(userList));
 
-    commandMap.put("/report/theme", new ReportAddThemeHandler(userList,reportList));
-    commandMap.put("/report/user", new ReportAddUserHandler(userList,reportList));
-    commandMap.put("/report/list", new ReportListHandler(userList,reportList));
-    commandMap.put("/report/process", new ReportProcessHandler(userList,reportList));
+    commandMap.put("/report/theme", new ReportAddThemeHandler(userList,reportThemeList));
+    commandMap.put("/report/user", new ReportAddUserHandler(userList,reportUserList));
+    commandMap.put("/report/list", new ReportMyListHandler(reportList));
+    commandMap.put("/report/themeProcess", new ReportThemeProcessingHandler(userList,reportThemeList));
+    commandMap.put("/report/userProcess", new ReportUserProcessingHandler(userList,reportUserList));
   }
 
   public static void main(String[] args) {
     App app = new App();
+    app.addApplicationContextListener(new FileListener());
+    app.addUserContextListener(new LoginListener());
     app.service();
+
+  }
+
+  private void notifyOnApplicationStarted() {
+    HashMap<String,Object> params = new HashMap<>();
+    params.put("userList", userList);
+    params.put("reportThemeList", reportThemeList);
+    params.put("reportUserList", reportUserList);
+
+    for (ApplicationContextListener listener : listeners) {
+      listener.contextInitialized(params);
+    }
+  }
+
+  private void notifyOnApplicationEnded() {
+    HashMap<String,Object> params = new HashMap<>();
+    params.put("userList", userList);
+    params.put("reportThemeList", reportThemeList);
+    params.put("reportUserList", reportUserList);
+
+    for (ApplicationContextListener listener : listeners) {
+      listener.contextDestroyed(params);
+    }
   }
 
   void service() {
-    loadObject("user.json",userList,User.class);
-    loadObject("report.json",reportList,Report.class);
+    notifyOnApplicationStarted();
+    reportList.addAll(reportThemeList);
+    reportList.addAll(reportUserList);
+
 
     createMenu().execute();
     Prompt.close();
-
-    saveObjects("user.json",userList);
-    saveObjects("report.json",reportList);
+    notifyOnApplicationEnded();
   }
 
-  public <E> void loadObject(String fileName, List<E> list, Class<E> domainType) {
-    try (BufferedReader in = new BufferedReader(new FileReader(fileName, Charset.forName("UTF-8")))) {
-
-      StringBuilder strBuilder = new StringBuilder();
-      String str;
-      while ((str = in.readLine()) != null) {
-        strBuilder.append(str);
-      }
-      Type type = TypeToken.getParameterized(Collection.class, domainType).getType();
-      Collection<E> collection = new Gson().fromJson(strBuilder.toString(), type);
-
-      list.addAll(collection);
-
-      System.out.printf("%s 데이터 로딩 완료!\n", fileName);
-
-    } catch (Exception e) {
-      System.out.printf("%s 데이터 로딩 오류!\n", fileName);
-    }
-  }
-
-  private void saveObjects(String filepath, List<?> list) {
-    try (PrintWriter out = new PrintWriter(
-        new BufferedWriter(new FileWriter(filepath, Charset.forName("UTF-8"))))) {
-
-      out.print(new Gson().toJson(list));
-
-      System.out.printf("%s 데이터 출력 완료!\n", filepath);
-
-    } catch (Exception e) {
-      System.out.printf("%s 데이터 출력 오류!\n", filepath);
-      e.printStackTrace();
-    }
-  }
 
   Menu createMenu() {
     MenuGroup mg = new MenuGroup("메인 메뉴");
@@ -190,16 +206,16 @@ public class App {
     mg.add(new MenuItem("로그인", Menu.ACCESS_LOGOUT, "/auth/login"));
     mg.add(new MenuItem("회원 가입하기", Menu.ACCESS_LOGOUT, "/user/add"));
     mg.add(new MenuItem("내 정보", Menu.ACCESS_GENERAL, "/auth/displayLoginUer"));
-    // 회원 탈퇴 만들기
+    //    mg.add(new MenuItem(""))
     mg.add(new MenuItem("로그아웃", Menu.ACCESS_GENERAL, "/auth/logout"));
     mg.add(new MenuItem("전체 테마 보기", "/theme/all"));
 
     createUserMenu(mg);
     createMyMapMenu(mg);
     //    createPlaceMenu(mg);
-    createsearchMenu(mg);
-    createLikeMenu(mg);
-    createFollowMenu(mg);
+    createSearchMenu(mg);
+    createLikedThemeMenu(mg);
+    createLikedUserMenu(mg);
     createRankMenu(mg);
     createReportMenu(mg);
 
@@ -241,7 +257,7 @@ public class App {
   //    mg.add(savePlaceInTheme);
   //  }
 
-  private void createsearchMenu(MenuGroup mg) {
+  private void createSearchMenu(MenuGroup mg) {
     MenuGroup search = new MenuGroup("검색하기");
 
 
@@ -254,12 +270,12 @@ public class App {
     mg.add(search);
   }
 
-  private void createLikeMenu(MenuGroup mg) {
+  private void createLikedThemeMenu(MenuGroup mg) {
     MenuGroup like = new MenuGroup("좋아하는 테마", Menu.ACCESS_ADMIN | Menu.ACCESS_GENERAL);
 
-    like.add(new MenuItem("좋아요 등록하기", "/like/add"));
-    like.add(new MenuItem("좋아요 목록보기", "/like/list"));
-    like.add(new MenuItem("좋아요 삭제하기", "/like/delete"));
+    like.add(new MenuItem("좋아요 등록하기", "/likedTheme/add"));
+    like.add(new MenuItem("좋아요 목록보기", "/likedTheme/list"));
+    like.add(new MenuItem("좋아요 삭제하기", "/likedTheme/delete"));
 
     mg.add(like);
   }
@@ -273,22 +289,22 @@ public class App {
     mg.add(rank);
   }
 
-  private void createFollowMenu(MenuGroup mg) {
-    MenuGroup follow = new MenuGroup("팔로우", Menu.ACCESS_GENERAL);
-    follow.add(new MenuItem("팔로우 등록하기", "/follow/add"));
-    follow.add(new MenuItem("팔로우 목록보기", "/follow/list"));
-    follow.add(new MenuItem("팔로우 삭제하기", "/follow/delete"));
+  private void createLikedUserMenu(MenuGroup mg) {
+    MenuGroup follow = new MenuGroup("좋아하는 유저", Menu.ACCESS_GENERAL);
+    follow.add(new MenuItem("좋아하는 유저 등록하기", "/likedUser/add"));
+    follow.add(new MenuItem("좋아하는 유저 목록보기", "/likedUser/list"));
+    follow.add(new MenuItem("좋아하는 유저 삭제하기", "/likedUser/delete"));
 
     mg.add(follow);
   }
 
   private void createReportMenu(MenuGroup mg) {
     MenuGroup report = new MenuGroup("신고하기", Menu.ACCESS_GENERAL);
-    report.add(new MenuItem("테마 신고하기", "/report/theme"));
-    report.add(new MenuItem("유저 신고하기", "/report/user"));
-    report.add(new MenuItem("신고 목록보기", "/report/list"));
-    report.add(new MenuItem("신고 처리하기", Menu.ACCESS_ADMIN,"/report/process"));
-
+    report.add(new MenuItem("테마 신고", "/report/theme"));
+    report.add(new MenuItem("유저 신고", "/report/user"));
+    report.add(new MenuItem("나의 신고 목록", "/report/list"));
+    report.add(new MenuItem("테마 신고 처리", Menu.ACCESS_ADMIN,"/report/themeProcess"));
+    report.add(new MenuItem("유저 신고 처리", Menu.ACCESS_ADMIN,"/report/userProcess"));
     mg.add(report);
   }
 

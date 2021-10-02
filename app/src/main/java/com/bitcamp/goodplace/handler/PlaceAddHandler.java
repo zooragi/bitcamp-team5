@@ -10,17 +10,18 @@ import com.google.gson.Gson;
 
 public class PlaceAddHandler extends AbstractPlaceHandler {
 
+  @Override
   public void execute(CommandRequest request) {
     Gson gson = new Gson();
     KakaoMapApi kakao = new KakaoMapApi();
 
-    System.out.println("[장소 등록]");
+    System.out.println("[장소 등록하기]");
 
     Theme theme = (Theme) request.getAttribute("searchedTheme");
 
-
     if (theme == null) {
-      System.out.println("해당 이름의 테마가 없습니다.");
+      System.out.println("등록된 테마 없음!");
+      System.out.println();
       return;
     }
 
@@ -28,8 +29,9 @@ public class PlaceAddHandler extends AbstractPlaceHandler {
     KakaoVo selectedPlace = new KakaoVo();
 
     ArrayList<KakaoVo> filterPlace = new ArrayList<>();
-    while(true) {
-      Object[] SearchedPlaces = kakao.searchPlace(Prompt.inputString("장소 이름을 입력하세요> "));
+    while (true) {
+      Object[] SearchedPlaces = kakao.searchPlace(Prompt.inputString("장소 이름 > "));
+
       for(int i = 0 ; i < SearchedPlaces.length ; i++) {
         selectedPlace = gson.fromJson(gson.toJson(SearchedPlaces[i]),KakaoVo.class);
 
@@ -47,27 +49,26 @@ public class PlaceAddHandler extends AbstractPlaceHandler {
             );
       }
 
-      int num = Prompt.inputInt("번호를 선택하세요 > ");
+      int num = Prompt.inputInt("번호 > ");
       if ( num == 0 ) continue;
       if(num > filterPlace.size()) {
-        System.out.println("잘못된 번호 입니다.");
+        System.out.println("잘못된 번호!");
         continue;
       } 
 
       selectedPlace = gson.fromJson(gson.toJson(filterPlace.get(num-1)),KakaoVo.class);
-      place.setAddressName(selectedPlace.getAddress_name());
+      place.setStoreAddress(selectedPlace.getAddress_name());
       place.setStoreName(selectedPlace.getPlace_name());
       place.setxCoord(selectedPlace.getX());
       place.setyCoord(selectedPlace.getY());
-      place.setTheme(theme.getTitle());
+      place.setTheme(theme/*.getTitle()*/);
 
       break;
     }
 
-    place.getComment().add(Prompt.inputString("장소 후기를 입력하세요> "));
+    place.getComments().add(Prompt.inputString("장소 후기 > "));
 
     theme.getPlaceList().add(place);
-
-    System.out.println("장소를 등록하였습니다.");
+    System.out.println("장소 등록 완료!");
   }
 }

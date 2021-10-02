@@ -4,15 +4,16 @@ import java.util.List;
 import com.bitcamp.goodplace.domain.User;
 import com.bitcamp.util.Prompt;
 
-public class UserFollowAddHandler extends AbstractUserHandler {
+public class LikedUserAddHandler extends AbstractUserHandler {
 
-  public UserFollowAddHandler(List<User> userList) {
+  public LikedUserAddHandler(List<User> userList) {
     super(userList);
   }
 
   public void execute(CommandRequest request) {
     System.out.println("[팔로우 등록하기]");
     while(true) {
+
       String input = Prompt.inputString("팔로우 할 유저의 닉네임(취소 : 엔터) > ");
       if(input.length()==0) {
         System.out.println("팔로우 등록 취소!");
@@ -27,9 +28,9 @@ public class UserFollowAddHandler extends AbstractUserHandler {
       }
 
       for(User followUser : AuthLoginHandler.getLoginUser().getLikedUsers()) {
-        if(followUser.getUserNickName().equals(input)) {
+        if(followUser.getNickName().equals(input)) {
           System.out.println("이미 팔로우 한 유저!");
-          continue;
+          return;
         }
       }
 
@@ -46,7 +47,7 @@ public class UserFollowAddHandler extends AbstractUserHandler {
 
   private User findByUserNickName(String userNickName) {
     for(User user : userList) {
-      if(user.getUserNickName().equals(userNickName)) {
+      if(user.getNickName().equals(userNickName)) {
         return user;
       }
     }

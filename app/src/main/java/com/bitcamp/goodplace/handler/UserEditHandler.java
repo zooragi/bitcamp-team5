@@ -1,24 +1,15 @@
 package com.bitcamp.goodplace.handler;
 
-import java.util.List;
 import com.bitcamp.goodplace.domain.User;
 import com.bitcamp.util.Prompt;
 
-public class UserUpdateHandler extends AbstractUserHandler{
-  public UserUpdateHandler(List<User> user) {
-    super(user);
-  }
+public class UserEditHandler implements Command {
 
   public void execute(CommandRequest request) {
-    System.out.println("[회원 정보 수정하기]");
-    int no = Prompt.inputInt("번호 > ");
 
-    User user = findByNo(no);
+    System.out.println("[내 정보 수정하기]");
 
-    if (user == null) {
-      System.out.println("등록된 회원 없음!");
-      return;
-    }
+    User user = (User) request.getAttribute("loginUser");
 
     String email = Prompt.inputString("이메일(" + user.getEmail() + ") > ");
     String password = Prompt.inputString("암호 > ");
@@ -26,7 +17,7 @@ public class UserUpdateHandler extends AbstractUserHandler{
 
     String input = Prompt.inputString("수정하기(y/N) > ");
     if (input.equalsIgnoreCase("n") || input.length() == 0) {
-      System.out.println("회원 수정 취소!");
+      System.out.println("수정 취소!");
       return;
     }
 

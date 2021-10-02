@@ -2,32 +2,37 @@ package com.bitcamp.goodplace.handler;
 
 import com.bitcamp.goodplace.domain.Place;
 import com.bitcamp.goodplace.domain.Theme;
-import com.bitcamp.util.Prompt;
 
 public class PlaceListHandler extends AbstractPlaceHandler{
 
+  @Override
   public void execute(CommandRequest request) {
-    System.out.println("[장소 목록]");
+    while (true) {
+      System.out.println("[장소 목록보기]");
 
-    Theme theme = (Theme) request.getAttribute("searchedTheme");
+      Theme theme = (Theme) request.getAttribute("searchedTheme");
 
-    if (theme == null) {
-      System.out.println("해당 이름의 테마가 없습니다.");
-      return;
-    }
+      if (theme == null) {
+        System.out.println("등록된 테마 없음!");
+        System.out.println();
+        continue;
+      }
 
-    int index = 1;
+      int index = 1;
 
-    System.out.printf("[%s]\n", theme.getTitle());
-    for (Place placeList : theme.getPlaceList()) {
-      System.out.printf("(%d)\n", index++);
-      System.out.printf("장소 이름> %s\n", placeList.getStoreName());
-      System.out.printf("장소 주소> %s\n", placeList.getAddressName());
-      System.out.printf("위도 > %s\n", placeList.getxCoord());
-      System.out.printf("경도 > %s\n", placeList.getyCoord());
-      System.out.printf("장소 후기> %s\n", placeList.getComment().toString());
-      System.out.println();
+      System.out.printf("[%s] 테마 제목 > %s\n", theme.getCategory(), theme.getTitle());
+
+      for (Place place : theme.getPlaceList()) {
+        System.out.printf("<%d>\n", index++);
+        System.out.printf("장소 이름 > %s\n", place.getStoreName());
+        System.out.printf("장소 주소 > %s\n", place.getStoreAddress());
+        System.out.printf("위도 > %s\n", place.getxCoord());
+        System.out.printf("경도 > %s\n", place.getyCoord());
+        System.out.printf("장소 후기> %s\n", place.getComments().toString());
+        System.out.println();
+      }
     }
   }
+
 
 }

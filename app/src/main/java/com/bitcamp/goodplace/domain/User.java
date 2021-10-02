@@ -8,23 +8,39 @@ public class User implements Comparable<User> {
   private int no;
   private String email;
   private String password;
-  private String userNickName;
+  private String nickName;
   private Date registeredDate;
   private int viewCount;
-  private int warning;
+  private int reportedCount = 0;
+  private int warningCount = 0;
 
   private List<User> likedUsers = new ArrayList<>(); //팔로우
   private List<Theme> themeList = new ArrayList<>();
   private List<Theme> likedThemes = new ArrayList<>(); // 북마크
 
 
+
+
   @Override
   public String toString() {
-    return "User [no=" + no + ", email=" + email + ", password=" + password + ", userNickName="
-        + userNickName + ", registeredDate=" + registeredDate + ", viewCount=" + viewCount
-        + ", warning=" + warning + ", likedUsers=" + likedUsers + ", themeList=" + themeList
-        + ", likedThemes=" + likedThemes + "]";
+    return "User [no=" + no + ", email=" + email + ", password=" + password + ", nickName="
+        + nickName + ", registeredDate=" + registeredDate + ", viewCount=" + viewCount
+        + ", reportedCount=" + reportedCount + ", warningCount=" + warningCount + ", likedUsers="
+        + likedUsers + ", themeList=" + themeList + ", likedThemes=" + likedThemes + "]";
   }
+
+
+  public int getReportedCount() {
+    return reportedCount;
+  }
+
+
+  public void setReportedCount(int reportedCount) {
+    this.reportedCount = reportedCount;
+  }
+
+
+
 
 
   public int getNo() {
@@ -61,13 +77,13 @@ public class User implements Comparable<User> {
 
 
 
-  public String getUserNickName() {
-    return userNickName;
+  public String getNickName() {
+    return nickName;
   }
 
 
-  public void setUserNickName(String userNickName) {
-    this.userNickName = userNickName;
+  public void setNickName(String nickName) {
+    this.nickName = nickName;
   }
 
 
@@ -91,17 +107,6 @@ public class User implements Comparable<User> {
   public void setViewCount(int viewCount) {
     this.viewCount = viewCount;
   }
-
-
-  public int getWarning() {
-    return warning;
-  }
-
-
-  public void setWarning(int warning) {
-    this.warning = warning;
-  }
-
 
   public List<User> getLikedUsers() {
     return likedUsers;
@@ -137,6 +142,16 @@ public class User implements Comparable<User> {
   @Override
   public int compareTo(User user) {
     return user.viewCount - this.viewCount;
+  }
+
+
+  public int getWarningCount() {
+    return warningCount;
+  }
+
+
+  public void setWarningCount(int warningCount) {
+    this.warningCount = warningCount;
   }
 
 }

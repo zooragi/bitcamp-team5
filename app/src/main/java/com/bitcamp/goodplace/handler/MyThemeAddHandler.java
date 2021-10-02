@@ -18,13 +18,13 @@ public class MyThemeAddHandler extends AbstractMyMapHandler {
     Theme theme = new Theme();
     System.out.println("[나의 테마 등록하기]");
 
-    int themeNo = AuthLoginHandler.getLoginUser().
-        getThemeList().get(AuthLoginHandler.getLoginUser().getThemeList().size()-1).getNo();
 
 
     if(AuthLoginHandler.getLoginUser().getThemeList().size() == 0) {
       theme.setNo(1);
     } else {
+      int themeNo = AuthLoginHandler.getLoginUser().
+          getThemeList().get(AuthLoginHandler.getLoginUser().getThemeList().size()-1).getNo();
       theme.setNo(++themeNo);
     }
 
@@ -70,7 +70,7 @@ public class MyThemeAddHandler extends AbstractMyMapHandler {
       theme.setPublic(true);
     }
 
-    theme.setUserNickName(AuthLoginHandler.getLoginUser());
+    theme.setThemeOwnerName(AuthLoginHandler.getLoginUser().getNickName());
     AuthLoginHandler.getLoginUser().getThemeList().add(theme);
     themeList.add(theme);
     System.out.println();

@@ -6,37 +6,49 @@ import com.bitcamp.util.Prompt;
 
 public class PlaceDeleteHandler extends AbstractPlaceHandler{
 
+  @Override
   public void execute(CommandRequest request) {
-    System.out.println("[장소 삭제]");
+    while (true) {
+      System.out.println("[장소 삭제하기]");
 
-    Theme theme = (Theme) request.getAttribute("searchedTheme");
+      Theme theme = (Theme) request.getAttribute("searchedTheme");
 
-    if (theme == null) {
-      System.out.println("해당 이름의 테마가 없습니다.");
-      return;
-    }
-
-    String storeName = Prompt.inputString("장소 이름을 입력하세요> ");
-    Place place = null;
-    for (Place list : theme.getPlaceList()) {
-      if (list.getStoreName().equals(storeName)) {
-        place = list;
-        break;
+      if (theme == null) {
+        System.out.println("등록된 테마 없음!");
+        return;
       }
-    }
 
-    if (place == null) {
-      System.out.println("해당 이름의 장소가 없습니다.");
-      return;
-    }
+      String storeName = Prompt.inputString("장소 이름(취소 : 엔터) > ");
 
-    String input = Prompt.inputString("정말 삭제하시겠습니까?(y/N)> ");
-    if (input.equalsIgnoreCase("n") || input.length() == 0) {
-      System.out.println("장소 삭제를 취소하였습니다.");
-      return;
-    }
+      if (storeName.equals("") || storeName.length() == 0) {
+        System.out.println("장소 삭제하기 취소!");
+        System.out.println();
+        return;
+      }
 
-    theme.getPlaceList().remove(place);
-    System.out.println("장소를 삭제하였습니다.");
+      Place place = null;
+      for (Place list : theme.getPlaceList()) {
+        if (list.getStoreName().equals(storeName)) {
+          place = list;
+          break;
+        }
+      }
+
+      if (place == null) {
+        System.out.println("등록된 장소 없음!");
+        System.out.println();
+        continue;
+      }
+
+      String input = Prompt.inputString("삭제하기(y/N) > ");
+      if (input.equalsIgnoreCase("n") || input.length() == 0) {
+        System.out.println("장소 삭제하기 취소!");
+        System.out.println();
+        return;
+      }
+
+      theme.getPlaceList().remove(place);
+      System.out.println("장소 삭제하기 완료!");
+    }
   }
 }

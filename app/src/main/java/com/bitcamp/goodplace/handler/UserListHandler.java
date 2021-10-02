@@ -8,13 +8,13 @@ public class UserListHandler extends AbstractUserHandler{
     super(userList);
   }
   public void execute(CommandRequest request) {
-    System.out.println("[회원 목록]");
+    System.out.println("[회원 목록 보기]");
 
     for (User user : userList) {
-      System.out.printf("회원 번호 : %s\n", user.getNo());
-      System.out.printf("회원 이름 : %s\n", user.getNickName());
-      System.out.printf("등록일 : %s\n", user.getRegisteredDate());
-      System.out.printf("팔로우 : %d\n", user.getFollowings().size());
+      System.out.printf("회원 번호 > %s\n", user.getNo());
+      System.out.printf("회원 이름 > %s\n", user.getNickName());
+      System.out.printf("가입일 > %s\n", user.getRegisteredDate());
+      System.out.printf("팔로우 > %d\n", user.getLikedUsers().size());
       System.out.println();
     } 
   }

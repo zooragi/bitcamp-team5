@@ -3,9 +3,9 @@ package com.bitcamp.goodplace.handler;
 import java.util.List;
 import com.bitcamp.goodplace.domain.User;
 
-public class UserFollowListHandler extends AbstractUserHandler {
+public class LikedUserListHandler extends AbstractUserHandler {
 
-  public UserFollowListHandler(List<User> userList) {
+  public LikedUserListHandler(List<User> userList) {
     super(userList);
   }
 
@@ -19,7 +19,7 @@ public class UserFollowListHandler extends AbstractUserHandler {
 
     int index = 1;
     for (User list : AuthLoginHandler.getLoginUser().getLikedUsers()) {
-      System.out.printf("<%d> 닉네임 > %s \n", index++, list.getUserNickName());
+      System.out.printf("<%d> 닉네임 > %s \n", index++, list.getNickName());
     }
   }
 

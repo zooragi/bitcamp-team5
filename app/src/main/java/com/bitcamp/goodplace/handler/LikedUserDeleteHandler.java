@@ -3,7 +3,7 @@ package com.bitcamp.goodplace.handler;
 import com.bitcamp.goodplace.domain.User;
 import com.bitcamp.util.Prompt;
 
-public class UserFollowDeleteHandler implements Command {
+public class LikedUserDeleteHandler implements Command {
 
   @Override
   public void execute(CommandRequest request) throws Exception {
@@ -11,7 +11,7 @@ public class UserFollowDeleteHandler implements Command {
 
     String input = Prompt.inputString("삭제할 유저의 닉네임 > ");
     for( User user : AuthLoginHandler.getLoginUser().getLikedUsers()) {
-      if(user.getUserNickName().equals(input)) {
+      if(user.getNickName().equals(input)) {
         AuthLoginHandler.getLoginUser().getLikedUsers().remove(user);
         System.out.println("팔로우 취소 완료!");
         break;
