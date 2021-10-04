@@ -1,9 +1,12 @@
 package com.bitcamp.goodplace.handler;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.bitcamp.goodplace.domain.User;
 import com.bitcamp.menu.Menu;
+import com.bitcamp.request.RequestAgent;
 import com.bitcamp.util.Prompt;
 
 public class AuthLoginHandler implements Command{
@@ -11,7 +14,7 @@ public class AuthLoginHandler implements Command{
   List<User> userList;
   static User loginUser;
   static int useAccessLevel = Menu.ACCESS_LOGOUT;
-
+  RequestAgent requestAgent;
 //  List<UserContextListener> userListeners = new ArrayList<>();
   User user;
 
@@ -22,12 +25,12 @@ public class AuthLoginHandler implements Command{
     return useAccessLevel;
   }
 
-	public AuthLoginHandler(List<User> userList/* ,List<UserContextListener> userListeners */) {
-    this.userList = userList;
+	public AuthLoginHandler(RequestAgent requestAgent/* ,List<UserContextListener> userListeners */) {
+    this.requestAgent = requestAgent;
 //    this.userListeners = userListeners;
   }
 
-  public void execute(CommandRequest request) {
+  public void execute(CommandRequest request) throws Exception{
     System.out.println("[로그인]");
 
     String email = Prompt.inputString("이메일 > ");
@@ -40,26 +43,24 @@ public class AuthLoginHandler implements Command{
       return;
     }
 
-    user = findByEmailPassword(email, password);
+    Map<String,String> params = new HashMap<String,String>();
+    params.put("email", email);
+    params.put("password", password);
+    
+    requestAgent.request("user.selectOneByEmailPassword", params);
 
-    if (user == null) {
-      System.out.println("이메일 또는 암호가 일치하지 않음!");
+    if(requestAgent.getStatus().equals(RequestAgent.SUCCESS)) {
+    	User user = requestAgent.getObject(User.class);
+    	loginUser = user;
+    	useAccessLevel = Menu.ACCESS_GENERAL;
     } else {
+    	System.out.println("이메일과 암호가 일치하는 회원을 찾을 수 없습니다.");
+    }
+    
 //      notifyOnLogin();
-      useAccessLevel = Menu.ACCESS_GENERAL;
-    }
-
-    loginUser = user;
+    
   }
 
-  private User findByEmailPassword(String email, String password) {
-    for (User user : userList) {
-      if (user.getEmail().equalsIgnoreCase(email) && user.getPassword().equals(password)) {
-        return user;
-      }
-    }
-    return null;
-  }
 
 //  private void notifyOnLogin() {
 //    HashMap<String,Object> params = new HashMap<>();

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.bitcamp.goodplace.context.UserContextListener;
+import com.bitcamp.context.UserContextListener;
 import com.bitcamp.goodplace.handler.AuthLoginHandler;
 import com.bitcamp.goodplace.handler.Command;
 import com.bitcamp.goodplace.handler.CommandRequest;
@@ -61,6 +61,7 @@ public class ClientApp {
   	requestAgent = new RequestAgent("127.0.0.1",8888);
   	
     commandMap.put("/user/add", new UserAddHandler(requestAgent));
+    commandMap.put("/auth/login", new AuthLoginHandler(requestAgent));
 
   }
   
@@ -173,9 +174,7 @@ public class ClientApp {
   public void service() throws Exception{
     createMenu().execute();
 
-    // 프로그램의 실행을 끝내면, 서버와의 연결을 끊는다.
     requestAgent.request("quit", null);
-    //    System.out.println(requestAgent.getObject(String.class));
 
     Prompt.close();
   }
