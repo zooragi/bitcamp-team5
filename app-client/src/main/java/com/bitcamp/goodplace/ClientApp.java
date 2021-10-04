@@ -9,6 +9,7 @@ import com.bitcamp.goodplace.handler.AuthLoginHandler;
 import com.bitcamp.goodplace.handler.Command;
 import com.bitcamp.goodplace.handler.CommandRequest;
 import com.bitcamp.goodplace.handler.MyThemeAddHandler;
+import com.bitcamp.goodplace.handler.MyThemeDetailHandler;
 import com.bitcamp.goodplace.handler.MyThemeListHandler;
 import com.bitcamp.goodplace.handler.UserAddHandler;
 import com.bitcamp.goodplace.listener.LoginListener;
@@ -67,6 +68,7 @@ public class ClientApp {
     commandMap.put("/auth/login", new AuthLoginHandler(requestAgent,userListeners));
     commandMap.put("/myTheme/add", new MyThemeAddHandler(requestAgent));
     commandMap.put("/myTheme/list", new MyThemeListHandler());
+    commandMap.put("/myTheme/detail", new MyThemeDetailHandler());
 
   }
   
