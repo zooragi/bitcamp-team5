@@ -23,6 +23,7 @@ public class RequestProcessor {
 	
 	public void service() throws Exception{
 		while(true) {
+			
 			String command = in.readLine();
 			
 			if(command.equals("quit")) {
@@ -45,20 +46,6 @@ public class RequestProcessor {
 				}
 				
 				out.flush();
-			} else if (command.startsWith("get.")) {
-				Request request = new Request(command,in.readLine());
-				Response response = new Response();
-				userTable.execute(request, response);
-				
-				out.println(response.getStatus());
-				if(response.getValue() != null) {
-					out.println(new Gson().toJson(response.getValue()));
-				} else {
-					out.println();
-				}
-				
-				out.flush();
-				
 			}else {
         in.readLine(); // 클라이언트가 보낸 문자열을 읽어서 버린다.
         out.println("success");
@@ -66,7 +53,7 @@ public class RequestProcessor {
         out.flush();
       }
 		}	
-		
+		userTable.save();
 	}
 
 	public void close() {
