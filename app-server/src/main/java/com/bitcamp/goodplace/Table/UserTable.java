@@ -19,7 +19,7 @@ public class UserTable extends JsonDataTable<User>{
 			case "user.selectOne": selectOne(request,response); break;
 			case "user.selectOneByEmailPassword" :selectOneByEmailPassword(request,response); break;
 			case "user.theme.insert" : themeInsert(request,response); break;
-			case "user.theme.list" : themeList(request,response); break;
+			case "user.theme.delete" : themeDelete(request, response); break;
       default:
         response.setStatus(Response.FAIL);
         response.setValue("해당 명령을 지원하지 않습니다.");
@@ -27,15 +27,19 @@ public class UserTable extends JsonDataTable<User>{
 		}
 	}
 
-	private void themeList(Request request, Response response) {
-		
+	private void themeDelete(Request request, Response response) {
+		String themeTitle = request.getObject(String.class);
+		Theme theme = findByTitle(themeTitle);
+		User user = findByThemeTitle(themeTitle);
+		user.getThemeList().remove(theme);
+		response.setStatus(Response.SUCCESS);
+		response.setValue(theme);
 	}
 
 	private void themeInsert(Request request, Response response) {
 		Theme theme = request.getObject(Theme.class);
 		User user = findByName(theme.getThemeOwnerName());
 		user.getThemeList().add(theme);
-		System.out.println(user);
 		response.setStatus(Response.SUCCESS);
 	}
 
@@ -97,4 +101,27 @@ public class UserTable extends JsonDataTable<User>{
 		}
 		return null;
 	}
+	
+	private User findByThemeTitle(String title) {
+		for(User user : list) {
+			for(Theme theme : user.getThemeList()) {
+				if(theme.getTitle().equals(title)) {
+					return user;
+				}
+			}
+		}
+		return null;
+	}
+	
+	private Theme findByTitle(String title) {
+		for(User user : list) {
+			for(Theme theme : user.getThemeList()) {
+				if(theme.getTitle().equals(title)) {
+					return theme;
+				}
+			}
+		}
+		return null;
+	}
+	
 }
