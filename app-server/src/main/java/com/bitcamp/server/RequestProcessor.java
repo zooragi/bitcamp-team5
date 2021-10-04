@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import com.bitcamp.goodplace.Table.ThemeTable;
 import com.bitcamp.goodplace.Table.UserTable;
 import com.google.gson.Gson;
 
@@ -14,6 +15,7 @@ public class RequestProcessor {
 	BufferedReader in;
 	
 	UserTable userTable = new UserTable();
+	ThemeTable themeTable = new ThemeTable();
 	
 	public RequestProcessor(Socket socket) throws Exception{
 		this.socket = socket;
@@ -32,8 +34,7 @@ public class RequestProcessor {
 				out.println();
 				out.flush();
 				break;
-			}
-			else if(command.startsWith("user."))	{
+			} else if(command.startsWith("user."))	{
 				Request request = new Request(command,in.readLine());
 				Response response = new Response();
 				userTable.execute(request, response);
@@ -46,7 +47,21 @@ public class RequestProcessor {
 				}
 				
 				out.flush();
-			}else {
+			}else if(command.startsWith("theme."))	{
+				Request request = new Request(command,in.readLine());
+				Response response = new Response();
+				themeTable.execute(request, response);
+				
+				out.println(response.getStatus());
+				if(response.getValue() != null) {
+					out.println(new Gson().toJson(response.getValue()));
+				} else {
+					out.println();
+				}
+				
+				out.flush();
+			}
+			else {
         in.readLine(); // 클라이언트가 보낸 문자열을 읽어서 버린다.
         out.println("success");
         out.println(command);
@@ -54,6 +69,7 @@ public class RequestProcessor {
       }
 		}	
 		userTable.save();
+		themeTable.save();
 	}
 
 	public void close() {

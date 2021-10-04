@@ -8,6 +8,7 @@ import com.bitcamp.context.UserContextListener;
 import com.bitcamp.goodplace.handler.AuthLoginHandler;
 import com.bitcamp.goodplace.handler.Command;
 import com.bitcamp.goodplace.handler.CommandRequest;
+import com.bitcamp.goodplace.handler.MyThemeAddHandler;
 import com.bitcamp.goodplace.handler.UserAddHandler;
 import com.bitcamp.goodplace.listener.LoginListener;
 import com.bitcamp.menu.Menu;
@@ -63,6 +64,7 @@ public class ClientApp {
   	
     commandMap.put("/user/add", new UserAddHandler(requestAgent));
     commandMap.put("/auth/login", new AuthLoginHandler(requestAgent,userListeners));
+    commandMap.put("/myTheme/add", new MyThemeAddHandler(requestAgent));
 
   }
   
