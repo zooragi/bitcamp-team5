@@ -1,22 +1,47 @@
 package com.bitcamp.goodplace.Table;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import com.bitcamp.goodplace.domain.User;
 import com.bitcamp.server.Request;
 import com.bitcamp.server.Response;
 
-public class UserTable {
+public class UserTable extends JsonDataTable<User>{
 
-	List<User> list = new ArrayList<User>();
-	
+	public UserTable() {
+		super("user.json", User.class);
+	}
+
 	public void execute(Request request, Response response) {
 		switch (request.getCommand()) {
 			case "user.insert": insert(request,response); break;
 			case "user.selectOne": selectOne(request,response); break;
+			case "user.selectOneByEmailPassword" :selectOneByEmailPassword(request,response); break;
+      default:
+        response.setStatus(Response.FAIL);
+        response.setValue("해당 명령을 지원하지 않습니다.");
 				
+		}
+	}
+
+	private void selectOneByEmailPassword(Request request, Response response) {
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
+		
+		User user = null;
+		for(User u : list) {
+			if(u.getEmail().equals(email) && u.getPassword().equals(password)) {
+				user = u;
+				break;
+			}
+		}
+		
+		if(user != null) {
+			response.setStatus(Response.SUCCESS);
+			response.setValue(user);
+		} else {
+			response.setStatus(Response.FAIL);
+			response.setValue("해당 이메일과 암호를 가진 회원을 찾을 수 없습니다.");
 		}
 	}
 
