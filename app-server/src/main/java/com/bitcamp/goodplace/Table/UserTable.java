@@ -2,6 +2,7 @@ package com.bitcamp.goodplace.Table;
 
 import java.util.Map;
 
+import com.bitcamp.goodplace.domain.Theme;
 import com.bitcamp.goodplace.domain.User;
 import com.bitcamp.server.Request;
 import com.bitcamp.server.Response;
@@ -17,11 +18,25 @@ public class UserTable extends JsonDataTable<User>{
 			case "user.insert": insert(request,response); break;
 			case "user.selectOne": selectOne(request,response); break;
 			case "user.selectOneByEmailPassword" :selectOneByEmailPassword(request,response); break;
+			case "user.theme.insert" : themeInsert(request,response); break;
+			case "user.theme.list" : themeList(request,response); break;
       default:
         response.setStatus(Response.FAIL);
         response.setValue("해당 명령을 지원하지 않습니다.");
 				
 		}
+	}
+
+	private void themeList(Request request, Response response) {
+		
+	}
+
+	private void themeInsert(Request request, Response response) {
+		Theme theme = request.getObject(Theme.class);
+		User user = findByName(theme.getThemeOwnerName());
+		user.getThemeList().add(theme);
+		System.out.println(user);
+		response.setStatus(Response.SUCCESS);
 	}
 
 	private void selectOneByEmailPassword(Request request, Response response) {
@@ -68,6 +83,15 @@ public class UserTable extends JsonDataTable<User>{
 	private User findByNo(int no) {
 		for(User user : list) {
 			if(user.getNo() == no) {
+				return user;
+			}
+		}
+		return null;
+	}
+	
+	private User findByName(String name) {
+		for(User user : list) {
+			if(user.getNickName().equals(name)) {
 				return user;
 			}
 		}
