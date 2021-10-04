@@ -2,7 +2,7 @@ package com.bitcamp.goodplace.listener;
 
 import java.util.Map;
 
-import com.bitcamp.goodplace.context.UserContextListener;
+import com.bitcamp.context.UserContextListener;
 import com.bitcamp.goodplace.domain.User;
 
 public class LoginListener implements UserContextListener{
@@ -11,7 +11,7 @@ public class LoginListener implements UserContextListener{
   public void contextLogin(Map<String, Object> params) {
     User currentUser = (User) params.get("currentUser");
     System.out.println("**************************************");
-    System.out.println("제주옵서예🍊!");
+    System.out.println("\t    제주옵서예🍊!");
     System.out.printf("\t* %s님 환영합니다*\t\n",currentUser.getNickName());
     System.out.println("**************************************");
     if(currentUser.getWarningCount() > 2) {

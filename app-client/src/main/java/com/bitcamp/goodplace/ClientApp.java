@@ -9,6 +9,7 @@ import com.bitcamp.goodplace.handler.AuthLoginHandler;
 import com.bitcamp.goodplace.handler.Command;
 import com.bitcamp.goodplace.handler.CommandRequest;
 import com.bitcamp.goodplace.handler.UserAddHandler;
+import com.bitcamp.goodplace.listener.LoginListener;
 import com.bitcamp.menu.Menu;
 import com.bitcamp.menu.MenuFilter;
 import com.bitcamp.menu.MenuGroup;
@@ -61,7 +62,7 @@ public class ClientApp {
   	requestAgent = new RequestAgent("127.0.0.1",8888);
   	
     commandMap.put("/user/add", new UserAddHandler(requestAgent));
-    commandMap.put("/auth/login", new AuthLoginHandler(requestAgent));
+    commandMap.put("/auth/login", new AuthLoginHandler(requestAgent,userListeners));
 
   }
   
@@ -183,6 +184,7 @@ public class ClientApp {
     System.out.println("[PMS 클라이언트]");
 
     ClientApp app = new ClientApp(); 
+    app.addUserContextListener(new LoginListener());
     app.service();
 
     Prompt.close();

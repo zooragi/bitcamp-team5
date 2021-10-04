@@ -1,9 +1,11 @@
 package com.bitcamp.goodplace.handler;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.bitcamp.context.UserContextListener;
 import com.bitcamp.goodplace.domain.User;
 import com.bitcamp.menu.Menu;
 import com.bitcamp.request.RequestAgent;
@@ -15,7 +17,7 @@ public class AuthLoginHandler implements Command{
   static User loginUser;
   static int useAccessLevel = Menu.ACCESS_LOGOUT;
   RequestAgent requestAgent;
-//  List<UserContextListener> userListeners = new ArrayList<>();
+  List<UserContextListener> userListeners = new ArrayList<>();
   User user;
 
   public static User getLoginUser() {
@@ -25,9 +27,9 @@ public class AuthLoginHandler implements Command{
     return useAccessLevel;
   }
 
-	public AuthLoginHandler(RequestAgent requestAgent/* ,List<UserContextListener> userListeners */) {
+	public AuthLoginHandler(RequestAgent requestAgent,List<UserContextListener> userListeners) {
     this.requestAgent = requestAgent;
-//    this.userListeners = userListeners;
+    this.userListeners = userListeners;
   }
 
   public void execute(CommandRequest request) throws Exception{
@@ -50,27 +52,26 @@ public class AuthLoginHandler implements Command{
     requestAgent.request("user.selectOneByEmailPassword", params);
 
     if(requestAgent.getStatus().equals(RequestAgent.SUCCESS)) {
-    	User user = requestAgent.getObject(User.class);
+    	user = requestAgent.getObject(User.class);
     	loginUser = user;
     	useAccessLevel = Menu.ACCESS_GENERAL;
     } else {
     	System.out.println("이메일과 암호가 일치하는 회원을 찾을 수 없습니다.");
     }
-    
-//      notifyOnLogin();
+      notifyOnLogin();
     
   }
 
 
-//  private void notifyOnLogin() {
-//    HashMap<String,Object> params = new HashMap<>();
-//
-//    params.put("currentUser", user);
-//
-//    for (UserContextListener listener : userListeners) {
-//      listener.contextLogin(params);
-//    }
-//  }
+  private void notifyOnLogin() {
+    HashMap<String,Object> params = new HashMap<>();
+
+    params.put("currentUser", user);
+
+    for (UserContextListener listener : userListeners) {
+      listener.contextLogin(params);
+    }
+  }
 
 
 }

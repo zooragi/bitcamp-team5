@@ -1,4 +1,4 @@
-package com.bitcamp.goodplace.context;
+package com.bitcamp.context;
 
 import java.util.Map;
 
