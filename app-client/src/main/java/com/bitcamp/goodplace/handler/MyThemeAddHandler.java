@@ -71,13 +71,16 @@ public class MyThemeAddHandler implements Command {
     }
 
     theme.setThemeOwnerName(AuthLoginHandler.getLoginUser().getNickName());
-    requestAgent.request("theme.insert", theme);
+    requestAgent.request("user.theme.insert", theme);
     
     if(requestAgent.getStatus().equals(RequestAgent.SUCCESS)) {
     	System.out.println("테마 등록 완료!");
-    } else {
+    } else if(requestAgent.getStatus().equals(RequestAgent.FAIL)){
     	System.out.println("테마 등록 실패!");
+    	return;
     }
+    
+    
     
   }
 
