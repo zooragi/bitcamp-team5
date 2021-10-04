@@ -34,7 +34,7 @@ public class MyThemeDetailHandler implements Command {
       return;
     }
 
-    request.setAttribute("searchedTheme", searchedTheme);
+    request.setAttribute("themeTitle", searchedTheme.getTitle());
 
     while (true) {
       System.out.println();
@@ -49,24 +49,20 @@ public class MyThemeDetailHandler implements Command {
       if(detailMenu == null) return;
 
       ArrayList<String> detailMenuListOfKeys = new ArrayList<>(detailMenu.keySet());
+      Collections.swap(detailMenuListOfKeys, detailMenuListOfKeys.indexOf("이전 메뉴"), detailMenuListOfKeys.size()-1);
       showMenuList(detailMenuListOfKeys);
       selectedNum = chooseMenu(detailMenuListOfKeys.size());
       if(detailMenu.get(detailMenuListOfKeys.get(selectedNum-1)).equals("0")) return;
-
       request.getRequestDispatcher(detailMenu.get(detailMenuListOfKeys.get(selectedNum-1))).forward(request);
     }
 
   }
 
   private void showThemeList() {
+  	int i = 1;
     for (Theme theme : AuthLoginHandler.getLoginUser().getThemeList()) {
-      System.out.printf("<%d>\n", theme.getNo());
-      System.out.printf("[%s] 테마 제목 > %s\n", theme.getCategory(), theme.getTitle());
-      System.out.printf("해시 태그 > %s\n", theme.getHashtags().toString());
-      System.out.printf("%s테마\n", theme.isPublic() ? "공개" : "비공개");
-      if (theme.isPublic()) {
-        System.out.printf("조회수 > %d\n", theme.getViewCount());
-      }
+      System.out.printf("<%d>\n", i++);
+      System.out.printf("테마 제목 > [%s] %s\n", theme.getCategory(), theme.getTitle());
       System.out.println();
     }
   }
@@ -124,8 +120,8 @@ public class MyThemeDetailHandler implements Command {
 
   private void addThemeDetailMapValue() {
     Map<String, String> themeMenu = new HashMap<>();
-    themeMenu.put("테마 수정하기", "/myMap/update");
-    themeMenu.put("테마 삭제하기", "/myMap/delete");
+    themeMenu.put("테마 수정하기", "/myTheme/update");
+    themeMenu.put("테마 삭제하기", "/myTheme/delete");
     themeMenu.put("이전 메뉴", "0");
     controlMenu.put("테마관리", themeMenu);
   }
