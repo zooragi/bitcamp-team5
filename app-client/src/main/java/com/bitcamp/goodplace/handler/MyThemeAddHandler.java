@@ -18,13 +18,16 @@ public class MyThemeAddHandler implements Command {
 
   public void execute(CommandRequest request) throws Exception{
     Theme theme = new Theme();
+    System.out.println();
     System.out.println("[나의 테마 등록하기]");
-
-    if(AuthLoginHandler.getLoginUser().getThemeList().size() == 0) {
+    
+    requestAgent.request("user.theme.list", AuthLoginHandler.getLoginUser().getNickName());
+    ArrayList<Theme> themeList = new ArrayList<>(requestAgent.getObjects(Theme.class));
+    
+    if(themeList.size() == 0) {
       theme.setNo(1);
     } else {
-      int themeNo = AuthLoginHandler.getLoginUser().
-          getThemeList().get(AuthLoginHandler.getLoginUser().getThemeList().size()-1).getNo();
+      int themeNo = themeList.get(themeList.size()-1).getNo();
       theme.setNo(++themeNo);
     }
 
