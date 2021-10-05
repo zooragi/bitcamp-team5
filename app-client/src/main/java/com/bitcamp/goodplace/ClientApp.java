@@ -117,7 +117,6 @@ public class ClientApp {
     myMap.add(new MenuItem("테마 만들기", "/myTheme/add"));
     myMap.add(new MenuItem("테마 목록보기", "/myTheme/list"));
     myMap.add(new MenuItem("테마 상세보기", "/myTheme/detail"));
-    myMap.add(new MenuItem("테마 삭제하기", "/myTheme/delete"));
 
     mg.add(myMap);
   }

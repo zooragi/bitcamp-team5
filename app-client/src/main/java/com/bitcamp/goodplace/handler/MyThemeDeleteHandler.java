@@ -25,6 +25,7 @@ public class MyThemeDeleteHandler implements Command {
 		
 		
 		System.out.printf("%s테마 삭제 완료!",requestAgent.getObject(Theme.class).getTitle());
+		System.out.println();
 	}
 
 }

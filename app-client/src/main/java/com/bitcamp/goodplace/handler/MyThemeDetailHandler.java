@@ -99,6 +99,7 @@ public class MyThemeDetailHandler implements Command {
     for (String key : list) {
       System.out.printf("%d. %s\n", i++, key);
     }
+    System.out.println();
   }
   private int chooseMenu(int size) {
     int selectedNum;
