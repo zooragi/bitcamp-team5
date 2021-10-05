@@ -5,14 +5,19 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.bitcamp.context.UserContextListener;
+import com.bitcamp.goodplace.dao.impl.NetUserDao;
+import com.bitcamp.goodplace.handler.AllThemeListHandler;
 import com.bitcamp.goodplace.handler.AuthLoginHandler;
+import com.bitcamp.goodplace.handler.AuthLogoutHandler;
 import com.bitcamp.goodplace.handler.Command;
 import com.bitcamp.goodplace.handler.CommandRequest;
 import com.bitcamp.goodplace.handler.MyThemeAddHandler;
 import com.bitcamp.goodplace.handler.MyThemeDeleteHandler;
 import com.bitcamp.goodplace.handler.MyThemeDetailHandler;
 import com.bitcamp.goodplace.handler.MyThemeListHandler;
+import com.bitcamp.goodplace.handler.ReportAddThemeHandler;
 import com.bitcamp.goodplace.handler.UserAddHandler;
+import com.bitcamp.goodplace.handler.UserPrompt;
 import com.bitcamp.goodplace.listener.LoginListener;
 import com.bitcamp.menu.Menu;
 import com.bitcamp.menu.MenuFilter;
@@ -65,12 +70,19 @@ public class ClientApp {
   public ClientApp() throws Exception{
   	requestAgent = new RequestAgent("127.0.0.1",8888);
   	
-    commandMap.put("/user/add", new UserAddHandler(requestAgent));
+  	NetUserDao userDao = new NetUserDao(requestAgent);
+  	
+    commandMap.put("/user/add", new UserAddHandler(userDao));
     commandMap.put("/auth/login", new AuthLoginHandler(requestAgent,userListeners));
+    commandMap.put("/auth/logout", new AuthLogoutHandler(userListeners));
     commandMap.put("/myTheme/add", new MyThemeAddHandler(requestAgent));
     commandMap.put("/myTheme/list", new MyThemeListHandler(requestAgent));
     commandMap.put("/myTheme/detail", new MyThemeDetailHandler(requestAgent));
     commandMap.put("/myTheme/delete", new MyThemeDeleteHandler(requestAgent));
+    commandMap.put("/theme/all", new AllThemeListHandler(requestAgent));
+    
+    UserPrompt userPrompt = new UserPrompt(requestAgent);
+    commandMap.put("/report/theme", new ReportAddThemeHandler(requestAgent,userPrompt));
 
   }
   
