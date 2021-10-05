@@ -17,14 +17,28 @@ public class UserTable extends JsonDataTable<User>{
 		switch (request.getCommand()) {
 			case "user.insert": insert(request,response); break;
 			case "user.selectOne": selectOne(request,response); break;
+			case "user.selectList": selectList(request,response); break;
 			case "user.selectOneByEmailPassword" :selectOneByEmailPassword(request,response); break;
 			case "user.theme.insert" : themeInsert(request,response); break;
 			case "user.theme.delete" : themeDelete(request, response); break;
+			case "user.theme.list" : themeList(request, response); break;
       default:
         response.setStatus(Response.FAIL);
         response.setValue("해당 명령을 지원하지 않습니다.");
 				
 		}
+	}
+
+	private void selectList(Request request, Response response) {
+		response.setValue(list);
+		response.setValue(Response.SUCCESS);
+	}
+
+	private void themeList(Request request, Response response) {
+		String name = request.getObject(String.class);
+		User user = findByName(name);
+		response.setStatus(Response.SUCCESS);
+		response.setValue(user.getThemeList());
 	}
 
 	private void themeDelete(Request request, Response response) {
