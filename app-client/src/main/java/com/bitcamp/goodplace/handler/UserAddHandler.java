@@ -1,18 +1,17 @@
 package com.bitcamp.goodplace.handler;
 
 import java.sql.Date;
-import java.util.List;
 
+import com.bitcamp.goodplace.dao.UserDao;
 import com.bitcamp.goodplace.domain.User;
-import com.bitcamp.request.RequestAgent;
 import com.bitcamp.util.Prompt;
 
 public class UserAddHandler implements Command{
-	RequestAgent requestAgent;
-	List<User> userList; 
+	UserDao userDao;
+//	List<User> userList; 
 	
-  public UserAddHandler(RequestAgent requestAgent) {
-  	this.requestAgent = requestAgent;
+  public UserAddHandler(UserDao userDao) {
+  	this.userDao = userDao;
   }
 
   public void execute(CommandRequest request) throws Exception{
@@ -25,17 +24,13 @@ public class UserAddHandler implements Command{
     user.setEmail(Prompt.inputString("이메일 > "));
     user.setNickName(Prompt.inputString("닉네임 > "));
     user.setPassword(Prompt.inputString("암호 > "));
-    user.setRegisteredDate(new Date(System.currentTimeMillis()));
+//    user.setRegisteredDate(new Date(System.currentTimeMillis()));
 //    userNo = userList.get(userList.size()-1).getNo();
 //    user.setNo(++userNo);
-
-    requestAgent.request("user.insert", user);
     
-    if(requestAgent.getStatus().equals(RequestAgent.SUCCESS)) {
-    	System.out.println("회원 추가 완료");
-    } else {
-    	System.out.println("회원 삭제 완료");
-    }
+    userDao.insert(user);
+  
+    System.out.println("회원 등록 완료");
   }
 
 }
