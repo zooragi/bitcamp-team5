@@ -68,8 +68,8 @@ public class ClientApp {
     commandMap.put("/user/add", new UserAddHandler(requestAgent));
     commandMap.put("/auth/login", new AuthLoginHandler(requestAgent,userListeners));
     commandMap.put("/myTheme/add", new MyThemeAddHandler(requestAgent));
-    commandMap.put("/myTheme/list", new MyThemeListHandler());
-    commandMap.put("/myTheme/detail", new MyThemeDetailHandler());
+    commandMap.put("/myTheme/list", new MyThemeListHandler(requestAgent));
+    commandMap.put("/myTheme/detail", new MyThemeDetailHandler(requestAgent));
     commandMap.put("/myTheme/delete", new MyThemeDeleteHandler(requestAgent));
 
   }

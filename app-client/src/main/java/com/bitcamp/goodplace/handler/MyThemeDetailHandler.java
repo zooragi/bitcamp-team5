@@ -1,21 +1,27 @@
 package com.bitcamp.goodplace.handler;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import com.bitcamp.goodplace.domain.Theme;
 import com.bitcamp.goodplace.domain.User;
+import com.bitcamp.request.RequestAgent;
 import com.bitcamp.util.Prompt;
 
 public class MyThemeDetailHandler implements Command {
   Map<String, Map<String, String>> controlMenu = new HashMap<>();
-
-  public MyThemeDetailHandler() {
+  RequestAgent requestAgent;
+  
+  
+  public MyThemeDetailHandler(RequestAgent requestAgent) {
     addPlaceDetailMapValue();
     addThemeDetailMapValue();
     controlMenu.put("이전 메뉴",null);
+    this.requestAgent = requestAgent;
   }
 
   @SuppressWarnings("unlikely-arg-type")
@@ -23,11 +29,14 @@ public class MyThemeDetailHandler implements Command {
   public void execute(CommandRequest request) throws Exception {
     Theme searchedTheme;
 
+    requestAgent.request("user.theme.list", AuthLoginHandler.getLoginUser().getNickName());
+    ArrayList<Theme> themeList = new ArrayList<>(requestAgent.getObjects(Theme.class));
+    
     System.out.println("[테마 상세보기]");
     System.out.println();
 
-    showThemeList();
-    searchedTheme = chooseTheme();
+    showThemeList(themeList);
+    searchedTheme = chooseTheme(themeList);
 
     User user = AuthLoginHandler.getLoginUser();
     if (!user.getNickName().equals(searchedTheme.getThemeOwnerName()) && user.getEmail().equals("root@test.com")) {
@@ -58,24 +67,24 @@ public class MyThemeDetailHandler implements Command {
 
   }
 
-  private void showThemeList() {
+  private void showThemeList(ArrayList<Theme> themeList) {
   	int i = 1;
-    for (Theme theme : AuthLoginHandler.getLoginUser().getThemeList()) {
+    for (Theme theme : themeList) {
       System.out.printf("<%d>\n", i++);
       System.out.printf("테마 제목 > [%s] %s\n", theme.getCategory(), theme.getTitle());
       System.out.println();
     }
   }
 
-  private Theme chooseTheme() {
+  private Theme chooseTheme(ArrayList<Theme> themeList) {
     while (true) {
       try {
         int inputNum = Prompt.inputInt("번호 입력 > ");
-        if (inputNum > AuthLoginHandler.getLoginUser().getThemeList().size() || inputNum < 0) {
+        if (inputNum > themeList.size() || inputNum < 0) {
           System.out.println("잘못된 번호!");
           continue;
         }
-        return AuthLoginHandler.getLoginUser().getThemeList().get(inputNum - 1);
+        return themeList.get(inputNum - 1);
       } catch (Exception e) {
         System.out.println("------------------------------------------");
         System.out.printf("오류 발생: %s\n", e.getClass().getName());
