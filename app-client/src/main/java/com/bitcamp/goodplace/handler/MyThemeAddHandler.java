@@ -1,7 +1,6 @@
 package com.bitcamp.goodplace.handler;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import com.bitcamp.goodplace.domain.Theme;
@@ -21,15 +20,8 @@ public class MyThemeAddHandler implements Command {
 		System.out.println();
 		System.out.println("[나의 테마 등록하기]");
 
-		requestAgent.request("user.theme.list", AuthLoginHandler.getLoginUser().getNickName());
+		requestAgent.request("theme.list", null);
 		ArrayList<Theme> themeList = new ArrayList<>(requestAgent.getObjects(Theme.class));
-
-		if (themeList.size() == 0) {
-			theme.setNo(1);
-		} else {
-			int themeNo = themeList.get(themeList.size() - 1).getNo();
-			theme.setNo(++themeNo);
-		}
 
 		theme.setTitle(Prompt.inputString("테마 이름(취소 : 엔터) > "));
 
@@ -37,6 +29,19 @@ public class MyThemeAddHandler implements Command {
 			System.out.println("나의 테마 등록 취소!");
 			return;
 		}
+
+		int uniqueNumber;
+		loop: while (true) {
+			uniqueNumber = Prompt.inputInt("고유 번호(취소 : 엔터) > ");
+			for (Theme t : themeList) {
+				if (t.getNo() == uniqueNumber) {
+					System.out.println("존재하는 번호입니다. 다시 입력 하시오.");
+					continue loop;
+				}
+			}
+			break;
+		}
+		theme.setNo(uniqueNumber);
 
 		int categoryNum;
 		List<String> categories = new ArrayList<>();
@@ -74,7 +79,6 @@ public class MyThemeAddHandler implements Command {
 		}
 
 		theme.setThemeOwnerName(AuthLoginHandler.getLoginUser().getNickName());
-		requestAgent.request("user.theme.insert", theme);
 		requestAgent.request("theme.insert", theme);
 
 		if (requestAgent.getStatus().equals(RequestAgent.SUCCESS)) {

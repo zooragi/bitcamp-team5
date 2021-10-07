@@ -9,21 +9,20 @@ import com.bitcamp.request.RequestAgent;
 public class UserPrompt {
 
 	RequestAgent requestAgent;
-	
+
 	public UserPrompt(RequestAgent requestAgent) {
 		this.requestAgent = requestAgent;
 	}
-	
-  public Theme findByTitle(String themeTitle) throws Exception {
-  	requestAgent.request("user.selectList", null);
-  	ArrayList<User> userList = new ArrayList<>(requestAgent.getObjects(User.class));
-    for(User user : userList) {
-      for(Theme theme : user.getThemeList())
-        if(theme.getTitle().equals(themeTitle)) {
-          return theme;
-        }
-    }
-    return null;
-  }
-	
+
+	public Theme findByTitle(String themeTitle) throws Exception {
+		requestAgent.request("theme.list", null);
+		ArrayList<Theme> themeList = new ArrayList<>(requestAgent.getObjects(Theme.class));
+		for (Theme theme : themeList)
+			if (theme.getTitle().equals(themeTitle)) {
+				return theme;
+			}
+
+		return null;
+	}
+
 }
