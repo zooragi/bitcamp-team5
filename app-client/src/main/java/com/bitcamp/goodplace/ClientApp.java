@@ -83,7 +83,7 @@ public class ClientApp {
     commandMap.put("/myTheme/add", new MyThemeAddHandler(themeDao));
     commandMap.put("/myTheme/list", new MyThemeListHandler(themeDao));
     commandMap.put("/myTheme/detail", new MyThemeDetailHandler(themeDao));
-    commandMap.put("/myTheme/delete", new MyThemeDeleteHandler(requestAgent));
+    commandMap.put("/myTheme/delete", new MyThemeDeleteHandler(themeDao));
     commandMap.put("/myTheme/update", new MyThemeUpdateHandler(themeDao));
     commandMap.put("/theme/all", new AllThemeListHandler(themeDao));
     

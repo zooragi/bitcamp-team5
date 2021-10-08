@@ -36,7 +36,7 @@ public class ThemeTable extends JsonDataTable<Theme> {
 		Theme deleteTheme = findByTitle(deleteThemeTitle);
 		list.remove(deleteTheme);
 		response.setStatus(Response.SUCCESS);
-		response.setValue(deleteTheme);
+		response.setValue(deleteTheme.getTitle());
 	}
 
 	private void themeUpdate(Request request, Response response) {

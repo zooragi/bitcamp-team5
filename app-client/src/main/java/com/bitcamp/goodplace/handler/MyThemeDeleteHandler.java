@@ -1,16 +1,17 @@
 package com.bitcamp.goodplace.handler;
 
+import com.bitcamp.goodplace.dao.ThemeDao;
 import com.bitcamp.goodplace.domain.Theme;
 import com.bitcamp.request.RequestAgent;
 import com.bitcamp.util.Prompt;
 
 public class MyThemeDeleteHandler implements Command {
 
-	RequestAgent requestAgent;
-
-	public MyThemeDeleteHandler(RequestAgent requestAgent) {
-		this.requestAgent = requestAgent;
-	}
+	ThemeDao themeDao;
+	
+  public MyThemeDeleteHandler(ThemeDao themeDao) {
+  	this.themeDao = themeDao;
+  }
 
 	public void execute(CommandRequest request) throws Exception{
 		System.out.println("[테마 삭제하기]");
@@ -21,10 +22,10 @@ public class MyThemeDeleteHandler implements Command {
 			return;
 		}
 		
-		requestAgent.request("user.theme.delete", request.getAttribute("themeTitle"));
+		Theme theme = (Theme) request.getAttribute("theme");
+		String deleteThemeTitle = themeDao.delete(theme.getTitle());
 		
-		
-		System.out.printf("%s테마 삭제 완료!",requestAgent.getObject(Theme.class).getTitle());
+		System.out.printf("%s테마 삭제 완료!",deleteThemeTitle);
 		System.out.println();
 	}
 
