@@ -84,7 +84,7 @@ public class ClientApp {
     commandMap.put("/myTheme/list", new MyThemeListHandler(themeDao));
     commandMap.put("/myTheme/detail", new MyThemeDetailHandler(themeDao));
     commandMap.put("/myTheme/delete", new MyThemeDeleteHandler(requestAgent));
-    commandMap.put("/myTheme/update", new MyThemeUpdateHandler(requestAgent));
+    commandMap.put("/myTheme/update", new MyThemeUpdateHandler(themeDao));
     commandMap.put("/theme/all", new AllThemeListHandler(themeDao));
     
     UserPrompt userPrompt = new UserPrompt(requestAgent);

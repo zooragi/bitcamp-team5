@@ -29,4 +29,14 @@ public class NetThemeDao implements ThemeDao{
 
     return new ArrayList<>(requestAgent.getObjects(Theme.class));
 	}
+
+	@Override
+	public void update(Theme theme) throws Exception {
+		requestAgent.request("theme.update", theme);		
+    if (requestAgent.getStatus().equals(RequestAgent.FAIL)) {
+      throw new Exception(requestAgent.getObject(String.class));
+    }
+	}
+	
+	
 }
