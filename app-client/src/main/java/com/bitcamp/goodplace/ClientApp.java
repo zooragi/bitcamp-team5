@@ -200,7 +200,7 @@ public class ClientApp {
   public void service() throws Exception{
     createMenu().execute();
 
-    requestAgent.request("quit", null);
+//    requestAgent.request("quit", null);
 
     Prompt.close();
   }

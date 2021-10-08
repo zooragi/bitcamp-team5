@@ -17,26 +17,30 @@ public class ServerApp {
 
     System.out.println("서버 실행중");
     ServerSocket serverSocket = new ServerSocket(8888);
-
-    Socket socket = serverSocket.accept();
-    System.out.println("클라이언트가 접속했음");
     
     HashMap<String,DataProcessor> dataProcessorMap = new HashMap<>();
+    
     dataProcessorMap.put("user.", new UserTable());
     dataProcessorMap.put("theme.", new ThemeTable());
 
-    RequestProcessor requestProcessor = new RequestProcessor(socket, dataProcessorMap);
-    requestProcessor.service();
-    requestProcessor.close();
+    while(true) {
+      Socket socket = serverSocket.accept();
+      System.out.println("클라이언트가 접속했음");
 
-    Collection<DataProcessor> dataProcessors = dataProcessorMap.values();
-    for (DataProcessor dataProcessor : dataProcessors) {
-      if (dataProcessor instanceof JsonDataTable) {
-        ((JsonDataTable<?>)dataProcessor).save();
-      }
+      RequestProcessor requestProcessor = new RequestProcessor(socket, dataProcessorMap);
+      requestProcessor.service();
+      requestProcessor.close();
+
+      Collection<DataProcessor> dataProcessors = dataProcessorMap.values();
+      for (DataProcessor dataProcessor : dataProcessors) {
+        if (dataProcessor instanceof JsonDataTable) {
+          ((JsonDataTable<?>)dataProcessor).save();
+        }
+      }    	
     }
+
     
-    System.out.println("서버 종료");
-    serverSocket.close();
+//    System.out.println("서버 종료");
+//    serverSocket.close();
 	}
 }

@@ -46,40 +46,39 @@ public class RequestProcessor implements AutoCloseable {
 	public void service() throws Exception {
 		Set<String> dataProcessorNames = dataProcessorMap.keySet();
 
-		while (true) {
-			String command = in.readLine();
-			Request request = new Request(command, in.readLine());
-			Response response = new Response();
-			
-			if (command.equals("quit")) {
-				out.println("success");
-				out.println();
-				out.flush();
+		String command = in.readLine();
+		Request request = new Request(command, in.readLine());
+		Response response = new Response();
+
+		if (command.equals("quit")) {
+			out.println("success");
+			out.println();
+			out.flush();
+			return;
+		}
+
+		DataProcessor dataProcessor = null;
+		for (String key : dataProcessorNames) {
+			if (command.startsWith(key)) {
+				dataProcessor = dataProcessorMap.get(key);
 				break;
 			}
-			
-			DataProcessor dataProcessor = null;
-			for (String key : dataProcessorNames) {
-				if (command.startsWith(key)) {
-					dataProcessor = dataProcessorMap.get(key);
-				}
-			}
-
-			if (dataProcessor != null) {
-				dataProcessor.execute(request, response);
-			} else {
-				response.setStatus(Response.FAIL);
-				response.setValue("해당 명령어를 처리할 수 없습니다.");
-			}
-			sendResult(response);
 		}
-		System.out.println("quit");
+
+		if (dataProcessor != null) {
+			dataProcessor.execute(request, response);
+		} else {
+			response.setStatus(Response.FAIL);
+			response.setValue("해당 명령어를 처리할 수 없습니다.");
+		}
+		sendResult(response);
+
 	}
-	
-	private void sendResult(Response response) throws Exception{
+
+	private void sendResult(Response response) throws Exception {
 		out.println(response.status);
-		if(response.getValue() != null) {
-      out.println(new Gson().toJson(response.getValue()));
+		if (response.getValue() != null) {
+			out.println(new Gson().toJson(response.getValue()));
 		} else {
 			out.println();
 		}
