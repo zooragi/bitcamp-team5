@@ -8,7 +8,6 @@ import com.bitcamp.util.Prompt;
 
 public class UserAddHandler implements Command{
 	UserDao userDao;
-//	List<User> userList; 
 	
   public UserAddHandler(UserDao userDao) {
   	this.userDao = userDao;
@@ -19,14 +18,12 @@ public class UserAddHandler implements Command{
     System.out.println("[회원 가입하기]");
 
     User user = new User();
-//    int userNo = 0;
 
     user.setEmail(Prompt.inputString("이메일 > "));
     user.setNickName(Prompt.inputString("닉네임 > "));
     user.setPassword(Prompt.inputString("암호 > "));
-//    user.setRegisteredDate(new Date(System.currentTimeMillis()));
-//    userNo = userList.get(userList.size()-1).getNo();
-//    user.setNo(++userNo);
+    user.setNo(Prompt.inputInt("고유 번호 > "));
+    user.setRegisteredDate(new Date(System.currentTimeMillis()));
     
     userDao.insert(user);
   
