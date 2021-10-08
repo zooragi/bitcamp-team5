@@ -13,9 +13,8 @@ import com.bitcamp.util.Prompt;
 
 public class MyThemeDetailHandler implements Command {
   Map<String, Map<String, String>> controlMenu = new HashMap<>();
-  ArrayList<Theme> myThemeList;
 	ThemeDao themeDao;
-	User user = AuthLoginHandler.getLoginUser();
+	ArrayList<Theme> myThemeList = new ArrayList<>();
   
   public MyThemeDetailHandler(ThemeDao themeDao) {
     addPlaceDetailMapValue();
@@ -28,14 +27,14 @@ public class MyThemeDetailHandler implements Command {
     Theme searchedTheme;
     
     ArrayList<Theme> themeList = (ArrayList<Theme>) themeDao.findAll();
-    myThemeList = findMyThemeList(themeList);
+    findMyThemeList(themeList);
     
     System.out.println("[테마 상세보기]");
     System.out.println();
 
     showThemeList(myThemeList);
     searchedTheme = chooseTheme(myThemeList);
-
+    User user = AuthLoginHandler.getLoginUser();
     if (!user.getNickName().equals(searchedTheme.getThemeOwnerName()) && user.getEmail().equals("root@test.com")) {
       return;
     }
@@ -64,13 +63,13 @@ public class MyThemeDetailHandler implements Command {
 
   }
 
-  private ArrayList<Theme> findMyThemeList(ArrayList<Theme> themeList) {
+  private void findMyThemeList(ArrayList<Theme> themeList) {
   	for(Theme theme : themeList) {
-  		if(theme.getThemeOwnerName().equals(user.getNickName())) {
+  		if(theme.getThemeOwnerName().equals(AuthLoginHandler.getLoginUser().getNickName())) {
   			myThemeList.add(theme);
   		}
   	}
-		return null;
+		
 	}
 
 	private void showThemeList(ArrayList<Theme> themeList) {
