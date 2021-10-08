@@ -10,11 +10,12 @@ public class Theme implements Comparable<Theme>{
   private int viewCount;
   private boolean isPublic;
   private boolean isShare;
-  private List<Place> placeList = new ArrayList<Place>();
-  private List<String> hashtags = new ArrayList<String>();
   private String category; 
   private int reportedCount = 0;
 
+  private List<Place> placeList = new ArrayList<Place>();
+  private List<String> hashtags = new ArrayList<String>();
+  private List<String> likedThemeUsers = new ArrayList<String>();
 
 
   @Override
@@ -108,5 +109,13 @@ public class Theme implements Comparable<Theme>{
   public void setNo(int no) {
     this.no = no;
   }
+
+	public List<String> getLikedThemeUsers() {
+		return likedThemeUsers;
+	}
+
+	public void setLikedThemeUsers(List<String> likedThemeUsers) {
+		this.likedThemeUsers = likedThemeUsers;
+	}
 
 }
