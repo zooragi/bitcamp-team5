@@ -2,12 +2,12 @@ package com.bitcamp.goodplace.Table;
 
 import java.util.Map;
 
-import com.bitcamp.goodplace.domain.Theme;
 import com.bitcamp.goodplace.domain.User;
+import com.bitcamp.server.DataProcessor;
 import com.bitcamp.server.Request;
 import com.bitcamp.server.Response;
 
-public class UserTable extends JsonDataTable<User>{
+public class UserTable extends JsonDataTable<User> implements DataProcessor{
 
 	public UserTable() {
 		super("user.json", User.class);

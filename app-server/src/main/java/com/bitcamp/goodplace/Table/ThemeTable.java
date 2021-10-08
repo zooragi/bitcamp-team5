@@ -1,10 +1,11 @@
 package com.bitcamp.goodplace.Table;
 
 import com.bitcamp.goodplace.domain.Theme;
+import com.bitcamp.server.DataProcessor;
 import com.bitcamp.server.Request;
 import com.bitcamp.server.Response;
 
-public class ThemeTable extends JsonDataTable<Theme> {
+public class ThemeTable extends JsonDataTable<Theme> implements DataProcessor{
 
 	public ThemeTable() {
 		super("theme.json", Theme.class);
