@@ -19,9 +19,6 @@ public class UserTable extends JsonDataTable<User>{
 			case "user.selectOne": selectOne(request,response); break;
 			case "user.selectList": selectList(request,response); break;
 			case "user.selectOneByEmailPassword" :selectOneByEmailPassword(request,response); break;
-			case "user.theme.insert" : themeInsert(request,response); break;
-			case "user.theme.delete" : themeDelete(request, response); break;
-			case "user.theme.list" : themeList(request, response); break;
       default:
         response.setStatus(Response.FAIL);
         response.setValue("해당 명령을 지원하지 않습니다.");
@@ -33,30 +30,7 @@ public class UserTable extends JsonDataTable<User>{
 		response.setValue(list);
 		response.setValue(Response.SUCCESS);
 	}
-
-	private void themeList(Request request, Response response) {
-		String name = request.getObject(String.class);
-		User user = findByName(name);
-		response.setStatus(Response.SUCCESS);
-		response.setValue(user.getThemeList());
-	}
-
-	private void themeDelete(Request request, Response response) {
-		String themeTitle = request.getObject(String.class);
-		Theme theme = findByTitle(themeTitle);
-		User user = findByThemeTitle(themeTitle);
-		user.getThemeList().remove(theme);
-		response.setStatus(Response.SUCCESS);
-		response.setValue(theme);
-	}
-
-	private void themeInsert(Request request, Response response) {
-		Theme theme = request.getObject(Theme.class);
-		User user = findByName(theme.getThemeOwnerName());
-		user.getThemeList().add(theme);
-		response.setStatus(Response.SUCCESS);
-	}
-
+	
 	private void selectOneByEmailPassword(Request request, Response response) {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
@@ -107,35 +81,6 @@ public class UserTable extends JsonDataTable<User>{
 		return null;
 	}
 	
-	private User findByName(String name) {
-		for(User user : list) {
-			if(user.getNickName().equals(name)) {
-				return user;
-			}
-		}
-		return null;
-	}
-	
-	private User findByThemeTitle(String title) {
-		for(User user : list) {
-			for(Theme theme : user.getThemeList()) {
-				if(theme.getTitle().equals(title)) {
-					return user;
-				}
-			}
-		}
-		return null;
-	}
-	
-	private Theme findByTitle(String title) {
-		for(User user : list) {
-			for(Theme theme : user.getThemeList()) {
-				if(theme.getTitle().equals(title)) {
-					return theme;
-				}
-			}
-		}
-		return null;
-	}
+
 	
 }
