@@ -24,19 +24,19 @@ public class ServerApp {
     dataProcessorMap.put("theme.", new ThemeTable());
 
     while(true) {
+    	
       Socket socket = serverSocket.accept();
-      System.out.println("클라이언트가 접속했음");
+      System.out.println("클라이언트 접속");
 
+      // 1) 새 실행 흐름 생성
       RequestProcessor requestProcessor = new RequestProcessor(socket, dataProcessorMap);
-      requestProcessor.service();
-      requestProcessor.close();
 
-      Collection<DataProcessor> dataProcessors = dataProcessorMap.values();
-      for (DataProcessor dataProcessor : dataProcessors) {
-        if (dataProcessor instanceof JsonDataTable) {
-          ((JsonDataTable<?>)dataProcessor).save();
-        }
-      }    	
+      // 2) 새로 생성한 실행 흐름을 시작시킨다.
+      // => run()이 호출될 것이다.
+      // => 시작시킨 후 즉시 리턴한다. 
+      //    즉 새로 생성한 실행 흐름이 종료될 때까지 기다리지 않는다.
+      requestProcessor.start();
+    	
     }
 
     
