@@ -2,21 +2,22 @@ package com.bitcamp.goodplace.handler;
 
 import java.util.ArrayList;
 
+import com.bitcamp.goodplace.dao.ThemeDao;
 import com.bitcamp.goodplace.domain.Theme;
 import com.bitcamp.request.RequestAgent;
 
 public class AllThemeListHandler implements Command{
 
-	RequestAgent requestAgent;
-
-	public AllThemeListHandler(RequestAgent requestAgent) {
-		this.requestAgent = requestAgent;
-	}
+	ThemeDao themeDao;
+	
+  public AllThemeListHandler(ThemeDao themeDao) {
+  	this.themeDao = themeDao;
+  }
 
 	public void execute(CommandRequest request) throws Exception {
 		System.out.println("[전체 테마 목록보기]");
-		requestAgent.request("theme.list", null);
-		ArrayList<Theme> themeList = new ArrayList<>(requestAgent.getObjects(Theme.class));
+		
+		ArrayList<Theme> themeList = (ArrayList<Theme>) themeDao.findAll();
 
 		int i = 1;
 		for (Theme theme : themeList) {

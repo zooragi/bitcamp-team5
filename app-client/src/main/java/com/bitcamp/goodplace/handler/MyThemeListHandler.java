@@ -1,30 +1,29 @@
 package com.bitcamp.goodplace.handler;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
+import com.bitcamp.goodplace.dao.ThemeDao;
 import com.bitcamp.goodplace.domain.Theme;
-import com.bitcamp.request.RequestAgent;
 
 public class MyThemeListHandler implements Command {
 
-	RequestAgent requestAgent;
+	ThemeDao themeDao;
 	
-	public MyThemeListHandler(RequestAgent requestAgent) {
-		this.requestAgent = requestAgent;
-	}
+  public MyThemeListHandler(ThemeDao themeDao) {
+  	this.themeDao = themeDao;
+  }
 	
   public void execute(CommandRequest request) throws Exception{
     System.out.println("[내 테마 목록보기]");
     int i = 1 ;
     
-    requestAgent.request("theme.list", AuthLoginHandler.getLoginUser().getNickName());
-    ArrayList<Theme> themeList = new ArrayList<>(requestAgent.getObjects(Theme.class));
+    ArrayList<Theme> themeList = (ArrayList<Theme>) themeDao.findAll();
     
     if (themeList.size() == 0) {
       System.out.println("등록된 테마 없음!");
       return;
     }
+    
     for (Theme theme : themeList) {
     	if(AuthLoginHandler.getLoginUser().getNickName().equals(theme.getThemeOwnerName())) {
     		System.out.printf("<%d>\n", i++);

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.bitcamp.context.UserContextListener;
+import com.bitcamp.goodplace.dao.impl.NetThemeDao;
 import com.bitcamp.goodplace.dao.impl.NetUserDao;
 import com.bitcamp.goodplace.handler.AllThemeListHandler;
 import com.bitcamp.goodplace.handler.AuthLoginHandler;
@@ -15,6 +16,7 @@ import com.bitcamp.goodplace.handler.MyThemeAddHandler;
 import com.bitcamp.goodplace.handler.MyThemeDeleteHandler;
 import com.bitcamp.goodplace.handler.MyThemeDetailHandler;
 import com.bitcamp.goodplace.handler.MyThemeListHandler;
+import com.bitcamp.goodplace.handler.MyThemeUpdateHandler;
 import com.bitcamp.goodplace.handler.ReportAddThemeHandler;
 import com.bitcamp.goodplace.handler.UserAddHandler;
 import com.bitcamp.goodplace.handler.UserPrompt;
@@ -75,11 +77,15 @@ public class ClientApp {
     commandMap.put("/user/add", new UserAddHandler(userDao));
     commandMap.put("/auth/login", new AuthLoginHandler(requestAgent,userListeners));
     commandMap.put("/auth/logout", new AuthLogoutHandler(userListeners));
-    commandMap.put("/myTheme/add", new MyThemeAddHandler(requestAgent));
-    commandMap.put("/myTheme/list", new MyThemeListHandler(requestAgent));
-    commandMap.put("/myTheme/detail", new MyThemeDetailHandler(requestAgent));
+    
+    NetThemeDao themeDao = new NetThemeDao(requestAgent);
+    
+    commandMap.put("/myTheme/add", new MyThemeAddHandler(themeDao));
+    commandMap.put("/myTheme/list", new MyThemeListHandler(themeDao));
+    commandMap.put("/myTheme/detail", new MyThemeDetailHandler(themeDao));
     commandMap.put("/myTheme/delete", new MyThemeDeleteHandler(requestAgent));
-    commandMap.put("/theme/all", new AllThemeListHandler(requestAgent));
+    commandMap.put("/myTheme/update", new MyThemeUpdateHandler(requestAgent));
+    commandMap.put("/theme/all", new AllThemeListHandler(themeDao));
     
     UserPrompt userPrompt = new UserPrompt(requestAgent);
     commandMap.put("/report/theme", new ReportAddThemeHandler(requestAgent,userPrompt));
