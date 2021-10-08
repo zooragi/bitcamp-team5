@@ -64,6 +64,7 @@ public class MyThemeDetailHandler implements Command {
   }
 
   private void findMyThemeList(ArrayList<Theme> themeList) {
+  	myThemeList.clear();
   	for(Theme theme : themeList) {
   		if(theme.getThemeOwnerName().equals(AuthLoginHandler.getLoginUser().getNickName())) {
   			myThemeList.add(theme);
