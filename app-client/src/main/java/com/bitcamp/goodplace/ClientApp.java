@@ -17,6 +17,9 @@ import com.bitcamp.goodplace.handler.MyThemeDeleteHandler;
 import com.bitcamp.goodplace.handler.MyThemeDetailHandler;
 import com.bitcamp.goodplace.handler.MyThemeListHandler;
 import com.bitcamp.goodplace.handler.MyThemeUpdateHandler;
+import com.bitcamp.goodplace.handler.PlaceAddHandler;
+import com.bitcamp.goodplace.handler.PlaceDeleteHandler;
+import com.bitcamp.goodplace.handler.PlaceListHandler;
 import com.bitcamp.goodplace.handler.ReportAddThemeHandler;
 import com.bitcamp.goodplace.handler.UserAddHandler;
 import com.bitcamp.goodplace.handler.UserPrompt;
@@ -86,6 +89,10 @@ public class ClientApp {
     commandMap.put("/myTheme/delete", new MyThemeDeleteHandler(themeDao));
     commandMap.put("/myTheme/update", new MyThemeUpdateHandler(themeDao));
     commandMap.put("/theme/all", new AllThemeListHandler(themeDao));
+    
+    commandMap.put("/place/add", new PlaceAddHandler(themeDao));
+    commandMap.put("/place/delete", new PlaceDeleteHandler(themeDao));
+    commandMap.put("/place/list", new PlaceListHandler(themeDao));
     
     UserPrompt userPrompt = new UserPrompt(requestAgent);
     commandMap.put("/report/theme", new ReportAddThemeHandler(requestAgent,userPrompt));

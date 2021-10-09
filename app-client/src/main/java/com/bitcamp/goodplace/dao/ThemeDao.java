@@ -2,6 +2,7 @@ package com.bitcamp.goodplace.dao;
 
 import java.util.List;
 
+import com.bitcamp.goodplace.domain.Place;
 import com.bitcamp.goodplace.domain.Theme;
 
 public interface ThemeDao {
@@ -9,4 +10,6 @@ public interface ThemeDao {
 	List<Theme> findAll() throws Exception;
 	void update(Theme theme) throws Exception;
 	String delete(String themeTitle) throws Exception;
+	void placeInsert(Place place) throws Exception;
+	String placeDelete(String placeTitle) throws Exception;
 }

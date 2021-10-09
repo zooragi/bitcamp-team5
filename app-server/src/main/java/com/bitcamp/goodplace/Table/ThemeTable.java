@@ -1,5 +1,6 @@
 package com.bitcamp.goodplace.Table;
 
+import com.bitcamp.goodplace.domain.Place;
 import com.bitcamp.goodplace.domain.Theme;
 import com.bitcamp.server.DataProcessor;
 import com.bitcamp.server.Request;
@@ -14,16 +15,19 @@ public class ThemeTable extends JsonDataTable<Theme> implements DataProcessor{
 	public void execute(Request request, Response response) {
 		switch (request.getCommand()) {
 		case "theme.insert":
-			themeInsert(request, response);
+			insert(request, response);
 			break;
 		case "theme.list":
-			themeList(request, response);
+			selectList(request, response);
 			break;
 		case "theme.update":
-			themeUpdate(request, response);
+			update(request, response);
 			break;
 		case "theme.delete":
-			themeDelete(request, response);
+			delete(request, response);
+			break;
+		case "theme.place.insert":
+			placeInsert(request,response);
 			break;
 		default:
 			response.setStatus(Response.FAIL);
@@ -32,7 +36,14 @@ public class ThemeTable extends JsonDataTable<Theme> implements DataProcessor{
 		}
 	}
 
-	private void themeDelete(Request request, Response response) {
+	private void placeInsert(Request request, Response response) {
+		Place place = request.getObject(Place.class);
+		Theme theme = findByTitle(place.getTheme().getTitle());
+		theme.getPlaceList().add(place);
+		response.setStatus(Response.SUCCESS);
+	}
+
+	private void delete(Request request, Response response) {
 		String deleteThemeTitle = request.getObject(String.class);
 		Theme deleteTheme = findByTitle(deleteThemeTitle);
 		list.remove(deleteTheme);
@@ -40,18 +51,18 @@ public class ThemeTable extends JsonDataTable<Theme> implements DataProcessor{
 		response.setValue(deleteTheme.getTitle());
 	}
 
-	private void themeUpdate(Request request, Response response) {
+	private void update(Request request, Response response) {
 		Theme theme = request.getObject(Theme.class);
 		list.set(indexOf(theme), theme);
 		response.setStatus(Response.SUCCESS);
 	}
 
-	private void themeList(Request request, Response response) {
+	private void selectList(Request request, Response response) {
 		response.setValue(list);
 		response.setStatus(Response.SUCCESS);
 	}
 
-	private void themeInsert(Request request, Response response) {
+	private void insert(Request request, Response response) {
 		Theme theme = request.getObject(Theme.class);
 		list.add(theme);
 		response.setStatus(Response.SUCCESS);
@@ -69,17 +80,6 @@ public class ThemeTable extends JsonDataTable<Theme> implements DataProcessor{
 		return -1;
 	}
 
-//	private User findByThemeNo(int no) {
-//		for(User user : list) {
-//			for(Theme theme : user.getThemeList()) {
-//				if(theme.getNo() == no) {
-//					return user;
-//				}
-//			}
-//		}
-//		return null;
-//	}
-//	
 	private Theme findByTitle(String title) {
 		for (Theme theme : list) {
 			if (theme.getTitle().equals(title)) {
@@ -89,18 +89,5 @@ public class ThemeTable extends JsonDataTable<Theme> implements DataProcessor{
 
 		return null;
 	}
-//	
-//	private int indexOfTheme(Theme theme) {
-//		for(User user : list) {
-//			int i = 0;
-//			for(Theme t : user.getThemeList()) {
-//				if(t.getNo() == theme.getNo()) {
-//					return i;
-//				}
-//				i++;
-//				
-//			}
-//		}
-//		return -1;
-//	}
+
 }

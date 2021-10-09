@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.bitcamp.goodplace.dao.ThemeDao;
+import com.bitcamp.goodplace.domain.Place;
 import com.bitcamp.goodplace.domain.Theme;
 import com.bitcamp.request.RequestAgent;
 
@@ -41,6 +42,24 @@ public class NetThemeDao implements ThemeDao{
 	@Override
 	public String delete(String themeTitle) throws Exception {
 		requestAgent.request("theme.delete", themeTitle);
+    if (requestAgent.getStatus().equals(RequestAgent.FAIL)) {
+      throw new Exception(requestAgent.getObject(String.class));
+    }
+		return requestAgent.getObject(String.class);
+	}
+
+	@Override
+	public void placeInsert(Place place) throws Exception {
+		requestAgent.request("theme.place.insert", place);
+		System.out.println(requestAgent.getObject(String.class));
+		if(requestAgent.getStatus().equals(RequestAgent.FAIL)) {
+			throw new Exception(requestAgent.getObject(String.class));
+		}
+	}
+
+	@Override
+	public String placeDelete(String placeTitle) throws Exception {
+		requestAgent.request("theme.place.delete", placeTitle);
     if (requestAgent.getStatus().equals(RequestAgent.FAIL)) {
       throw new Exception(requestAgent.getObject(String.class));
     }

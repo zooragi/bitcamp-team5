@@ -1,0 +1,28 @@
+package com.bitcamp.goodplace.handler;
+
+import com.bitcamp.goodplace.domain.Place;
+import com.bitcamp.goodplace.domain.Theme;
+
+public class PlaceHandlerHelper {
+
+	public static void printPlaceInfo(Theme theme) {
+		int index = 1;
+    for (Place place : theme.getPlaceList()) {
+      System.out.printf("<%d>\n", index++);
+      System.out.printf("장소 이름 > %s\n", place.getStoreName());
+      System.out.printf("장소 주소 > %s\n", place.getStoreAddress());
+      System.out.printf("위도 > %s\n", place.getxCoord());
+      System.out.printf("경도 > %s\n", place.getyCoord());
+      System.out.printf("장소 후기> %s\n", place.getComments().toString());
+    }
+	}
+	
+	public static void printPlaceName(Theme theme) {
+		int index = 1;
+    for (Place place : theme.getPlaceList()) {
+      System.out.printf("<%d>\n", index++);
+      System.out.printf("장소 이름 > %s\n", place.getStoreName());
+    }
+	}
+	
+}
