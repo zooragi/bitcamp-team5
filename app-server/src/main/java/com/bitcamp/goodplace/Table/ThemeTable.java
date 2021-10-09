@@ -20,6 +20,9 @@ public class ThemeTable extends JsonDataTable<Theme> implements DataProcessor{
 		case "theme.list":
 			selectList(request, response);
 			break;
+		case "theme.selectedOne":
+			selectedOne(request, response);
+			break;
 		case "theme.update":
 			update(request, response);
 			break;
@@ -29,11 +32,28 @@ public class ThemeTable extends JsonDataTable<Theme> implements DataProcessor{
 		case "theme.place.insert":
 			placeInsert(request,response);
 			break;
+		case "theme.place.delete":
+			placeDelete(request,response);
+			break;
 		default:
 			response.setStatus(Response.FAIL);
 			response.setValue("해당 명령을 지원하지 않습니다.");
 
 		}
+	}
+
+	private void selectedOne(Request request, Response response) {
+		Theme theme = findByTitle(request.getObject(Theme.class).getTitle());
+		response.setStatus(Response.SUCCESS);
+		response.setValue(theme);
+	}
+
+	private void placeDelete(Request request, Response response) {
+		Place place = findByPlace(request.getObject(Place.class));
+		Theme theme = findByTitle(place.getTheme().getTitle());
+		theme.getPlaceList().remove(place);
+		response.setStatus(Response.SUCCESS);
+		response.setValue(place.getStoreName());
 	}
 
 	private void placeInsert(Request request, Response response) {
@@ -86,8 +106,18 @@ public class ThemeTable extends JsonDataTable<Theme> implements DataProcessor{
 				return theme;
 			}
 		}
-
 		return null;
 	}
-
+	
+	private Place findByPlace(Place place) {
+		for(Theme theme : list) {
+			if(place.getTheme().getTitle().equals(theme.getTitle())){
+				for(Place p : theme.getPlaceList()) {
+					if(p.getStoreName().equals(place.getStoreName())) return p;
+				}
+			}
+		}
+		return null;
+	}
+	
 }

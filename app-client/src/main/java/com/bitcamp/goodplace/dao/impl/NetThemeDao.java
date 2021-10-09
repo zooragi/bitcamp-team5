@@ -58,12 +58,21 @@ public class NetThemeDao implements ThemeDao{
 	}
 
 	@Override
-	public String placeDelete(String placeTitle) throws Exception {
-		requestAgent.request("theme.place.delete", placeTitle);
+	public String placeDelete(Place place) throws Exception {
+		requestAgent.request("theme.place.delete", place);
     if (requestAgent.getStatus().equals(RequestAgent.FAIL)) {
       throw new Exception(requestAgent.getObject(String.class));
     }
 		return requestAgent.getObject(String.class);
+	}
+
+	@Override
+	public Theme selectedOne(Theme theme) throws Exception {
+		requestAgent.request("theme.selectedOne", theme);
+    if (requestAgent.getStatus().equals(RequestAgent.FAIL)) {
+      throw new Exception(requestAgent.getObject(String.class));
+    }
+		return requestAgent.getObject(Theme.class);
 	}
 	
 	

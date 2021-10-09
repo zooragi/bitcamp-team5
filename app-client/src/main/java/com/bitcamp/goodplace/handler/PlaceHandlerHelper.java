@@ -2,6 +2,7 @@ package com.bitcamp.goodplace.handler;
 
 import com.bitcamp.goodplace.domain.Place;
 import com.bitcamp.goodplace.domain.Theme;
+import com.bitcamp.util.Prompt;
 
 public class PlaceHandlerHelper {
 
@@ -23,6 +24,22 @@ public class PlaceHandlerHelper {
       System.out.printf("<%d>\n", index++);
       System.out.printf("장소 이름 > %s\n", place.getStoreName());
     }
+	}
+	
+	public static Place promptPlace(Theme theme) {
+		printPlaceName(theme);
+		int selectNum;
+		while(true) {
+			selectNum = Prompt.inputInt("번호 선택 > ");
+			if(selectNum > theme.getPlaceList().size() || selectNum < 0) {
+				System.out.println("다시 입력 해주세요.");
+				continue;
+			}
+			break;
+		}
+		
+		return theme.getPlaceList().get(selectNum-1);
+		
 	}
 	
 }

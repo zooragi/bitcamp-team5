@@ -34,6 +34,7 @@ public class MyThemeDetailHandler implements Command {
 
     showThemeList(myThemeList);
     searchedTheme = chooseTheme(myThemeList);
+    if(searchedTheme == null) return;
     User user = AuthLoginHandler.getLoginUser();
     if (!user.getNickName().equals(searchedTheme.getThemeOwnerName()) && user.getEmail().equals("root@test.com")) {
       return;
@@ -85,7 +86,8 @@ public class MyThemeDetailHandler implements Command {
   private Theme chooseTheme(ArrayList<Theme> themeList) {
     while (true) {
       try {
-        int inputNum = Prompt.inputInt("번호 입력 > ");
+        int inputNum = Prompt.inputInt("번호 입력(0번 취소) > ");
+        if(inputNum == 0) return null;
         if (inputNum > themeList.size() || inputNum < 0) {
           System.out.println("잘못된 번호!");
           continue;

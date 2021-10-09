@@ -11,5 +11,6 @@ public interface ThemeDao {
 	void update(Theme theme) throws Exception;
 	String delete(String themeTitle) throws Exception;
 	void placeInsert(Place place) throws Exception;
-	String placeDelete(String placeTitle) throws Exception;
+	String placeDelete(Place place) throws Exception;
+	Theme selectedOne(Theme theme) throws Exception;
 }

@@ -43,11 +43,15 @@ public class PlaceAddHandler implements Command {
       for(int i = 0 ; i < SearchedPlaces.length ; i++) {
         selectedPlace = gson.fromJson(gson.toJson(SearchedPlaces[i]),KakaoVo.class);
 
-        if(selectedPlace.getAddress_name().contains("서울")) {
+        if(selectedPlace.getAddress_name().contains("제주")) {
           filterPlace.add(selectedPlace);
         }
       }
 
+      if(filterPlace.size() == 0) {
+      	System.out.println("검색된 장소가 없습니다.");
+      	continue;
+      }
       int i = 1;
       for(KakaoVo kakaoVo : filterPlace) {
         System.out.printf("%d. %s, %s, %s, %s\n",i++,kakaoVo.getPlace_name(),
