@@ -20,6 +20,9 @@ public class ThemeTable extends JsonDataTable<Theme> implements DataProcessor{
 		case "theme.list":
 			selectList(request, response);
 			break;
+		case "theme.search":
+			search(request, response);
+			break;
 		case "theme.selectedOne":
 			selectedOne(request, response);
 			break;
@@ -40,6 +43,14 @@ public class ThemeTable extends JsonDataTable<Theme> implements DataProcessor{
 			response.setValue("해당 명령을 지원하지 않습니다.");
 
 		}
+	}
+
+	private void search(Request request, Response response) {
+		String title = request.getObject(String.class);
+		Theme theme = findByTitle(title);
+		System.out.println(theme);
+		response.setStatus(Response.SUCCESS);
+		response.setValue(theme);
 	}
 
 	private void selectedOne(Request request, Response response) {

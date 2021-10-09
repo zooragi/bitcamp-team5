@@ -17,7 +17,7 @@ public class PlaceListHandler implements Command {
 		System.out.println("[장소 목록보기]");
 
 		Theme theme = (Theme) request.getAttribute("theme");
-		theme = themeDao.selectedOne(theme);
+		theme = themeDao.search(theme.getTitle());
 		
 		System.out.printf("[%s] 테마 제목 > %s\n", theme.getCategory(), theme.getTitle());
 

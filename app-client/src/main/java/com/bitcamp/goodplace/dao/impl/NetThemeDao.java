@@ -66,9 +66,18 @@ public class NetThemeDao implements ThemeDao{
 		return requestAgent.getObject(String.class);
 	}
 
+//	@Override
+//	public Theme selectedOne(Theme theme) throws Exception {
+//		requestAgent.request("theme.selectedOne", theme);
+//    if (requestAgent.getStatus().equals(RequestAgent.FAIL)) {
+//      throw new Exception(requestAgent.getObject(String.class));
+//    }
+//		return requestAgent.getObject(Theme.class);
+//	}
+
 	@Override
-	public Theme selectedOne(Theme theme) throws Exception {
-		requestAgent.request("theme.selectedOne", theme);
+	public Theme search(String title) throws Exception {
+		requestAgent.request("theme.search", title);
     if (requestAgent.getStatus().equals(RequestAgent.FAIL)) {
       throw new Exception(requestAgent.getObject(String.class));
     }

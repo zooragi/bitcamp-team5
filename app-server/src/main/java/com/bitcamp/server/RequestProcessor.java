@@ -32,26 +32,27 @@ public class RequestProcessor extends Thread {
 				BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));) {
 
 			Set<String> dataProcessorNames = dataProcessorMap.keySet();
-
+			
 			String command = in.readLine();
 			Request request = new Request(command, in.readLine());
 			Response response = new Response();
-
+			
 			if (command.equals("quit")) {
 				response.setStatus("success");
 				response.setValue("goodbye");
 				sendResult(response,out);
 				return;
 			}
-
+			
 			DataProcessor dataProcessor = null;
+			
 			for (String key : dataProcessorNames) {
 				if (command.startsWith(key)) {
 					dataProcessor = dataProcessorMap.get(key);
 					break;
 				}
 			}
-
+			
 			if (dataProcessor != null) {
 				dataProcessor.execute(request, response);
 			} else {

@@ -20,7 +20,7 @@ public class PlaceDeleteHandler implements Command{
       System.out.println("[장소 삭제하기]");
 
       Theme theme = (Theme) request.getAttribute("theme");
-      theme = themeDao.selectedOne(theme);
+      theme = themeDao.search(theme.getTitle());
       
       if (theme == null) {
         System.out.println("등록된 테마 없음!");
