@@ -14,7 +14,7 @@ public class ThemePrompt {
 		this.themeDao = themeDao;
 	}
 	
-	public void printList(User user) throws Exception {
+	public void printMyList(User user) throws Exception {
 		ArrayList<Theme> themeList = (ArrayList<Theme>) themeDao.findAll();
 		for(Theme theme : themeList) {
 			if(theme.getThemeOwnerName().equals(user.getNickName())) {

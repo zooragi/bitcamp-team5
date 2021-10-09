@@ -1,5 +1,8 @@
 package com.bitcamp.goodplace.Table;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.bitcamp.goodplace.domain.Place;
 import com.bitcamp.goodplace.domain.Theme;
 import com.bitcamp.server.DataProcessor;
@@ -23,6 +26,9 @@ public class ThemeTable extends JsonDataTable<Theme> implements DataProcessor{
 		case "theme.search":
 			search(request, response);
 			break;
+		case "theme.hashtag.search":
+			hashtagSearch(request, response);
+			break;
 		case "theme.selectedOne":
 			selectedOne(request, response);
 			break;
@@ -45,10 +51,17 @@ public class ThemeTable extends JsonDataTable<Theme> implements DataProcessor{
 		}
 	}
 
+	private void hashtagSearch(Request request, Response response) {
+		String hashtag = request.getObject(String.class);
+		ArrayList<Theme> hashtagSearchedList = findByHashtag(hashtag);
+		response.setStatus(Response.SUCCESS);
+		response.setValue(hashtagSearchedList);
+		
+	}
+
 	private void search(Request request, Response response) {
 		String title = request.getObject(String.class);
 		Theme theme = findByTitle(title);
-		System.out.println(theme);
 		response.setStatus(Response.SUCCESS);
 		response.setValue(theme);
 	}
@@ -129,6 +142,18 @@ public class ThemeTable extends JsonDataTable<Theme> implements DataProcessor{
 			}
 		}
 		return null;
+	}
+	
+	private ArrayList<Theme> findByHashtag(String hashtag){
+		ArrayList<Theme> searchedThemeList = new ArrayList<>();
+		for(Theme t : list) {
+			for(String h : t.getHashtags()) {
+				if(h.equals(hashtag)) {
+					searchedThemeList.add(t);
+				}
+			}
+		}
+		return searchedThemeList;
 	}
 	
 }

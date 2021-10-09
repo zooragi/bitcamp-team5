@@ -13,4 +13,5 @@ public interface ThemeDao {
 	String delete(String themeTitle) throws Exception;
 	void placeInsert(Place place) throws Exception;
 	String placeDelete(Place place) throws Exception;
+	List<Theme> hashtagSearch(String hashtagName) throws Exception;
 }

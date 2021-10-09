@@ -1,10 +1,7 @@
 package com.bitcamp.goodplace.handler;
 
-import java.util.List;
-
 import com.bitcamp.goodplace.dao.ThemeDao;
 import com.bitcamp.goodplace.domain.Theme;
-import com.bitcamp.goodplace.domain.User;
 import com.bitcamp.util.Prompt;
 
 public class SearchThemeHandler implements Command {

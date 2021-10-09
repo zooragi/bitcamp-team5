@@ -26,7 +26,7 @@ public class SearchUserHandler implements Command {
       	continue;
       }
       System.out.printf("[%s]유저의 테마 목록\n", user.getNickName());
-      themePrompt.printList(user);
+      themePrompt.printMyList(user);
       System.out.println();
       
       return;

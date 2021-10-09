@@ -83,6 +83,16 @@ public class NetThemeDao implements ThemeDao{
     }
 		return requestAgent.getObject(Theme.class);
 	}
+
+	@Override
+	public List<Theme> hashtagSearch(String hashtagName) throws Exception {
+		requestAgent.request("theme.hashtag.search", hashtagName);
+    if (requestAgent.getStatus().equals(RequestAgent.FAIL)) {
+      throw new Exception(requestAgent.getObject(String.class));
+    }
+		
+		return new ArrayList<>(requestAgent.getObjects(Theme.class));
+	}
 	
 	
 }
