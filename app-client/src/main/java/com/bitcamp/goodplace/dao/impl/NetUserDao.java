@@ -32,6 +32,23 @@ public class NetUserDao implements UserDao{
 		return requestAgent.getObject(User.class);
 	}
 
+	@Override
+	public void update(User user) throws Exception {
+		requestAgent.request("user.update", user);
+		if(requestAgent.getStatus().equals(RequestAgent.FAIL)) {
+			throw new Exception(requestAgent.getObject(String.class));
+		}
+	}
+
+	@Override
+	public List<User> findAll() throws Exception {
+		requestAgent.request("user.selectList", null);
+		if(requestAgent.getStatus().equals(RequestAgent.FAIL)) {
+			throw new Exception(requestAgent.getObject(String.class));
+		}
+		return new ArrayList<>(requestAgent.getObjects(User.class));
+	}
+
 
 	
 }

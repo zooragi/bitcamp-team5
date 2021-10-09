@@ -23,6 +23,10 @@ public class SearchThemeHandler implements Command {
         return;
       }
       Theme theme = themeDao.search(input);
+      int currentCount = theme.getViewCount();
+      theme.setViewCount(currentCount+1);
+      
+      themeDao.update(theme);
       PlaceHandlerHelper.printPlaceInfo(theme);
       
       return;

@@ -2,6 +2,7 @@ package com.bitcamp.goodplace.Table;
 
 import java.util.Map;
 
+import com.bitcamp.goodplace.domain.Theme;
 import com.bitcamp.goodplace.domain.User;
 import com.bitcamp.server.DataProcessor;
 import com.bitcamp.server.Request;
@@ -20,11 +21,18 @@ public class UserTable extends JsonDataTable<User> implements DataProcessor{
 			case "user.selectList": selectList(request,response); break;
 			case "user.selectOneByEmailPassword" :selectOneByEmailPassword(request,response); break;
 			case "user.search" :search(request,response); break;
+			case "user.update" :update(request,response); break;
       default:
         response.setStatus(Response.FAIL);
         response.setValue("해당 명령을 지원하지 않습니다.");
 				
 		}
+	}
+
+	private void update(Request request, Response response) {
+		User user = request.getObject(User.class);
+		list.set(indexOf(user), user);		
+		response.setStatus(Response.SUCCESS);
 	}
 
 	private void search(Request request, Response response) {
@@ -34,8 +42,8 @@ public class UserTable extends JsonDataTable<User> implements DataProcessor{
 	}
 
 	private void selectList(Request request, Response response) {
+		response.setStatus(Response.SUCCESS);
 		response.setValue(list);
-		response.setValue(Response.SUCCESS);
 	}
 	
 	private void selectOneByEmailPassword(Request request, Response response) {
@@ -97,5 +105,16 @@ public class UserTable extends JsonDataTable<User> implements DataProcessor{
 		return null;
 	}
 
+	private int indexOf(User user) {
+		int i = 0;
+		for (User u : list) {
+			if (u.getNo() == user.getNo()) {
+				return i;
+			}
+			i++;
+		}
+		return -1;
+	}
+	
 	
 }

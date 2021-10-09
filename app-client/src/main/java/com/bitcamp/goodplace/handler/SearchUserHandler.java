@@ -25,6 +25,10 @@ public class SearchUserHandler implements Command {
       	System.out.println("등록된 회원 아닙니다");
       	continue;
       }
+      int currentViewCount = user.getViewCount();
+      user.setViewCount(currentViewCount+1);
+      userDao.update(user);
+      
       System.out.printf("[%s]유저의 테마 목록\n", user.getNickName());
       themePrompt.printMyList(user);
       System.out.println();

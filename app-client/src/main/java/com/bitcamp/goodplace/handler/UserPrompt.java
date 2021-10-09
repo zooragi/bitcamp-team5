@@ -1,28 +1,30 @@
 package com.bitcamp.goodplace.handler;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
+import com.bitcamp.goodplace.dao.UserDao;
 import com.bitcamp.goodplace.domain.Theme;
 import com.bitcamp.goodplace.domain.User;
 import com.bitcamp.request.RequestAgent;
 
 public class UserPrompt {
 
-	RequestAgent requestAgent;
+	UserDao userDao;
+	
+  public UserPrompt(UserDao userDao) {
+  	this.userDao = userDao;
+  }
+	
+	public ArrayList<User> rank() throws Exception {
+		ArrayList<User> userList = (ArrayList<User>) userDao.findAll();
+		ArrayList<User> ascThemeList = new ArrayList<>();
+		for (User user : userList) {
+				ascThemeList.add(user);
+		}
 
-	public UserPrompt(RequestAgent requestAgent) {
-		this.requestAgent = requestAgent;
-	}
-
-	public Theme findByTitle(String themeTitle) throws Exception {
-		requestAgent.request("theme.list", null);
-		ArrayList<Theme> themeList = new ArrayList<>(requestAgent.getObjects(Theme.class));
-		for (Theme theme : themeList)
-			if (theme.getTitle().equals(themeTitle)) {
-				return theme;
-			}
-
-		return null;
+		Collections.sort(ascThemeList);
+		return ascThemeList;
 	}
 
 }

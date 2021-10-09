@@ -10,11 +10,9 @@ import com.bitcamp.goodplace.domain.User;
 
 public class RealTimeRankHandler implements Command{
 	
-	ThemeDao themeDao;
 	ThemePrompt themePrompt;
 	
-  public RealTimeRankHandler(ThemeDao themeDao,ThemePrompt themePrompt) {
-  	this.themeDao = themeDao;
+  public RealTimeRankHandler(ThemePrompt themePrompt) {
   	this.themePrompt = themePrompt;
   }
 
