@@ -19,11 +19,18 @@ public class UserTable extends JsonDataTable<User> implements DataProcessor{
 			case "user.selectOne": selectOne(request,response); break;
 			case "user.selectList": selectList(request,response); break;
 			case "user.selectOneByEmailPassword" :selectOneByEmailPassword(request,response); break;
+			case "user.search" :search(request,response); break;
       default:
         response.setStatus(Response.FAIL);
         response.setValue("해당 명령을 지원하지 않습니다.");
 				
 		}
+	}
+
+	private void search(Request request, Response response) {
+		String name = request.getObject(String.class);
+		response.setStatus(Response.SUCCESS);
+		response.setValue(findByName(name));
 	}
 
 	private void selectList(Request request, Response response) {
@@ -81,6 +88,14 @@ public class UserTable extends JsonDataTable<User> implements DataProcessor{
 		return null;
 	}
 	
+	private User findByName(String name) {
+		for(User user : list) {
+			if(user.getNickName().equals(name)) {
+				return user;
+			}
+		}
+		return null;
+	}
 
 	
 }

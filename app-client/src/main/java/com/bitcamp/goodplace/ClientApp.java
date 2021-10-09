@@ -21,6 +21,10 @@ import com.bitcamp.goodplace.handler.PlaceAddHandler;
 import com.bitcamp.goodplace.handler.PlaceDeleteHandler;
 import com.bitcamp.goodplace.handler.PlaceListHandler;
 import com.bitcamp.goodplace.handler.ReportAddThemeHandler;
+import com.bitcamp.goodplace.handler.SearchHashtagHandler;
+import com.bitcamp.goodplace.handler.SearchThemeHandler;
+import com.bitcamp.goodplace.handler.SearchUserHandler;
+import com.bitcamp.goodplace.handler.ThemePrompt;
 import com.bitcamp.goodplace.handler.UserAddHandler;
 import com.bitcamp.goodplace.handler.UserPrompt;
 import com.bitcamp.goodplace.listener.LoginListener;
@@ -96,6 +100,12 @@ public class ClientApp {
     
     UserPrompt userPrompt = new UserPrompt(requestAgent);
     commandMap.put("/report/theme", new ReportAddThemeHandler(requestAgent,userPrompt));
+    
+    ThemePrompt themePrompt = new ThemePrompt(themeDao);
+    
+    commandMap.put("/search/searchTheme", new SearchThemeHandler(themeDao));
+    commandMap.put("/search/searchUser", new SearchUserHandler(userDao,themePrompt));
+    commandMap.put("/search/searchHashtag", new SearchHashtagHandler(themeDao));
 
   }
   
