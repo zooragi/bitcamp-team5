@@ -38,18 +38,18 @@ public class AuthLoginHandler implements Command{
     String email = Prompt.inputString("이메일 > ");
     String password = Prompt.inputString("암호 > ");
 
-    if(email.equals("root@test.com") && password.equals("0000")) {
-      loginUser = userList.get(0);
-      useAccessLevel = Menu.ACCESS_GENERAL | Menu.ACCESS_ADMIN;
-      System.out.println("제주정승🍊 환영합니다!");
-      return;
-    }
-
     Map<String,String> params = new HashMap<String,String>();
     params.put("email", email);
     params.put("password", password);
     
     requestAgent.request("user.selectOneByEmailPassword", params);
+    
+    if(email.equals("root@test.com") && password.equals("0000")) {
+      loginUser = requestAgent.getObject(User.class);
+      useAccessLevel = Menu.ACCESS_GENERAL | Menu.ACCESS_ADMIN;
+      System.out.println("제주정승🍊 환영합니다!");
+      return;
+    }
 
     if(requestAgent.getStatus().equals(RequestAgent.SUCCESS)) {
     	user = requestAgent.getObject(User.class);
