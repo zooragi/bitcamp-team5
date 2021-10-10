@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.bitcamp.context.UserContextListener;
+import com.bitcamp.goodplace.dao.impl.NetReportDao;
 import com.bitcamp.goodplace.dao.impl.NetThemeDao;
 import com.bitcamp.goodplace.dao.impl.NetUserDao;
 import com.bitcamp.goodplace.handler.AllThemeListHandler;
@@ -22,8 +23,10 @@ import com.bitcamp.goodplace.handler.PlaceAddHandler;
 import com.bitcamp.goodplace.handler.PlaceDeleteHandler;
 import com.bitcamp.goodplace.handler.PlaceListHandler;
 import com.bitcamp.goodplace.handler.RealTimeRankHandler;
+import com.bitcamp.goodplace.handler.ReportAddThemeHandler;
+import com.bitcamp.goodplace.handler.ReportAddUserHandler;
+import com.bitcamp.goodplace.handler.ReportMyListHandler;
 import com.bitcamp.goodplace.handler.SearchHashtagHandler;
-import com.bitcamp.goodplace.handler.SearchThemeHandler;
 import com.bitcamp.goodplace.handler.SearchUserHandler;
 import com.bitcamp.goodplace.handler.ThemePrompt;
 import com.bitcamp.goodplace.handler.UserAddHandler;
@@ -82,13 +85,15 @@ public class ClientApp {
   	requestAgent = new RequestAgent("127.0.0.1",8888);
   	
   	NetUserDao userDao = new NetUserDao(requestAgent);
+  	NetThemeDao themeDao = new NetThemeDao(requestAgent);
+  	NetReportDao reportDao = new NetReportDao(requestAgent);
+    UserPrompt userPrompt = new UserPrompt(userDao);
+  	ThemePrompt themePrompt = new ThemePrompt(themeDao);
   	
     commandMap.put("/user/add", new UserAddHandler(userDao));
     commandMap.put("/auth/displayLoginUer", new AuthDisplayLoginUserHandler());
     commandMap.put("/auth/login", new AuthLoginHandler(requestAgent,userListeners));
     commandMap.put("/auth/logout", new AuthLogoutHandler(userListeners));
-    
-    NetThemeDao themeDao = new NetThemeDao(requestAgent);
     
     commandMap.put("/myTheme/add", new MyThemeAddHandler(themeDao));
     commandMap.put("/myTheme/list", new MyThemeListHandler(themeDao));
@@ -101,12 +106,12 @@ public class ClientApp {
     commandMap.put("/place/delete", new PlaceDeleteHandler(themeDao));
     commandMap.put("/place/list", new PlaceListHandler(themeDao));
     
-    UserPrompt userPrompt = new UserPrompt(userDao);
-//    commandMap.put("/report/theme", new ReportAddThemeHandler(requestAgent,userPrompt));
+    commandMap.put("/report/theme", new ReportAddThemeHandler(reportDao,themePrompt));
+    commandMap.put("/report/user", new ReportAddUserHandler(reportDao,userPrompt));
+    commandMap.put("/report/list", new ReportMyListHandler(reportDao));
+//    commandMap.put("/report/themeProcess", new ReportThemeProcessingHandler(userList,reportThemeList));
+//    commandMap.put("/report/userProcess", new ReportUserProcessingHandler(userList,reportUserList));
     
-    ThemePrompt themePrompt = new ThemePrompt(themeDao);
-    
-    commandMap.put("/search/searchTheme", new SearchThemeHandler(themeDao));
     commandMap.put("/search/searchUser", new SearchUserHandler(userDao,themePrompt));
     commandMap.put("/search/searchHashtag", new SearchHashtagHandler(themeDao));
     

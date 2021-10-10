@@ -27,4 +27,13 @@ public class UserPrompt {
 		return ascThemeList;
 	}
 
+  public User findByName(String userNickName) throws Exception {
+  	ArrayList<User> userList = (ArrayList<User>) userDao.findAll();
+    for (User user : userList) {
+      if (user.getNickName().equals(userNickName)) {
+        return user;
+      }
+    }
+    return null;
+  }
 }

@@ -36,4 +36,14 @@ public class ThemePrompt {
 		Collections.sort(ascThemeList);
 		return ascThemeList;
 	}
+	
+	public Theme findByTitle(String themeTitle) throws Exception {
+  	ArrayList<Theme> themeList = (ArrayList<Theme>) themeDao.findAll();
+      for(Theme theme : themeList)
+        if(theme.getTitle().equals(themeTitle)) {
+          return theme;
+        }
+    
+    return null;
+  }
 }

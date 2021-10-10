@@ -2,10 +2,9 @@ package com.bitcamp.goodplace;
 
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Collection;
 import java.util.HashMap;
 
-import com.bitcamp.goodplace.Table.JsonDataTable;
+import com.bitcamp.goodplace.Table.ReportTable;
 import com.bitcamp.goodplace.Table.ThemeTable;
 import com.bitcamp.goodplace.Table.UserTable;
 import com.bitcamp.server.DataProcessor;
@@ -22,6 +21,7 @@ public class ServerApp {
     
     dataProcessorMap.put("user.", new UserTable());
     dataProcessorMap.put("theme.", new ThemeTable());
+    dataProcessorMap.put("report.", new ReportTable());
 
     while(true) {
     	

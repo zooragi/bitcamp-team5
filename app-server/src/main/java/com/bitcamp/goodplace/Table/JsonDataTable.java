@@ -10,6 +10,11 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import com.bitcamp.goodplace.domain.Report;
+import com.bitcamp.goodplace.domain.ReportTheme;
+import com.bitcamp.goodplace.domain.ReportUser;
+import com.bitcamp.server.Request;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -32,20 +37,43 @@ public abstract class JsonDataTable<T> {
     saveObjects();
   }
 
-  private void loadObjects() {
+  @SuppressWarnings("unchecked")
+	private void loadObjects() {
 
     try (BufferedReader in = new BufferedReader(
         new FileReader(filename, Charset.forName("UTF-8")))) {
-
       StringBuilder strBuilder = new StringBuilder();
       String str;
       while ((str = in.readLine()) != null) { // 파일 전체를 읽는다.
         strBuilder.append(str);
       }
-
-      Type type = TypeToken.getParameterized(Collection.class, elementType).getType(); 
-      Collection<T> collection = new Gson().fromJson(strBuilder.toString(), type);
-      list.addAll(collection);
+      if(this.toString().contains("ReportTable")) {
+        Collection<Report> collection1 = Request.getReportInheritedChildObjects(strBuilder.toString(), "reportedThemeTitle");
+        ArrayList<Report> collection1Temp = new ArrayList<>();
+        ArrayList<Report> collection2Temp = new ArrayList<>();
+        for(Report report : collection1) {
+        	if(report.getClass().getName().contains("Theme")) {
+        		if(((ReportTheme) report).getReportedThemeTitle().length() != 0){
+        			collection1Temp.add(report);
+        		}
+        	}
+        }
+        for(Report report : collection1) {
+        	if(report.getClass().getName().contains("User")) {
+        		if(((ReportUser) report).getReportedUserName() != null){
+        			collection2Temp.add(report);
+        		}
+        	}
+        }
+        
+        list.addAll((Collection<? extends T>) collection1Temp);
+        list.addAll((Collection<? extends T>) collection2Temp);
+        
+      } else {
+      	Type type = TypeToken.getParameterized(Collection.class, elementType).getType(); 
+      	Collection<T> collection = new Gson().fromJson(strBuilder.toString(), type);
+      	list.addAll(collection);
+      }
 
       System.out.printf("%s 데이터 로딩 완료!\n", filename);
 
@@ -59,7 +87,7 @@ public abstract class JsonDataTable<T> {
         new BufferedWriter(
             new FileWriter(filename, Charset.forName("UTF-8"))))) {
 
-      out.print(new Gson().toJson(list));
+    	out.print(new Gson().toJson(list));
 
       System.out.printf("%s 데이터 출력 완료!\n", filename);
 

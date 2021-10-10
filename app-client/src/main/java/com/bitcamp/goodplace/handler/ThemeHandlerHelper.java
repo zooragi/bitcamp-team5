@@ -1,11 +1,8 @@
 package com.bitcamp.goodplace.handler;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import com.bitcamp.goodplace.domain.Theme;
-import com.bitcamp.goodplace.domain.User;
 
 public class ThemeHandlerHelper {
 

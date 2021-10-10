@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 import com.bitcamp.goodplace.Table.JsonDataTable;
+import com.bitcamp.goodplace.Table.ReportTable;
 import com.bitcamp.goodplace.Table.ThemeTable;
 import com.bitcamp.goodplace.Table.UserTable;
 import com.google.gson.Gson;
@@ -19,6 +20,7 @@ public class RequestProcessor extends Thread {
 
 	UserTable userTable = new UserTable();
 	ThemeTable themeTable = new ThemeTable();
+	ReportTable reportTable = new ReportTable();
 
 	public RequestProcessor(Socket socket, HashMap<String, DataProcessor> dataProcessorMap) throws Exception {
 		this.socket = socket;

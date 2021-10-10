@@ -13,16 +13,19 @@ public class Report {
   private User writer;
   private String state;
   private Date registeredDate;
-
-  @Override
-  public String toString() {
-    return "Board [no=" + no + ", content=" + content + ", writer=" + writer + ", state=" + state + ", registeredDate="
-        + registeredDate + "]";
-  }
-  public String getState() {
+//  private String reportedType;
+//  private String reportedSubject;
+//  private int reportedCount;
+	
+	public String getState() {
     return state;
   }
-  public void setState(String state) {
+  @Override
+	public String toString() {
+		return "Report [no=" + no + ", content=" + content + ", writer=" + writer + ", state=" + state + ", registeredDate="
+				+ registeredDate + "]";
+	}
+	public void setState(String state) {
     this.state = state;
   }
   public int getNo() {
@@ -49,5 +52,23 @@ public class Report {
   public void setRegisteredDate(Date registeredDate) {
     this.registeredDate = registeredDate;
   }
+//	public String getReportedType() {
+//		return reportedType;
+//	}
+//	public void setReportedType(String reportedType) {
+//		this.reportedType = reportedType;
+//	}
+//	public String getReportedSubject() {
+//		return reportedSubject;
+//	}
+//	public void setReportedSubject(String reportedSubject) {
+//		this.reportedSubject = reportedSubject;
+//	}
+//	public int getReportedCount() {
+//		return reportedCount;
+//	}
+//	public void setReportedCount(int reportedCount) {
+//		this.reportedCount = reportedCount;
+//	}
 
 }

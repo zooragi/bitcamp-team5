@@ -1,8 +1,22 @@
 package com.bitcamp.server;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
+import com.bitcamp.goodplace.domain.Report;
+import com.bitcamp.goodplace.domain.ReportTheme;
+import com.bitcamp.goodplace.domain.ReportUser;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.reflect.TypeToken;
 
 public class Request {
 	String command;
@@ -20,6 +34,27 @@ public class Request {
 	
 	public <T> T getObject(Class<T> type) {
 		return new Gson().fromJson(jsonData, type);
+	}
+	
+	public static Collection<Report> getReportInheritedChildObjects(String jsonStr,String classAttribute) {
+    Gson gson = new GsonBuilder()
+        .registerTypeAdapter(Report.class, new JsonDeserializer<Report>() {
+          @Override
+          public Report deserialize(JsonElement json, Type typeOfT,
+              JsonDeserializationContext context) throws JsonParseException {
+
+            JsonObject jsonObject = json.getAsJsonObject();
+            
+            if (jsonObject.get(classAttribute) != null) {
+              return context.deserialize(jsonObject, ReportTheme.class);
+            } else {
+              return context.deserialize(jsonObject, ReportUser.class);
+            }
+          }
+        })
+        .create();
+    Type collectionType = TypeToken.getParameterized(Collection.class, Report.class).getType();
+    return gson.fromJson(jsonStr, collectionType);
 	}
 	
   @SuppressWarnings("unchecked")
