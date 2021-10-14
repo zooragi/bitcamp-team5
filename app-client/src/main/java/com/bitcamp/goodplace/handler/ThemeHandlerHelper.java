@@ -8,7 +8,7 @@ public class ThemeHandlerHelper {
 
 	public static void printList(List<Theme> themeList) {
 		for (Theme theme : themeList) {
-			System.out.printf("테마명 > %s\n", theme.getTitle());
+			System.out.printf("[%s] 테마명 > %s\n", theme.getThemeOwnerName(), theme.getTitle());
 		}
 	}
 }

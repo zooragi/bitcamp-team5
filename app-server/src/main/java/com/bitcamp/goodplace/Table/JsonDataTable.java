@@ -47,27 +47,28 @@ public abstract class JsonDataTable<T> {
       while ((str = in.readLine()) != null) { // 파일 전체를 읽는다.
         strBuilder.append(str);
       }
+      
       if(this.toString().contains("ReportTable")) {
-        Collection<Report> collection1 = Request.getReportInheritedChildObjects(strBuilder.toString(), "reportedThemeTitle");
-        ArrayList<Report> collection1Temp = new ArrayList<>();
-        ArrayList<Report> collection2Temp = new ArrayList<>();
-        for(Report report : collection1) {
+        Collection<Report> reportChildList = Request.getReportInheritedChildObjects(strBuilder.toString(), "reportedThemeTitle");
+        ArrayList<Report> reportThemeList = new ArrayList<>();
+        ArrayList<Report> reportUserList = new ArrayList<>();
+        for(Report report : reportChildList) {
         	if(report.getClass().getName().contains("Theme")) {
         		if(((ReportTheme) report).getReportedThemeTitle().length() != 0){
-        			collection1Temp.add(report);
+        			reportThemeList.add(report);
         		}
         	}
         }
-        for(Report report : collection1) {
+        for(Report report : reportChildList) {
         	if(report.getClass().getName().contains("User")) {
         		if(((ReportUser) report).getReportedUserName() != null){
-        			collection2Temp.add(report);
+        			reportUserList.add(report);
         		}
         	}
         }
         
-        list.addAll((Collection<? extends T>) collection1Temp);
-        list.addAll((Collection<? extends T>) collection2Temp);
+        list.addAll((Collection<? extends T>) reportThemeList);
+        list.addAll((Collection<? extends T>) reportUserList);
         
       } else {
       	Type type = TypeToken.getParameterized(Collection.class, elementType).getType(); 

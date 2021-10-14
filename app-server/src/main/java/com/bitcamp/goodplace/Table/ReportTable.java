@@ -47,7 +47,6 @@ public class ReportTable extends JsonDataTable<Report> implements DataProcessor{
 	}
 
 	private void selectList(Request request, Response response) {
-		System.out.println(list);
 		response.setValue(list);
 		response.setStatus(Response.SUCCESS);
 	}	

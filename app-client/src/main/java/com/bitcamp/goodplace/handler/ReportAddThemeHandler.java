@@ -64,6 +64,7 @@ public class ReportAddThemeHandler implements Command{
     reportTheme.setState(Report.WAITING);
     
     reportDao.themeInsert(reportTheme);
+    themePrompt.increaseReportedCount(reportedTheme);
     
     System.out.println("테마 신고 완료!");
 

@@ -20,7 +20,7 @@ public class ThemePrompt {
 		ArrayList<Theme> themeList = (ArrayList<Theme>) themeDao.findAll();
 		for(Theme theme : themeList) {
 			if(theme.getThemeOwnerName().equals(user.getNickName()) && theme.isPublic() == true) {
-				System.out.printf("테마 > %s",theme.getTitle());
+				System.out.printf("테마 > %s\n",theme.getTitle());
 			}
 		}
 	}
@@ -46,4 +46,21 @@ public class ThemePrompt {
     
     return null;
   }
+	
+	public void increaseReportedCount(Theme theme) throws Exception {
+    int reportCount = theme.getReportedCount();
+    theme.setReportedCount(reportCount+1);
+    themeDao.update(theme);
+	}
+	
+	public List<Theme> setCountedThemes() throws Exception {
+		ArrayList<Theme> themeList = (ArrayList<Theme>) themeDao.findAll();
+		ArrayList<Theme> reportedThemes = new ArrayList<>();
+		for(Theme theme : themeList) {
+			if(theme.getReportedCount() != 0) {
+				reportedThemes.add(theme);
+			}
+		}
+		return reportedThemes;
+	}
 }
