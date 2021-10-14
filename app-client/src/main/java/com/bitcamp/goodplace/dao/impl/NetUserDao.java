@@ -1,6 +1,7 @@
 package com.bitcamp.goodplace.dao.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.bitcamp.goodplace.dao.UserDao;
@@ -48,7 +49,39 @@ public class NetUserDao implements UserDao{
 		}
 		return new ArrayList<>(requestAgent.getObjects(User.class));
 	}
+	
+  @Override
+  public void userLikedUserInsert(String likedUser, String loginUser) throws Exception {
+    HashMap<String, String> params = new HashMap<>();
+    params.put("likedUser",likedUser);
+    params.put("loginUser",loginUser);
 
+    requestAgent.request("user.likedUser.insert", params);
+
+    if (!requestAgent.getStatus().equals(RequestAgent.SUCCESS)) {
+      throw new Exception("좋아하는 유저 등록 실패!");
+    }
+  }
+  public void userLikedUserDelete(String likedUser, String loginUser) throws Exception {
+    HashMap<String, String> params = new HashMap<>();
+    params.put("likedUser",likedUser);
+    params.put("loginUser",loginUser);
+
+    requestAgent.request("user.likedUser.delete", params);
+    if (!requestAgent.getStatus().equals(RequestAgent.SUCCESS)) {
+      throw new Exception("좋아하는 유저 등록 실패!");
+    }
+  }
+  
+  @Override
+  public List<String> likedUserFindAll(User loginUser) throws Exception {
+    requestAgent.request("user.likedUser.list", loginUser);
+
+    if(!requestAgent.getStatus().equals(RequestAgent.SUCCESS)) {
+      return null;
+    }
+    return new ArrayList<>(requestAgent.getObjects(String.class));
+  }
 
 	
 }

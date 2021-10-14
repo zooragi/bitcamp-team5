@@ -14,7 +14,7 @@ public class User implements Comparable<User> {
   private int reportedCount = 0;
   private int warningCount = 0;
 
-  private List<User> likedUsers = new ArrayList<>(); //팔로우 
+  private List<String> likedUsers = new ArrayList<>(); //팔로우 
 
   @Override
   public String toString() {
@@ -25,7 +25,15 @@ public class User implements Comparable<User> {
   }
 
 
-  public int getReportedCount() {
+  public List<String> getLikedUsers() {
+		return likedUsers;
+	}
+
+	public void setLikedUsers(List<String> likedUsers) {
+		this.likedUsers = likedUsers;
+	}
+
+	public int getReportedCount() {
     return reportedCount;
   }
 
@@ -97,15 +105,6 @@ public class User implements Comparable<User> {
 
   public void setViewCount(int viewCount) {
     this.viewCount = viewCount;
-  }
-
-  public List<User> getLikedUsers() {
-    return likedUsers;
-  }
-
-
-  public void setLikedUsers(List<User> likedUsers) {
-    this.likedUsers = likedUsers;
   }
 
   @Override

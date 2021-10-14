@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.bitcamp.goodplace.domain.Place;
 import com.bitcamp.goodplace.domain.Theme;
+import com.bitcamp.goodplace.domain.User;
 import com.bitcamp.server.DataProcessor;
 import com.bitcamp.server.Request;
 import com.bitcamp.server.Response;
@@ -44,11 +45,43 @@ public class ThemeTable extends JsonDataTable<Theme> implements DataProcessor{
 		case "theme.place.delete":
 			placeDelete(request,response);
 			break;
+		case "theme.liked.insert":
+			likedInsert(request, response);
+			break;
+		case "theme.liked.delete":
+			likedDelete(request, response);
+			break;
+		case "theme.liked.list":
+			likedList(request, response);
+			break;
 		default:
 			response.setStatus(Response.FAIL);
 			response.setValue("해당 명령을 지원하지 않습니다.");
 
 		}
+	}
+
+	private void likedList(Request request, Response response) {
+		String userName = request.getObject(String.class);
+		ArrayList<Theme> likedThemeList = findLikedUserByUserName(userName);
+		response.setValue(likedThemeList);
+		response.setStatus(Response.SUCCESS);
+	}
+
+	private void likedDelete(Request request, Response response) {
+    String themeTitle = request.getParameter("themeTitle");
+    String userName = request.getParameter("userName");
+    Theme theme = findByTitle(themeTitle);
+    theme.getLikedThemeUsers().remove(userName);
+    response.setStatus(Response.SUCCESS);
+	}
+
+	private void likedInsert(Request request, Response response) {
+    String themeTitle = request.getParameter("themeTitle");
+    String userName = request.getParameter("userName");
+    Theme theme = findByTitle(themeTitle);
+    theme.getLikedThemeUsers().add(userName);
+    response.setStatus(Response.SUCCESS);
 	}
 
 	private void hashtagSearch(Request request, Response response) {
@@ -154,6 +187,19 @@ public class ThemeTable extends JsonDataTable<Theme> implements DataProcessor{
 			}
 		}
 		return searchedThemeList;
+	}
+	
+	private ArrayList<Theme> findLikedUserByUserName(String userName){
+		ArrayList<Theme> likedUserList = new ArrayList<>();
+		for(Theme t : list) {
+			for(String name : t.getLikedThemeUsers()) {
+				if(name.equals(userName)) {
+					likedUserList.add(t);
+					break;
+				}
+			}
+		}
+		return likedUserList;
 	}
 	
 }

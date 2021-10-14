@@ -9,4 +9,7 @@ public interface UserDao {
 	User search(String name) throws Exception;
 	void update(User user) throws Exception;
 	List<User> findAll() throws Exception;
+	void userLikedUserInsert(String likedUser, String loginUser) throws Exception;
+	void userLikedUserDelete(String likedUser, String loginUser) throws Exception;
+	List<String> likedUserFindAll(User loginUser) throws Exception;
 }

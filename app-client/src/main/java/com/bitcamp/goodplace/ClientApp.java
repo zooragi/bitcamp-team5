@@ -14,6 +14,12 @@ import com.bitcamp.goodplace.handler.AuthLoginHandler;
 import com.bitcamp.goodplace.handler.AuthLogoutHandler;
 import com.bitcamp.goodplace.handler.Command;
 import com.bitcamp.goodplace.handler.CommandRequest;
+import com.bitcamp.goodplace.handler.LikedThemeAddHandler;
+import com.bitcamp.goodplace.handler.LikedThemeDeleteHandler;
+import com.bitcamp.goodplace.handler.LikedThemeListHandler;
+import com.bitcamp.goodplace.handler.LikedUserAddHandler;
+import com.bitcamp.goodplace.handler.LikedUserDeleteHandler;
+import com.bitcamp.goodplace.handler.LikedUserListHandler;
 import com.bitcamp.goodplace.handler.MyThemeAddHandler;
 import com.bitcamp.goodplace.handler.MyThemeDeleteHandler;
 import com.bitcamp.goodplace.handler.MyThemeDetailHandler;
@@ -108,6 +114,15 @@ public class ClientApp {
     commandMap.put("/place/add", new PlaceAddHandler(themeDao));
     commandMap.put("/place/delete", new PlaceDeleteHandler(themeDao));
     commandMap.put("/place/list", new PlaceListHandler(themeDao));
+    
+    commandMap.put("/likedTheme/add", new LikedThemeAddHandler(themeDao));
+    commandMap.put("/likedTheme/delete", new LikedThemeDeleteHandler(themeDao));
+    commandMap.put("/likedTheme/list", new LikedThemeListHandler(themeDao));
+
+    
+    commandMap.put("/likedUser/add", new LikedUserAddHandler(userDao));
+    commandMap.put("/likedUser/list", new LikedUserListHandler(userDao));
+    commandMap.put("/likedUser/delete", new LikedUserDeleteHandler(userDao));
     
     commandMap.put("/report/theme", new ReportAddThemeHandler(reportDao,themePrompt));
     commandMap.put("/report/user", new ReportAddUserHandler(reportDao,userPrompt));

@@ -1,6 +1,7 @@
 package com.bitcamp.goodplace.dao.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.bitcamp.goodplace.dao.ThemeDao;
@@ -15,6 +16,7 @@ public class NetThemeDao implements ThemeDao{
 		this.requestAgent = requestAgent;
 	}
 	
+	@Override
 	public void insert(Theme theme) throws Exception {
 		requestAgent.request("theme.insert", theme);
 		if(requestAgent.getStatus().equals(RequestAgent.FAIL)) {
@@ -22,6 +24,7 @@ public class NetThemeDao implements ThemeDao{
 		}
 	}
 	
+	@Override
 	public List<Theme> findAll() throws Exception {
 		requestAgent.request("theme.list", null);
     if (requestAgent.getStatus().equals(RequestAgent.FAIL)) {
@@ -51,7 +54,6 @@ public class NetThemeDao implements ThemeDao{
 	@Override
 	public void placeInsert(Place place) throws Exception {
 		requestAgent.request("theme.place.insert", place);
-		System.out.println(requestAgent.getObject(String.class));
 		if(requestAgent.getStatus().equals(RequestAgent.FAIL)) {
 			throw new Exception(requestAgent.getObject(String.class));
 		}
@@ -65,15 +67,6 @@ public class NetThemeDao implements ThemeDao{
     }
 		return requestAgent.getObject(String.class);
 	}
-
-//	@Override
-//	public Theme selectedOne(Theme theme) throws Exception {
-//		requestAgent.request("theme.selectedOne", theme);
-//    if (requestAgent.getStatus().equals(RequestAgent.FAIL)) {
-//      throw new Exception(requestAgent.getObject(String.class));
-//    }
-//		return requestAgent.getObject(Theme.class);
-//	}
 
 	@Override
 	public Theme search(String title) throws Exception {
@@ -94,5 +87,37 @@ public class NetThemeDao implements ThemeDao{
 		return new ArrayList<>(requestAgent.getObjects(Theme.class));
 	}
 	
+	@Override
+	public void likedThemeInsert(String themeTitle, String userName) throws Exception{
+		HashMap<String, String> params = new HashMap<>();
+	  params.put("themeTitle",themeTitle);
+	  params.put("userName",userName);
+	  requestAgent.request("theme.liked.insert", params);
+		if(requestAgent.getStatus().equals(RequestAgent.FAIL)) {
+			throw new Exception(requestAgent.getObject(String.class));
+		}
+	}
 	
+	@Override
+	public void likedThemeDelete(String themeTitle,String userName) throws Exception{
+		HashMap<String, String> params = new HashMap<>();
+	  params.put("themeTitle",themeTitle);
+	  params.put("userName",userName);
+	  requestAgent.request("theme.liked.delete", params);
+		if(requestAgent.getStatus().equals(RequestAgent.FAIL)) {
+			throw new Exception(requestAgent.getObject(String.class));
+		}
+	}
+	
+	@Override
+	public List<Theme> likedThemeList(String userName) throws Exception{
+		requestAgent.request("theme.liked.list", userName);
+		
+    if (requestAgent.getStatus().equals(RequestAgent.FAIL)) {
+      throw new Exception(requestAgent.getObject(String.class));
+    }
+
+    return new ArrayList<>(requestAgent.getObjects(Theme.class));
+	}
+  
 }
