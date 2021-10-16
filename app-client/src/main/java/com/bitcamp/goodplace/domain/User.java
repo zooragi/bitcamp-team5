@@ -14,23 +14,23 @@ public class User implements Comparable<User> {
   private int reportedCount = 0;
   private int warningCount = 0;
 
-  private List<String> likedUsers = new ArrayList<>(); //팔로우 
+  private List<Integer> likedUserNo = new ArrayList<>(); //팔로우 
 
   @Override
   public String toString() {
     return "User [no=" + no + ", email=" + email + ", password=" + password + ", nickName="
         + nickName + ", registeredDate=" + registeredDate + ", viewCount=" + viewCount
         + ", reportedCount=" + reportedCount + ", warningCount=" + warningCount + ", likedUsers="
-        + likedUsers + ", ]";
+        + likedUserNo + ", ]";
   }
 
 
-  public List<String> getLikedUsers() {
-		return likedUsers;
+  public List<Integer> getLikedUserNo() {
+		return likedUserNo;
 	}
 
-	public void setLikedUsers(List<String> likedUsers) {
-		this.likedUsers = likedUsers;
+	public void setLikedUser(List<Integer> likedUserNo) {
+		this.likedUserNo = likedUserNo;
 	}
 
 	public int getReportedCount() {

@@ -1,5 +1,7 @@
 package com.bitcamp.goodplace.Table;
 
+import java.util.ArrayList;
+
 import java.util.Map;
 
 import com.bitcamp.goodplace.domain.Theme;
@@ -50,57 +52,27 @@ public class UserTable extends JsonDataTable<User> implements DataProcessor {
 		}
 	}
 
-  private void likedUserDelete(Request request, Response response) {
-    String loginUserName = request.getParameter("loginUser");
-    String likedUserName = request.getParameter("likedUser");
-    User loginUser = null;
-    User likedUser = null;
-    for(User u : list) {
-      if(u.getNickName().equals(loginUserName)) {
-        loginUser = u;
-        break;
-      }
-    }
-
-    for(User u : list) {
-      if(u.getNickName().equals(likedUserName)) {
-        likedUser = u;
-        break;
-      }
-    }
-    loginUser.getLikedUsers().remove(likedUser);
-    response.setStatus(Response.SUCCESS);
-
-  }
+	private void likedUserDelete(Request request, Response response) {
+		int likedUserNo= Integer.parseInt(request.getParameter("likedUserNo"));
+		int loginUserNo = Integer.parseInt(request.getParameter("loginUserNo"));
+		User likedUser = findByNo(likedUserNo);
+		likedUser.getLikedUserNo().remove(Integer.valueOf(loginUserNo));
+		response.setStatus(Response.SUCCESS);
+	}
 
 	private void likedUserList(Request request, Response response) {
-		User loginUser = request.getObject(User.class);
-    response.setStatus(Response.SUCCESS);
-    response.setValue(loginUser.getLikedUsers());
-
+		int userNo = Integer.parseInt(request.getObject(String.class));
+		ArrayList<String> likedUserList = findLikedUserByUserName(userNo); 
+		response.setStatus(Response.SUCCESS);
+		response.setValue(likedUserList);
 	}
 
 	private void likedUserInsert(Request request, Response response) {
-		String loginUserName = request.getParameter("loginUser");
-		String likedUserName = request.getParameter("likedUser");
-		User loginUser = null;
-		User likedUser = null;
-		for (User u : list) {
-			if (u.getNickName().equals(loginUserName)) {
-				loginUser = u;
-				break;
-			}
-		}
-
-		for (User u : list) {
-			if (u.getNickName().equals(likedUserName)) {
-				likedUser = u;
-				break;
-			}
-		}
-		loginUser.getLikedUsers().add(likedUser);
+		int likedUserNo= Integer.parseInt(request.getParameter("likedUserNo"));
+		int loginUserNo = Integer.parseInt(request.getParameter("loginUserNo"));
+		User likedUser = findByNo(likedUserNo);
+		likedUser.getLikedUserNo().add(loginUserNo);
 		response.setStatus(Response.SUCCESS);
-
 	}
 
 	private void update(Request request, Response response) {
@@ -169,7 +141,7 @@ public class UserTable extends JsonDataTable<User> implements DataProcessor {
 		}
 		return null;
 	}
-
+	
 	private User findByName(String name) {
 		for (User user : list) {
 			if (user.getNickName().equals(name)) {
@@ -190,4 +162,16 @@ public class UserTable extends JsonDataTable<User> implements DataProcessor {
 		return -1;
 	}
 
+	private ArrayList<String> findLikedUserByUserName(int userNo){
+		ArrayList<String> likedUser = new ArrayList<>();
+		for(User u : list) {
+			for(int no : u.getLikedUserNo()) {
+				if(no == userNo) {
+					likedUser.add(u.getNickName());
+				}
+			}
+		}
+		return likedUser;
+	}
+	
 }

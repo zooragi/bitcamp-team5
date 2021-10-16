@@ -14,7 +14,6 @@ public class LikedThemeAddHandler implements Command {
 
   @Override
   public void execute(CommandRequest request) throws Exception {
-    //    while (true) {
     System.out.println("[좋아요 등록하기]");
 
     String title = Prompt.inputString("테마 이름(취소 : 엔터) > ");
@@ -57,7 +56,6 @@ public class LikedThemeAddHandler implements Command {
 
 
     System.out.println("좋아요 등록 완료!");
-    //    }
   }
 
 

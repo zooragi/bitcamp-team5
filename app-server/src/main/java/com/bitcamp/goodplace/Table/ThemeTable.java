@@ -63,7 +63,7 @@ public class ThemeTable extends JsonDataTable<Theme> implements DataProcessor{
 
 	private void likedList(Request request, Response response) {
 		String userName = request.getObject(String.class);
-		ArrayList<Theme> likedThemeList = findLikedUserByUserName(userName);
+		ArrayList<Theme> likedThemeList = findLikedThemeByUserName(userName);
 		response.setValue(likedThemeList);
 		response.setStatus(Response.SUCCESS);
 	}
@@ -189,7 +189,7 @@ public class ThemeTable extends JsonDataTable<Theme> implements DataProcessor{
 		return searchedThemeList;
 	}
 	
-	private ArrayList<Theme> findLikedUserByUserName(String userName){
+	private ArrayList<Theme> findLikedThemeByUserName(String userName){
 		ArrayList<Theme> likedUserList = new ArrayList<>();
 		for(Theme t : list) {
 			for(String name : t.getLikedThemeUsers()) {

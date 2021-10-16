@@ -6,11 +6,14 @@ import com.bitcamp.util.Prompt;
 
 public class LikedUserDeleteHandler implements Command {
 
-	UserDao userDao;
+  UserDao userDao;
+  UserPrompt userPrompt;
+  
+  public LikedUserDeleteHandler(UserDao userDao,UserPrompt userPrompt) {
+    this.userDao = userDao;
+    this.userPrompt = userPrompt;
+  }
 
-	public LikedUserDeleteHandler(UserDao userDao) {
-		this.userDao = userDao;
-	}
 
 	@Override
 	public void execute(CommandRequest request) throws Exception {
@@ -23,22 +26,20 @@ public class LikedUserDeleteHandler implements Command {
 		}
 
 		User likedUser = userDao.search(input);
-		String loginUser = AuthLoginHandler.getLoginUser().getNickName();
 
 		if (likedUser == null) {
 			System.out.println("등록된 유저 없음!");
 			return;
 		}
 
-		for (String userName : likedUser.getLikedUsers()) {
-			if (userName.equals(loginUser)) {
-				userDao.userLikedUserDelete(likedUser.getNickName(), loginUser);
-				System.out.println("좋아하는 유저 삭제 완료!");
-				return;
-			}
-		}
+    if(likedUser.getNo() == AuthLoginHandler.getLoginUser().getNo()) {
+      System.out.println("본인은 삭제 불가!");
+      return;
+    }
+    
+    userDao.userLikedUserDelete(likedUser.getNo(), AuthLoginHandler.getLoginUser().getNo());
 
-		System.out.println("좋아하는 유저 없음!");
+    System.out.println("좋아하는 유저 삭제 완료!");
 	}
 
 }

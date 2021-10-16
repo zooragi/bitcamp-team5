@@ -119,10 +119,9 @@ public class ClientApp {
     commandMap.put("/likedTheme/delete", new LikedThemeDeleteHandler(themeDao));
     commandMap.put("/likedTheme/list", new LikedThemeListHandler(themeDao));
 
-    
-    commandMap.put("/likedUser/add", new LikedUserAddHandler(userDao));
+    commandMap.put("/likedUser/add", new LikedUserAddHandler(userDao,userPrompt));
     commandMap.put("/likedUser/list", new LikedUserListHandler(userDao));
-    commandMap.put("/likedUser/delete", new LikedUserDeleteHandler(userDao));
+    commandMap.put("/likedUser/delete", new LikedUserDeleteHandler(userDao,userPrompt));
     
     commandMap.put("/report/theme", new ReportAddThemeHandler(reportDao,themePrompt));
     commandMap.put("/report/user", new ReportAddUserHandler(reportDao,userPrompt));

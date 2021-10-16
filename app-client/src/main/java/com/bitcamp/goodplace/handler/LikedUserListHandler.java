@@ -19,7 +19,7 @@ public class LikedUserListHandler implements Command {
 
     User loginUser = AuthLoginHandler.getLoginUser();
 
-    Collection<String> likedUserList = userDao.likedUserFindAll(loginUser);
+    Collection<String> likedUserList = userDao.likedUserFindAll(loginUser.getNo());
     if (likedUserList.isEmpty()) {
       System.out.println("좋아하는 유저 없음!");
       return;

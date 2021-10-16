@@ -17,7 +17,6 @@ public class Theme implements Comparable<Theme>{
   private List<String> hashtags = new ArrayList<String>();
   private List<String> likedThemeUsers = new ArrayList<String>();
 
-
   @Override
   public String toString() {
     return "Theme [no=" + no + ", title=" + title + ", themeOwnerName=" + themeOwnerName + ", viewCount=" + viewCount

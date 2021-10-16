@@ -59,4 +59,13 @@ public class UserPrompt {
 		}
 		return reportedThemes;
 	}
+	
+	public boolean isAlreadyRegisterLikedUser(User user,int userNo) throws Exception {
+		for(int no: user.getLikedUserNo()) {
+			if(no == userNo) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

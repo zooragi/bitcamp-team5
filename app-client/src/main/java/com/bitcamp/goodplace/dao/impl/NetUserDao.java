@@ -51,10 +51,10 @@ public class NetUserDao implements UserDao{
 	}
 	
   @Override
-  public void userLikedUserInsert(String likedUser, String loginUser) throws Exception {
+  public void userLikedUserInsert(int likedUserNo, int loginUserNo) throws Exception {
     HashMap<String, String> params = new HashMap<>();
-    params.put("likedUser",likedUser);
-    params.put("loginUser",loginUser);
+    params.put("likedUserNo",Integer.toString(likedUserNo));
+    params.put("loginUserNo",Integer.toString(loginUserNo));
 
     requestAgent.request("user.likedUser.insert", params);
 
@@ -62,10 +62,10 @@ public class NetUserDao implements UserDao{
       throw new Exception("좋아하는 유저 등록 실패!");
     }
   }
-  public void userLikedUserDelete(String likedUser, String loginUser) throws Exception {
+  public void userLikedUserDelete(int likedUserNo, int loginUserNo) throws Exception {
     HashMap<String, String> params = new HashMap<>();
-    params.put("likedUser",likedUser);
-    params.put("loginUser",loginUser);
+    params.put("likedUserNo",Integer.toString(likedUserNo));
+    params.put("loginUserNo",Integer.toString(loginUserNo));
 
     requestAgent.request("user.likedUser.delete", params);
     if (!requestAgent.getStatus().equals(RequestAgent.SUCCESS)) {
@@ -74,14 +74,12 @@ public class NetUserDao implements UserDao{
   }
   
   @Override
-  public List<String> likedUserFindAll(User loginUser) throws Exception {
-    requestAgent.request("user.likedUser.list", loginUser);
-
+  public List<String> likedUserFindAll(int loginUserNo) throws Exception {
+    requestAgent.request("user.likedUser.list",Integer.toString(loginUserNo));
     if(!requestAgent.getStatus().equals(RequestAgent.SUCCESS)) {
       return null;
     }
     return new ArrayList<>(requestAgent.getObjects(String.class));
   }
-
 	
 }

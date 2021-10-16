@@ -14,23 +14,26 @@ public class User implements Comparable<User> {
   private int reportedCount = 0;
   private int warningCount = 0;
 
-  private List<User> likedUsers = new ArrayList<>(); //팔로우
-  private List<Theme> themeList = new ArrayList<>();
-  private List<Theme> likedThemes = new ArrayList<>(); // 북마크
-
-
-
+  private List<Integer> likedUserNo = new ArrayList<>(); //팔로우 
 
   @Override
   public String toString() {
     return "User [no=" + no + ", email=" + email + ", password=" + password + ", nickName="
         + nickName + ", registeredDate=" + registeredDate + ", viewCount=" + viewCount
         + ", reportedCount=" + reportedCount + ", warningCount=" + warningCount + ", likedUsers="
-        + likedUsers + ", themeList=" + themeList + ", likedThemes=" + likedThemes + "]";
+        + likedUserNo + ", ]";
   }
 
 
-  public int getReportedCount() {
+  public List<Integer> getLikedUserNo() {
+		return likedUserNo;
+	}
+
+	public void setLikedUser(List<Integer> likedUserNo) {
+		this.likedUserNo = likedUserNo;
+	}
+
+	public int getReportedCount() {
     return reportedCount;
   }
 
@@ -38,10 +41,6 @@ public class User implements Comparable<User> {
   public void setReportedCount(int reportedCount) {
     this.reportedCount = reportedCount;
   }
-
-
-
-
 
   public int getNo() {
     return no;
@@ -107,37 +106,6 @@ public class User implements Comparable<User> {
   public void setViewCount(int viewCount) {
     this.viewCount = viewCount;
   }
-
-  public List<User> getLikedUsers() {
-    return likedUsers;
-  }
-
-
-  public void setLikedUsers(List<User> likedUsers) {
-    this.likedUsers = likedUsers;
-  }
-
-
-  public List<Theme> getThemeList() {
-    return themeList;
-  }
-
-
-
-  public void setThemeList(List<Theme> themeList) {
-    this.themeList = themeList;
-  }
-
-
-  public List<Theme> getLikedThemes() {
-    return likedThemes;
-  }
-
-
-  public void setLikedThemes(List<Theme> likedThemes) {
-    this.likedThemes = likedThemes;
-  }
-
 
   @Override
   public int compareTo(User user) {
