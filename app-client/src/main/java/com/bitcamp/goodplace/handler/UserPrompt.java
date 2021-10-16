@@ -28,10 +28,20 @@ public class UserPrompt {
 		return ascThemeList;
 	}
 
-  public User findByName(String userNickName) throws Exception {
+  public User findByNo(int userNo) throws Exception {
   	ArrayList<User> userList = (ArrayList<User>) userDao.findAll();
     for (User user : userList) {
-      if (user.getNickName().equals(userNickName)) {
+      if (user.getNo() == userNo) {
+        return user;
+      }
+    }
+    return null;
+  }
+  
+  public User findByName(String userName) throws Exception {
+  	ArrayList<User> userList = (ArrayList<User>) userDao.findAll();
+    for (User user : userList) {
+      if (user.getNickName().equals(userName)) {
         return user;
       }
     }
@@ -67,5 +77,13 @@ public class UserPrompt {
 			}
 		}
 		return false;
+	}
+	
+	public String getByUserNo(int userNo) throws Exception {
+		ArrayList<User> userList = (ArrayList<User>) userDao.findAll();
+		for(User u : userList) {
+			if(u.getNo() == userNo) return u.getNickName();
+		}
+		return null;
 	}
 }

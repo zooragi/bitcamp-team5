@@ -46,8 +46,8 @@ public class ReportAddThemeHandler implements Command{
       System.out.println("등록된 테마 없음!");
       return;
     }
-    if(reportedTheme.getThemeOwnerName()
-        .equals(AuthLoginHandler.getLoginUser().getNickName())) {
+    if(reportedTheme.getThemeOwnerNo()
+         == (AuthLoginHandler.getLoginUser().getNo())) {
       System.out.println("본인의 테마 신고 불가!");
       return;
     }

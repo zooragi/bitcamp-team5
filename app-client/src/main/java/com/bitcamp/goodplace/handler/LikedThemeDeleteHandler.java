@@ -42,7 +42,7 @@ public class LikedThemeDeleteHandler implements Command {
     	}
     }
 
-		themeDao.likedThemeDelete(theme.getTitle(), AuthLoginHandler.getLoginUser().getNickName());
+		themeDao.likedThemeDelete(theme.getNo(), AuthLoginHandler.getLoginUser().getNo());
 		System.out.println("좋아요 삭제하기 완료!");
 	}
 

@@ -14,7 +14,7 @@ public interface ThemeDao {
 	void placeInsert(Place place) throws Exception;
 	String placeDelete(Place place) throws Exception;
 	List<Theme> hashtagSearch(String hashtagName) throws Exception;
-	void likedThemeInsert(String themeTitle,String userName) throws Exception;
-	void likedThemeDelete(String themeTitle,String userName) throws Exception;
-	List<Theme> likedThemeList(String userName) throws Exception;
+	void likedThemeInsert(int themeNo,int userNo) throws Exception;
+	void likedThemeDelete(int themeNo,int userNo) throws Exception;
+	List<Theme> likedThemeList(int userNo) throws Exception;
 }

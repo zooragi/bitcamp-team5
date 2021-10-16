@@ -77,7 +77,7 @@ public class MyThemeAddHandler implements Command {
 		if (publicOption.equalsIgnoreCase("y") || publicOption.equals("")) {
 			theme.setPublic(true);
 		}
-		theme.setThemeOwnerName(AuthLoginHandler.getLoginUser().getNickName());
+		theme.setThemeOwnerNo(AuthLoginHandler.getLoginUser().getNo());
 		themeDao.insert(theme);
 
 	}

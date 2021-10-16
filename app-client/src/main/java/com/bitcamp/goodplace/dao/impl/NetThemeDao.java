@@ -88,10 +88,10 @@ public class NetThemeDao implements ThemeDao{
 	}
 	
 	@Override
-	public void likedThemeInsert(String themeTitle, String userName) throws Exception{
+	public void likedThemeInsert(int themeNo, int userNo) throws Exception{
 		HashMap<String, String> params = new HashMap<>();
-	  params.put("themeTitle",themeTitle);
-	  params.put("userName",userName);
+	  params.put("themeNo",Integer.toString(themeNo));
+	  params.put("userNo",Integer.toString(userNo));
 	  requestAgent.request("theme.liked.insert", params);
 		if(requestAgent.getStatus().equals(RequestAgent.FAIL)) {
 			throw new Exception(requestAgent.getObject(String.class));
@@ -99,10 +99,10 @@ public class NetThemeDao implements ThemeDao{
 	}
 	
 	@Override
-	public void likedThemeDelete(String themeTitle,String userName) throws Exception{
+	public void likedThemeDelete(int themeNo,int userNo) throws Exception{
 		HashMap<String, String> params = new HashMap<>();
-	  params.put("themeTitle",themeTitle);
-	  params.put("userName",userName);
+	  params.put("themeNo",Integer.toString(themeNo));
+	  params.put("userNo",Integer.toString(userNo));
 	  requestAgent.request("theme.liked.delete", params);
 		if(requestAgent.getStatus().equals(RequestAgent.FAIL)) {
 			throw new Exception(requestAgent.getObject(String.class));
@@ -110,8 +110,8 @@ public class NetThemeDao implements ThemeDao{
 	}
 	
 	@Override
-	public List<Theme> likedThemeList(String userName) throws Exception{
-		requestAgent.request("theme.liked.list", userName);
+	public List<Theme> likedThemeList(int userNo) throws Exception{
+		requestAgent.request("theme.liked.list", Integer.toString(userNo));
 		
     if (requestAgent.getStatus().equals(RequestAgent.FAIL)) {
       throw new Exception(requestAgent.getObject(String.class));

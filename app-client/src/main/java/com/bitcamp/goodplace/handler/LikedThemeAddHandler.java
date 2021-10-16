@@ -32,7 +32,7 @@ public class LikedThemeAddHandler implements Command {
       return;
     }
 
-    if (theme.getThemeOwnerName().equals(AuthLoginHandler.getLoginUser().getNickName())) {
+    if (theme.getThemeOwnerNo() == AuthLoginHandler.getLoginUser().getNo()) {
       System.out.println("본인의 테마 좋아요 등록 불가!");
       return;
     }
@@ -52,7 +52,7 @@ public class LikedThemeAddHandler implements Command {
     	}
     }
 
-    themeDao.likedThemeInsert(theme.getTitle(), AuthLoginHandler.getLoginUser().getNickName());
+    themeDao.likedThemeInsert(theme.getNo(), AuthLoginHandler.getLoginUser().getNo());
 
 
     System.out.println("좋아요 등록 완료!");

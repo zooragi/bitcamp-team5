@@ -4,16 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.bitcamp.goodplace.dao.ThemeDao;
+import com.bitcamp.goodplace.dao.UserDao;
 import com.bitcamp.goodplace.domain.Theme;
-import com.bitcamp.goodplace.domain.User;
 import com.bitcamp.util.Prompt;
 
 public class SearchHashtagHandler implements Command {
 
 	ThemeDao themeDao;
+	UserPrompt userPrompt;
 	
-  public SearchHashtagHandler(ThemeDao themeDao) {
+  public SearchHashtagHandler(ThemeDao themeDao,UserPrompt userPrompt) {
   	this.themeDao = themeDao;
+  	this.userPrompt = userPrompt;
   }
 
   public void execute(CommandRequest request) throws Exception {
@@ -35,9 +37,15 @@ public class SearchHashtagHandler implements Command {
       }
 
       System.out.printf("[%s]의 검색결과\n", input);
-      ThemeHandlerHelper.printList(searchedThemeList);
+      printList(searchedThemeList);
       
       return;
     }
   }
+  
+	private void printList(List<Theme> themeList) throws Exception {
+		for (Theme theme : themeList) {
+			System.out.printf("[%s] 테마명 > %s\n", userPrompt.getByUserNo(theme.getThemeOwnerNo()) , theme.getTitle());
+		}
+	}
 }

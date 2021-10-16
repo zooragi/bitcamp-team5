@@ -117,7 +117,7 @@ public class ClientApp {
     
     commandMap.put("/likedTheme/add", new LikedThemeAddHandler(themeDao));
     commandMap.put("/likedTheme/delete", new LikedThemeDeleteHandler(themeDao));
-    commandMap.put("/likedTheme/list", new LikedThemeListHandler(themeDao));
+    commandMap.put("/likedTheme/list", new LikedThemeListHandler(themeDao,userPrompt));
 
     commandMap.put("/likedUser/add", new LikedUserAddHandler(userDao,userPrompt));
     commandMap.put("/likedUser/list", new LikedUserListHandler(userDao));
@@ -131,7 +131,7 @@ public class ClientApp {
     
     commandMap.put("/search/searchTheme", new SearchThemeHandler(themeDao));
     commandMap.put("/search/searchUser", new SearchUserHandler(userDao,themePrompt));
-    commandMap.put("/search/searchHashtag", new SearchHashtagHandler(themeDao));
+    commandMap.put("/search/searchHashtag", new SearchHashtagHandler(themeDao,userPrompt));
     
     commandMap.put("/rank/themeRank", new RealTimeRankHandler(themePrompt));
     commandMap.put("/rank/userRank", new UserRankHandler(userPrompt));

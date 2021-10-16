@@ -62,25 +62,25 @@ public class ThemeTable extends JsonDataTable<Theme> implements DataProcessor{
 	}
 
 	private void likedList(Request request, Response response) {
-		String userName = request.getObject(String.class);
-		ArrayList<Theme> likedThemeList = findLikedThemeByUserName(userName);
+		int userNo = Integer.parseInt(request.getObject(String.class));
+		ArrayList<Theme> likedThemeList = findLikedThemeByUserNo(userNo);
 		response.setValue(likedThemeList);
 		response.setStatus(Response.SUCCESS);
 	}
 
 	private void likedDelete(Request request, Response response) {
-    String themeTitle = request.getParameter("themeTitle");
-    String userName = request.getParameter("userName");
-    Theme theme = findByTitle(themeTitle);
-    theme.getLikedThemeUsers().remove(userName);
+    int themeNo =Integer.parseInt(request.getParameter("themeNo")) ;
+    int userNo = Integer.parseInt(request.getParameter("userNo"));
+    Theme theme = findByNo(themeNo);
+    theme.getLikedThemeUserNo().remove(Integer.valueOf(userNo));
     response.setStatus(Response.SUCCESS);
 	}
 
 	private void likedInsert(Request request, Response response) {
-    String themeTitle = request.getParameter("themeTitle");
-    String userName = request.getParameter("userName");
-    Theme theme = findByTitle(themeTitle);
-    theme.getLikedThemeUsers().add(userName);
+    int themeNo =Integer.parseInt(request.getParameter("themeNo")) ;
+    int userNo = Integer.parseInt(request.getParameter("userNo"));
+    Theme theme = findByNo(themeNo);
+    theme.getLikedThemeUserNo().add(userNo);
     response.setStatus(Response.SUCCESS);
 	}
 
@@ -165,6 +165,14 @@ public class ThemeTable extends JsonDataTable<Theme> implements DataProcessor{
 		}
 		return null;
 	}
+	private Theme findByNo(int no) {
+		for (Theme theme : list) {
+			if (theme.getNo() == no) {
+				return theme;
+			}
+		}
+		return null;
+	}
 	
 	private Place findByPlace(Place place) {
 		for(Theme theme : list) {
@@ -189,11 +197,11 @@ public class ThemeTable extends JsonDataTable<Theme> implements DataProcessor{
 		return searchedThemeList;
 	}
 	
-	private ArrayList<Theme> findLikedThemeByUserName(String userName){
+	private ArrayList<Theme> findLikedThemeByUserNo(int userNo){
 		ArrayList<Theme> likedUserList = new ArrayList<>();
 		for(Theme t : list) {
-			for(String name : t.getLikedThemeUsers()) {
-				if(name.equals(userName)) {
+			for(int no : t.getLikedThemeUserNo()) {
+				if(userNo == no) {
 					likedUserList.add(t);
 					break;
 				}
