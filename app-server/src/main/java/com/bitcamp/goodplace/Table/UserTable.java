@@ -21,6 +21,9 @@ public class UserTable extends JsonDataTable<User> implements DataProcessor {
 		case "user.insert":
 			insert(request, response);
 			break;
+		case "user.delete":
+			delete(request, response);
+			break;
 		case "user.selectOne":
 			selectOne(request, response);
 			break;
@@ -50,6 +53,13 @@ public class UserTable extends JsonDataTable<User> implements DataProcessor {
 			response.setValue("해당 명령을 지원하지 않습니다.");
 
 		}
+	}
+
+	private void delete(Request request, Response response) {
+		int no = Integer.parseInt(request.getObject(String.class));
+		User user = findByNo(no);
+		list.remove(user);
+		response.setStatus(Response.SUCCESS);
 	}
 
 	private void likedUserDelete(Request request, Response response) {

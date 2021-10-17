@@ -25,6 +25,15 @@ public class NetUserDao implements UserDao{
 	}
 
 	@Override
+  public void delete(int userNo) throws Exception {
+    requestAgent.request("user.delete",Integer.toString(userNo));
+
+    if (requestAgent.getStatus().equals(RequestAgent.FAIL)) {
+      throw new Exception(requestAgent.getObject(String.class));
+    }
+  }
+	
+	@Override
 	public User search(String name) throws Exception {
 		requestAgent.request("user.search", name);
 		if(requestAgent.getStatus().equals(RequestAgent.FAIL)) {

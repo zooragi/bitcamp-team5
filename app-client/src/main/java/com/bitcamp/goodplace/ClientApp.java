@@ -39,8 +39,10 @@ import com.bitcamp.goodplace.handler.SearchThemeHandler;
 import com.bitcamp.goodplace.handler.SearchUserHandler;
 import com.bitcamp.goodplace.handler.ThemePrompt;
 import com.bitcamp.goodplace.handler.UserAddHandler;
+import com.bitcamp.goodplace.handler.UserDeleteHandler;
 import com.bitcamp.goodplace.handler.UserPrompt;
 import com.bitcamp.goodplace.handler.UserRankHandler;
+import com.bitcamp.goodplace.handler.UserUpdateHandler;
 import com.bitcamp.goodplace.listener.LoginListener;
 import com.bitcamp.menu.Menu;
 import com.bitcamp.menu.MenuFilter;
@@ -100,7 +102,10 @@ public class ClientApp {
   	ThemePrompt themePrompt = new ThemePrompt(themeDao);
   	
     commandMap.put("/user/add", new UserAddHandler(userDao));
+    commandMap.put("/auth/unregistered", new UserDeleteHandler(userDao));
+    commandMap.put("/auth/edit", new UserUpdateHandler(userDao));
     commandMap.put("/auth/displayLoginUer", new AuthDisplayLoginUserHandler());
+    
     commandMap.put("/auth/login", new AuthLoginHandler(requestAgent,userListeners));
     commandMap.put("/auth/logout", new AuthLogoutHandler(userListeners));
     
