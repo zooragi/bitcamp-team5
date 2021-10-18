@@ -1,4 +1,4 @@
-package com.bitcamp.util;
+package com.welcomeToJeju.util;
 
 public class KakaoVo {
 	private String address_name;

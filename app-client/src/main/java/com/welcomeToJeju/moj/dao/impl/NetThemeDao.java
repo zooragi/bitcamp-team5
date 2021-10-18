@@ -1,13 +1,13 @@
-package com.bitcamp.goodplace.dao.impl;
+package com.welcomeToJeju.moj.dao.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.bitcamp.goodplace.dao.ThemeDao;
-import com.bitcamp.goodplace.domain.Place;
-import com.bitcamp.goodplace.domain.Theme;
-import com.bitcamp.request.RequestAgent;
+import com.welcomeToJeju.moj.dao.ThemeDao;
+import com.welcomeToJeju.moj.domain.Place;
+import com.welcomeToJeju.moj.domain.Theme;
+import com.welcomeToJeju.request.RequestAgent;
 
 public class NetThemeDao implements ThemeDao{
 	RequestAgent requestAgent;

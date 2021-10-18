@@ -1,6 +1,6 @@
-package com.bitcamp.goodplace.handler;
+package com.welcomeToJeju.moj.handler;
 
-import com.bitcamp.goodplace.dao.ReportDao;
+import com.welcomeToJeju.moj.dao.ReportDao;
 
 public class ReportPrompt {
 

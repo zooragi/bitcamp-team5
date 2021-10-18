@@ -1,10 +1,10 @@
-package com.bitcamp.goodplace.dao;
+package com.welcomeToJeju.moj.dao;
 
 import java.util.List;
 
-import com.bitcamp.goodplace.domain.Report;
-import com.bitcamp.goodplace.domain.ReportTheme;
-import com.bitcamp.goodplace.domain.ReportUser;
+import com.welcomeToJeju.moj.domain.Report;
+import com.welcomeToJeju.moj.domain.ReportTheme;
+import com.welcomeToJeju.moj.domain.ReportUser;
 
 public interface ReportDao {
 	void userInsert(ReportUser report) throws Exception;

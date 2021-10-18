@@ -1,8 +1,8 @@
-package com.bitcamp.goodplace.handler;
+package com.welcomeToJeju.moj.handler;
 
-import com.bitcamp.goodplace.dao.ThemeDao;
-import com.bitcamp.goodplace.domain.Place;
-import com.bitcamp.goodplace.domain.Theme;
+import com.welcomeToJeju.moj.dao.ThemeDao;
+import com.welcomeToJeju.moj.domain.Place;
+import com.welcomeToJeju.moj.domain.Theme;
 
 public class PlaceListHandler implements Command {
 

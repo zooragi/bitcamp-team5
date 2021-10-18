@@ -1,14 +1,14 @@
-package com.bitcamp.goodplace.handler;
+package com.welcomeToJeju.moj.handler;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.bitcamp.goodplace.dao.ReportDao;
-import com.bitcamp.goodplace.domain.Report;
-import com.bitcamp.goodplace.domain.ReportUser;
-import com.bitcamp.goodplace.domain.User;
-import com.bitcamp.util.Prompt;
+import com.welcomeToJeju.moj.dao.ReportDao;
+import com.welcomeToJeju.moj.domain.Report;
+import com.welcomeToJeju.moj.domain.ReportUser;
+import com.welcomeToJeju.moj.domain.User;
+import com.welcomeToJeju.util.Prompt;
 
 public class ReportAddUserHandler implements Command {
 

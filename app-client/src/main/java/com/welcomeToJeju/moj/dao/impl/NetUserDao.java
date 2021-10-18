@@ -1,12 +1,12 @@
-package com.bitcamp.goodplace.dao.impl;
+package com.welcomeToJeju.moj.dao.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.bitcamp.goodplace.dao.UserDao;
-import com.bitcamp.goodplace.domain.User;
-import com.bitcamp.request.RequestAgent;
+import com.welcomeToJeju.moj.dao.UserDao;
+import com.welcomeToJeju.moj.domain.User;
+import com.welcomeToJeju.request.RequestAgent;
 
 public class NetUserDao implements UserDao{
 	

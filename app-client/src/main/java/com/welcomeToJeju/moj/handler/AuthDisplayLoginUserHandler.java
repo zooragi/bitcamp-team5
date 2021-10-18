@@ -1,6 +1,6 @@
-package com.bitcamp.goodplace.handler;
+package com.welcomeToJeju.moj.handler;
 
-import com.bitcamp.util.Prompt;
+import com.welcomeToJeju.util.Prompt;
 
 public class AuthDisplayLoginUserHandler implements Command{
 

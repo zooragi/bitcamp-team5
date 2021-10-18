@@ -1,4 +1,4 @@
-package com.bitcamp.request;
+package com.welcomeToJeju.request;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -7,9 +7,6 @@ import java.lang.reflect.Type;
 import java.net.Socket;
 import java.util.Collection;
 
-import com.bitcamp.goodplace.domain.Report;
-import com.bitcamp.goodplace.domain.ReportTheme;
-import com.bitcamp.goodplace.domain.ReportUser;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
@@ -18,6 +15,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
+import com.welcomeToJeju.moj.domain.Report;
+import com.welcomeToJeju.moj.domain.ReportTheme;
+import com.welcomeToJeju.moj.domain.ReportUser;
 
 public class RequestAgent {
 

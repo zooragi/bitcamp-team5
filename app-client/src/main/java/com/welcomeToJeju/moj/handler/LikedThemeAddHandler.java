@@ -1,8 +1,8 @@
-package com.bitcamp.goodplace.handler;
+package com.welcomeToJeju.moj.handler;
 
-import com.bitcamp.goodplace.dao.ThemeDao;
-import com.bitcamp.goodplace.domain.Theme;
-import com.bitcamp.util.Prompt;
+import com.welcomeToJeju.moj.dao.ThemeDao;
+import com.welcomeToJeju.moj.domain.Theme;
+import com.welcomeToJeju.util.Prompt;
 
 public class LikedThemeAddHandler implements Command {
 

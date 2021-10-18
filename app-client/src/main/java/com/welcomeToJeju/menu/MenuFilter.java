@@ -1,4 +1,4 @@
-package com.bitcamp.menu;
+package com.welcomeToJeju.menu;
 
 public interface MenuFilter {
 	boolean accept(Menu menu);

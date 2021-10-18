@@ -1,11 +1,11 @@
-package com.bitcamp.goodplace.handler;
+package com.welcomeToJeju.moj.handler;
 
 import java.util.ArrayList;
 
-import com.bitcamp.goodplace.dao.ReportDao;
-import com.bitcamp.goodplace.domain.Report;
-import com.bitcamp.goodplace.domain.ReportTheme;
-import com.bitcamp.goodplace.domain.ReportUser;
+import com.welcomeToJeju.moj.dao.ReportDao;
+import com.welcomeToJeju.moj.domain.Report;
+import com.welcomeToJeju.moj.domain.ReportTheme;
+import com.welcomeToJeju.moj.domain.ReportUser;
 
 public class ReportMyListHandler implements Command {
 

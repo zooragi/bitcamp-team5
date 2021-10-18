@@ -1,15 +1,15 @@
-package com.bitcamp.goodplace.handler;
+package com.welcomeToJeju.moj.handler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.bitcamp.context.UserContextListener;
-import com.bitcamp.goodplace.domain.User;
-import com.bitcamp.menu.Menu;
-import com.bitcamp.request.RequestAgent;
-import com.bitcamp.util.Prompt;
+import com.welcomeToJeju.context.UserContextListener;
+import com.welcomeToJeju.menu.Menu;
+import com.welcomeToJeju.moj.domain.User;
+import com.welcomeToJeju.request.RequestAgent;
+import com.welcomeToJeju.util.Prompt;
 
 public class AuthLoginHandler implements Command{
 

@@ -1,13 +1,13 @@
-package com.bitcamp.goodplace.handler;
+package com.welcomeToJeju.moj.handler;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.bitcamp.goodplace.dao.UserDao;
-import com.bitcamp.goodplace.domain.Theme;
-import com.bitcamp.goodplace.domain.User;
-import com.bitcamp.request.RequestAgent;
+import com.welcomeToJeju.moj.dao.UserDao;
+import com.welcomeToJeju.moj.domain.Theme;
+import com.welcomeToJeju.moj.domain.User;
+import com.welcomeToJeju.request.RequestAgent;
 
 public class UserPrompt {
 

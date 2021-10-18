@@ -1,9 +1,9 @@
-package com.bitcamp.goodplace.listener;
+package com.welcomeToJeju.moj.listener;
 
 import java.util.Map;
 
-import com.bitcamp.context.UserContextListener;
-import com.bitcamp.goodplace.domain.User;
+import com.welcomeToJeju.context.UserContextListener;
+import com.welcomeToJeju.moj.domain.User;
 
 public class LoginListener implements UserContextListener{
 

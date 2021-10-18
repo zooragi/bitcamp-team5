@@ -1,4 +1,4 @@
-package com.bitcamp.goodplace.domain;
+package com.welcomeToJeju.moj.domain;
 
 public class ReportTheme extends Report{
   String reportedThemeTitle;

@@ -1,4 +1,4 @@
-package com.bitcamp.goodplace.handler;
+package com.welcomeToJeju.moj.handler;
 
 public class RequestDispatcher {
 

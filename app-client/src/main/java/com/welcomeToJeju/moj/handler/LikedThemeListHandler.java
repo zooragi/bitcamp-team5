@@ -1,11 +1,11 @@
-package com.bitcamp.goodplace.handler;
+package com.welcomeToJeju.moj.handler;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.bitcamp.goodplace.dao.ThemeDao;
-import com.bitcamp.goodplace.domain.Theme;
+import com.welcomeToJeju.moj.dao.ThemeDao;
+import com.welcomeToJeju.moj.domain.Theme;
 
 public class LikedThemeListHandler implements Command{
 

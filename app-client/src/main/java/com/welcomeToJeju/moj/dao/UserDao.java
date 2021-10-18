@@ -1,8 +1,8 @@
-package com.bitcamp.goodplace.dao;
+package com.welcomeToJeju.moj.dao;
 
 import java.util.List;
 
-import com.bitcamp.goodplace.domain.User;
+import com.welcomeToJeju.moj.domain.User;
 
 public interface UserDao {
 	void insert(User user) throws Exception;

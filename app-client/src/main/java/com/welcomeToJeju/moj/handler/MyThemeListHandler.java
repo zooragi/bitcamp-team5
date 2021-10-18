@@ -1,9 +1,9 @@
-package com.bitcamp.goodplace.handler;
+package com.welcomeToJeju.moj.handler;
 
 import java.util.ArrayList;
 
-import com.bitcamp.goodplace.dao.ThemeDao;
-import com.bitcamp.goodplace.domain.Theme;
+import com.welcomeToJeju.moj.dao.ThemeDao;
+import com.welcomeToJeju.moj.domain.Theme;
 
 public class MyThemeListHandler implements Command {
 

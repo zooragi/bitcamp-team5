@@ -1,9 +1,9 @@
-package com.bitcamp.goodplace.dao;
+package com.welcomeToJeju.moj.dao;
 
 import java.util.List;
 
-import com.bitcamp.goodplace.domain.Place;
-import com.bitcamp.goodplace.domain.Theme;
+import com.welcomeToJeju.moj.domain.Place;
+import com.welcomeToJeju.moj.domain.Theme;
 
 public interface ThemeDao {
 	void insert(Theme theme) throws Exception;

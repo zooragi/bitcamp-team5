@@ -1,4 +1,4 @@
-package com.bitcamp.util;
+package com.welcomeToJeju.util;
 
 import java.sql.Date;
 import java.util.Scanner;

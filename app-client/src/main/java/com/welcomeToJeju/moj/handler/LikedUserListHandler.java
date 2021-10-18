@@ -1,9 +1,9 @@
-package com.bitcamp.goodplace.handler;
+package com.welcomeToJeju.moj.handler;
 
 import java.util.Collection;
 
-import com.bitcamp.goodplace.dao.UserDao;
-import com.bitcamp.goodplace.domain.User;
+import com.welcomeToJeju.moj.dao.UserDao;
+import com.welcomeToJeju.moj.domain.User;
 
 public class LikedUserListHandler implements Command {
 
