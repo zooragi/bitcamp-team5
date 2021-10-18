@@ -21,6 +21,7 @@ public class UserPrompt {
 		ArrayList<User> userList = (ArrayList<User>) userDao.findAll();
 		ArrayList<User> ascThemeList = new ArrayList<>();
 		for (User user : userList) {
+			if(user.getNickName().equals("관리자")) continue;
 				ascThemeList.add(user);
 		}
 
