@@ -1,5 +1,7 @@
 package com.welcomeToJeju.moj;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,9 +10,11 @@ import com.welcomeToJeju.context.UserContextListener;
 import com.welcomeToJeju.menu.Menu;
 import com.welcomeToJeju.menu.MenuFilter;
 import com.welcomeToJeju.menu.MenuGroup;
+import com.welcomeToJeju.moj.dao.ThemeDao;
+import com.welcomeToJeju.moj.dao.UserDao;
+import com.welcomeToJeju.moj.dao.impl.MariadbThemeDao;
+import com.welcomeToJeju.moj.dao.impl.MariadbUserDao;
 import com.welcomeToJeju.moj.dao.impl.NetReportDao;
-import com.welcomeToJeju.moj.dao.impl.NetThemeDao;
-import com.welcomeToJeju.moj.dao.impl.NetUserDao;
 import com.welcomeToJeju.moj.handler.AllThemeListHandler;
 import com.welcomeToJeju.moj.handler.AuthDisplayLoginUserHandler;
 import com.welcomeToJeju.moj.handler.AuthLoginHandler;
@@ -43,6 +47,8 @@ import com.welcomeToJeju.moj.handler.SearchUserHandler;
 import com.welcomeToJeju.moj.handler.ThemePrompt;
 import com.welcomeToJeju.moj.handler.UserAddHandler;
 import com.welcomeToJeju.moj.handler.UserDeleteHandler;
+import com.welcomeToJeju.moj.handler.UserDetailHandler;
+import com.welcomeToJeju.moj.handler.UserListHandler;
 import com.welcomeToJeju.moj.handler.UserPrompt;
 import com.welcomeToJeju.moj.handler.UserRankHandler;
 import com.welcomeToJeju.moj.handler.UserUpdateHandler;
@@ -52,6 +58,8 @@ import com.welcomeToJeju.util.Prompt;
 
 public class ClientApp {
 	static RequestAgent requestAgent;
+	
+	Connection con;
 	
   HashMap<String,Command> commandMap = new HashMap<>();
 
@@ -95,18 +103,25 @@ public class ClientApp {
   public ClientApp() throws Exception{
   	requestAgent = new RequestAgent("127.0.0.1",8888);
   	
-  	NetUserDao userDao = new NetUserDao(requestAgent);
-  	NetThemeDao themeDao = new NetThemeDao(requestAgent);
+  	con = DriverManager.getConnection( //
+        "jdbc:mysql://localhost:3306/jejudb?user=jeju&password=1111");
+  	
+  	UserDao userDao = new MariadbUserDao(con);
+  	ThemeDao themeDao = new MariadbThemeDao(con);
   	NetReportDao reportDao = new NetReportDao(requestAgent);
     UserPrompt userPrompt = new UserPrompt(userDao);
   	ThemePrompt themePrompt = new ThemePrompt(themeDao);
   	
     commandMap.put("/user/add", new UserAddHandler(userDao));
+    commandMap.put("/user/list", new UserListHandler(userDao));
+    commandMap.put("/user/delete", new UserDeleteHandler(userDao));
+    commandMap.put("/user/detail", new UserDetailHandler(userDao));
+    commandMap.put("/user/update", new UserUpdateHandler(userDao));
     commandMap.put("/auth/unregistered", new UserDeleteHandler(userDao));
     commandMap.put("/auth/edit", new UserUpdateHandler(userDao));
     commandMap.put("/auth/displayLoginUer", new AuthDisplayLoginUserHandler());
     
-    commandMap.put("/auth/login", new AuthLoginHandler(requestAgent,userListeners));
+    commandMap.put("/auth/login", new AuthLoginHandler(userDao,userListeners));
     commandMap.put("/auth/logout", new AuthLogoutHandler(userListeners));
     
     commandMap.put("/myTheme/add", new MyThemeAddHandler(themeDao));

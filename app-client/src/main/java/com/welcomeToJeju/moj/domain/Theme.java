@@ -8,8 +8,8 @@ public class Theme implements Comparable<Theme>{
   private String title;
   private int themeOwnerNo;
   private int viewCount;
-  private boolean isPublic;
-  private boolean isShare;
+  private int isPublic;
+  private int isShare;
   private String category; 
   private int reportedCount = 0;
 
@@ -56,11 +56,11 @@ public class Theme implements Comparable<Theme>{
     this.hashtags = hashtag;
   }
 
-  public boolean isPublic() {
+  public int isPublic() {
     return isPublic;
   }
 
-  public void setPublic(boolean isPublic) {
+  public void setPublic(int isPublic) {
     this.isPublic = isPublic;
   }
 
@@ -80,11 +80,11 @@ public class Theme implements Comparable<Theme>{
     this.placeList = placeList;
   }
 
-  public boolean isShare() {
+  public int isShare() {
     return isShare;
   }
 
-  public void setShare(boolean isShare) {
+  public void setShare(int isShare) {
     this.isShare = isShare;
   }
 

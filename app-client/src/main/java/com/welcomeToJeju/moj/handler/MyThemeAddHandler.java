@@ -21,27 +21,12 @@ public class MyThemeAddHandler implements Command {
 		System.out.println();
 		System.out.println("[나의 테마 등록하기]");
 
-		ArrayList<Theme> themeList = (ArrayList<Theme>) themeDao.findAll();
-
 		theme.setTitle(Prompt.inputString("테마 이름(취소 : 엔터) > "));
 
 		if (theme.getTitle().equals("")) {
 			System.out.println("나의 테마 등록 취소!");
 			return;
 		}
-
-		int uniqueNumber;
-		loop: while (true) {
-			uniqueNumber = Prompt.inputInt("고유 번호(취소 : 엔터) > ");
-			for (Theme t : themeList) {
-				if (t.getNo() == uniqueNumber) {
-					System.out.println("존재하는 번호입니다. 다시 입력 하시오.");
-					continue loop;
-				}
-			}
-			break;
-		}
-		theme.setNo(uniqueNumber);
 
 		int categoryNum;
 		List<String> categories = new ArrayList<>();
@@ -65,17 +50,17 @@ public class MyThemeAddHandler implements Command {
 		}
 		theme.setCategory(categories.get(categoryNum - 1));
 
-		while (true) {
-			String input = Prompt.inputString("해시 태그(완료: 엔터) > ");
-			if (input.length() == 0)
-				break;
-
-			theme.getHashtags().add(input);
-		}
+//		while (true) {
+//			String input = Prompt.inputString("해시 태그(완료: 엔터) > ");
+//			if (input.length() == 0)
+//				break;
+//
+//			theme.getHashtags().add(input);
+//		}
 
 		String publicOption = Prompt.inputString("공개 설정(Y/n) > ");
 		if (publicOption.equalsIgnoreCase("y") || publicOption.equals("")) {
-			theme.setPublic(true);
+			theme.setPublic(1);
 		}
 		theme.setThemeOwnerNo(AuthLoginHandler.getLoginUser().getNo());
 		themeDao.insert(theme);

@@ -8,9 +8,10 @@ import com.welcomeToJeju.moj.domain.Theme;
 public interface ThemeDao {
 	void insert(Theme theme) throws Exception;
 	Theme search(String title) throws Exception;
-	List<Theme> findAll() throws Exception;
+	List<Theme> findByUserNo(int userNo) throws Exception;
 	void update(Theme theme) throws Exception;
 	String delete(String themeTitle) throws Exception;
+//	public void hashtagInsert(String hashtag) throws Exception;
 	void placeInsert(Place place) throws Exception;
 	String placeDelete(Place place) throws Exception;
 	List<Theme> hashtagSearch(String hashtagName) throws Exception;
