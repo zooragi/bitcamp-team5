@@ -19,7 +19,7 @@ public class UserUpdateHandler implements Command {
     User user = (User) request.getAttribute("loginUser");
 
     User temp = new User();
-
+    temp.setNo(user.getNo());
     temp.setEmail(Prompt.inputString("이메일(" + user.getEmail() + ") > "));
     temp.setPassword(Prompt.inputString("암호 > "));
     temp.setNickName(Prompt.inputString("닉네임(" + user.getNickName() + ") > "));
