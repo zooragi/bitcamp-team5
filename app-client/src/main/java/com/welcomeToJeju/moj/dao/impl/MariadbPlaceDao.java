@@ -2,9 +2,13 @@ package com.welcomeToJeju.moj.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.welcomeToJeju.moj.dao.PlaceDao;
 import com.welcomeToJeju.moj.domain.Place;
+import com.welcomeToJeju.moj.domain.Theme;
 
 public class MariadbPlaceDao implements PlaceDao{
 	Connection con;
@@ -28,6 +32,27 @@ public class MariadbPlaceDao implements PlaceDao{
 			if(stmt.executeUpdate() == 0) {
 				throw new Exception("장소 데이터 저장 실패!");
 			}
+		}
+	}
+	
+	@Override
+	public List<Place> findByThemeNo(int themeNo) throws Exception{
+		try(PreparedStatement stmt = con.prepareStatement(
+				"select place_name, place_address, x_coord, y_coord from jeju_place where theme_no="+themeNo);
+				ResultSet rs = stmt.executeQuery()){
+			ArrayList<Place> list = new ArrayList<>();
+			
+			while(rs.next()) {
+				Place place = new Place();
+				
+				place.setStoreName(rs.getString("place_name"));
+				place.setStoreAddress(rs.getString("place_address"));
+				place.setxCoord(rs.getString("x_coord"));
+				place.setyCoord(rs.getString("y_coord"));
+				
+				list.add(place);
+			}
+			return list;
 		}
 	}
 

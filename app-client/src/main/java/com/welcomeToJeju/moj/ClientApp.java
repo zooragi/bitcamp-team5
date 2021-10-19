@@ -10,8 +10,10 @@ import com.welcomeToJeju.context.UserContextListener;
 import com.welcomeToJeju.menu.Menu;
 import com.welcomeToJeju.menu.MenuFilter;
 import com.welcomeToJeju.menu.MenuGroup;
+import com.welcomeToJeju.moj.dao.PlaceDao;
 import com.welcomeToJeju.moj.dao.ThemeDao;
 import com.welcomeToJeju.moj.dao.UserDao;
+import com.welcomeToJeju.moj.dao.impl.MariadbPlaceDao;
 import com.welcomeToJeju.moj.dao.impl.MariadbThemeDao;
 import com.welcomeToJeju.moj.dao.impl.MariadbUserDao;
 import com.welcomeToJeju.moj.dao.impl.NetReportDao;
@@ -108,6 +110,7 @@ public class ClientApp {
   	
   	UserDao userDao = new MariadbUserDao(con);
   	ThemeDao themeDao = new MariadbThemeDao(con);
+  	PlaceDao placeDao = new MariadbPlaceDao(con);
   	NetReportDao reportDao = new NetReportDao(requestAgent);
     UserPrompt userPrompt = new UserPrompt(userDao);
   	ThemePrompt themePrompt = new ThemePrompt(themeDao);
@@ -131,9 +134,9 @@ public class ClientApp {
     commandMap.put("/myTheme/update", new MyThemeUpdateHandler(themeDao));
     commandMap.put("/theme/all", new AllThemeListHandler(themeDao));
     
-    commandMap.put("/place/add", new PlaceAddHandler(themeDao));
+    commandMap.put("/place/add", new PlaceAddHandler(placeDao));
     commandMap.put("/place/delete", new PlaceDeleteHandler(themeDao));
-    commandMap.put("/place/list", new PlaceListHandler(themeDao));
+    commandMap.put("/place/list", new PlaceListHandler(placeDao));
     
     commandMap.put("/likedTheme/add", new LikedThemeAddHandler(themeDao));
     commandMap.put("/likedTheme/delete", new LikedThemeDeleteHandler(themeDao));
