@@ -1,5 +1,7 @@
 package com.welcomeToJeju.moj.dao;
 
-public interface PlaceDao {
+import com.welcomeToJeju.moj.domain.Place;
 
+public interface PlaceDao {
+	void insert(Place place) throws Exception;
 }

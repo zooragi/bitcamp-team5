@@ -3,7 +3,7 @@ package com.welcomeToJeju.moj.handler;
 import java.util.ArrayList;
 
 import com.google.gson.Gson;
-import com.welcomeToJeju.moj.dao.ThemeDao;
+import com.welcomeToJeju.moj.dao.PlaceDao;
 import com.welcomeToJeju.moj.domain.Place;
 import com.welcomeToJeju.moj.domain.Theme;
 import com.welcomeToJeju.util.KakaoMapApi;
@@ -12,10 +12,10 @@ import com.welcomeToJeju.util.Prompt;
 
 public class PlaceAddHandler implements Command {
 
-	ThemeDao themeDao;
+	PlaceDao placeDao;
 	
-  public PlaceAddHandler(ThemeDao themeDao) {
-  	this.themeDao = themeDao;
+  public PlaceAddHandler(PlaceDao placeDao) {
+  	this.placeDao = placeDao;
   }
 	
   @Override
@@ -73,13 +73,13 @@ public class PlaceAddHandler implements Command {
       place.setStoreName(selectedPlace.getPlace_name());
       place.setxCoord(selectedPlace.getX());
       place.setyCoord(selectedPlace.getY());
-      place.setTheme(theme/*.getTitle()*/);
+      place.setThemeNo(theme.getNo());
 
       break;
     }
 
     place.getComments().add(Prompt.inputString("장소 후기 > "));
-    themeDao.placeInsert(place);
+    placeDao.insert(place);
     
     System.out.println("장소 등록 완료!");
   }
