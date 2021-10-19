@@ -16,18 +16,18 @@ public class UserDeleteHandler implements Command {
 
   public void execute(CommandRequest request) throws Exception {
 
-    System.out.println("[회원 탈퇴하기]");
+    System.out.println("[회원 삭제하기]");
 
-    User user = (User) request.getAttribute("loginUser");
+    int no = Prompt.inputInt("번호 > ");
 
-    String input = Prompt.inputString("회원 탈퇴하기(y/N) > ");
+    String input = Prompt.inputString("삭제하기(y/N) > ");
     if (input.equalsIgnoreCase("n") || input.length() == 0) {
-      System.out.println("회원 탈퇴 취소!");
+      System.out.println("회원 삭제 취소!");
       return;
     }
 
-    userDao.delete(user.getNo());
-
-    System.out.println("회원 탈퇴 완료!");
+    userDao.delete(no);
+    
+    System.out.println("회원 삭제 완료!");
   }
 }
