@@ -50,20 +50,20 @@ public class MyThemeUpdateHandler implements Command {
       break;
     }
 
-    List<String> hashtagList = new ArrayList<>();
+//    List<String> hashtagList = new ArrayList<>();
+//
+//    while (true) {
+//      String input = Prompt.inputString("해시 태그(완료: 엔터) > ");
+//      if (input.length() == 0)
+//        break;
+//      hashtagList.add(input);
+//    }
 
-    while (true) {
-      String input = Prompt.inputString("해시 태그(완료: 엔터) > ");
-      if (input.length() == 0)
-        break;
-      hashtagList.add(input);
-    }
-
-    boolean isPublic = false;
+    int isPublic = 0;
 
     String publicOption = Prompt.inputString("공개 설정(Y/n) > ");
     if (publicOption.equalsIgnoreCase("y") || publicOption.equals("")) {
-      isPublic = true;
+      isPublic = 1;
     }
 
     String input = Prompt.inputString("수정하기(y/N) > ");
@@ -73,7 +73,7 @@ public class MyThemeUpdateHandler implements Command {
     }
 
     theme.setTitle(newTitle);
-    theme.setHashtags(hashtagList);
+//    theme.setHashtags(hashtagList);
     theme.setCategory(categories.get(categoryNum-1));
     theme.setPublic(isPublic);
     
