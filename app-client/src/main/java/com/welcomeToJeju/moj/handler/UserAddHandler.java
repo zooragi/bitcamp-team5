@@ -22,8 +22,6 @@ public class UserAddHandler implements Command{
     user.setEmail(Prompt.inputString("이메일 > "));
     user.setNickName(Prompt.inputString("닉네임 > "));
     user.setPassword(Prompt.inputString("암호 > "));
-    user.setNo(Prompt.inputInt("고유 번호 > "));
-    user.setRegisteredDate(new Date(System.currentTimeMillis()));
     
     userDao.insert(user);
   
