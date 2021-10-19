@@ -82,13 +82,14 @@ public class MariadbThemeDao implements ThemeDao{
 	}
 
 	@Override
-	public String delete(String themeTitle) throws Exception {
-//		requestAgent.request("theme.delete", themeTitle);
-//    if (requestAgent.getStatus().equals(RequestAgent.FAIL)) {
-//      throw new Exception(requestAgent.getObject(String.class));
-//    }
-//		return requestAgent.getObject(String.class);
-		return null;
+	public String delete(Theme theme) throws Exception {
+		try(PreparedStatement stmt = con.prepareStatement(
+				"delete from jeju_theme where theme_no="+theme.getNo())){
+  		if(stmt.executeUpdate() == 0) {
+  			throw new Exception("회원 데이터 삭제 실패!");
+  		}
+		}
+		return theme.getTitle();
 	}
 
 	@Override

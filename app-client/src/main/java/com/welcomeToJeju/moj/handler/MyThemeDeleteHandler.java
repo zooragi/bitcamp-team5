@@ -23,7 +23,7 @@ public class MyThemeDeleteHandler implements Command {
 		}
 		
 		Theme theme = (Theme) request.getAttribute("theme");
-		String deleteThemeTitle = themeDao.delete(theme.getTitle());
+		String deleteThemeTitle = themeDao.delete(theme);
 		
 		System.out.printf("%s테마 삭제 완료!",deleteThemeTitle);
 		System.out.println();
