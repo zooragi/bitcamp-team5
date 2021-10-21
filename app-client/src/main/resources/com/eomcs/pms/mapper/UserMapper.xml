@@ -39,6 +39,11 @@
 		values(#{email},password(#{password}),#{nickname})
   </insert>
   
+  <delete id="delete" parameterType="int">
+    delete from jeju_user 
+    where user_no=#{value}
+  </delete>
+  
  <!--
   <select id="findByNo" resultMap="MemberMap" parameterType="int">
     select 
@@ -65,10 +70,6 @@
       member_no=#{no}
   </update>
   
-  <delete id="delete" parameterType="int">
-    delete from pms_member 
-    where member_no=#{value}
-  </delete>
   
   <select id="findByEmailAndPassword" resultMap="MemberMap" parameterType="map">
     select 

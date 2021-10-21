@@ -16,13 +16,12 @@ public class MybatisUserDao implements UserDao{
 
   public MybatisUserDao(SqlSession sqlSession) {
     this.sqlSession = sqlSession;
-    sqlSession.commit();
   }
   
 	@Override
 	public void insert(User user) throws Exception {
 		sqlSession.insert("UserMapper.insert",user);
-		
+		sqlSession.commit();
 	}
 	
 	@Override
@@ -35,12 +34,8 @@ public class MybatisUserDao implements UserDao{
 
 	@Override
   public void delete(int userNo) throws Exception {
-//		try(PreparedStatement stmt = con.prepareStatement(
-//				"delete from jeju_user where user_no="+userNo)){
-//  		if(stmt.executeUpdate() == 0) {
-//  			throw new Exception("회원 데이터 삭제 실패!");
-//  		}
-//		}
+		sqlSession.delete("UserMapper.delete", userNo);
+		sqlSession.commit();
   }
 	
 	@Override
