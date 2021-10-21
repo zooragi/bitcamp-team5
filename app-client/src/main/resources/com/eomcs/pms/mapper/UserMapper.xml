@@ -7,7 +7,7 @@
   
   <resultMap type="User" id="UserMap">
     <id column="user_no" property="no"/> 
-    <result column="nickname" property="nickName"/>
+    <result column="nickname" property="nickname"/>
     <result column="email" property="email"/>
     <result column="password" property="password"/>
     <result column="created_dt" property="registeredDate"/>
@@ -33,22 +33,13 @@
 		where 
 			email=#{email} and password=password(#{password})
  	</select>
+ 	
+	<insert id="insert" parameterType="user">
+		Insert into jeju_user(email,password,nickname) 
+		values(#{email},password(#{password}),#{nickname})
+  </insert>
   
  <!--
- 
-  <select id="findAll" resultMap="MemberMap">
-    select 
-      member_no,
-      name,
-      email,
-      tel,
-      created_dt 
-    from 
-      pms_member 
-    order by 
-      name asc
-  </select>
-  
   <select id="findByNo" resultMap="MemberMap" parameterType="int">
     select 
       member_no,
@@ -63,11 +54,6 @@
       member_no=#{no}
   </select>
 
-  <insert id="insert" parameterType="member">
-    insert into pms_member(name,email,password,photo,tel) 
-    values(#{name},#{email},password(#{password}),#{photo},#{tel})
-  </insert>
-  
   <update id="update" parameterType="member">
     update pms_member set
       name=#{name},

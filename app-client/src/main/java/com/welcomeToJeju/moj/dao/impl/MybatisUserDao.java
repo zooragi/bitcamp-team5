@@ -16,19 +16,13 @@ public class MybatisUserDao implements UserDao{
 
   public MybatisUserDao(SqlSession sqlSession) {
     this.sqlSession = sqlSession;
+    sqlSession.commit();
   }
+  
 	@Override
 	public void insert(User user) throws Exception {
-//		try(PreparedStatement stmt = con.prepareStatement(
-//				"Insert into jeju_user(email,password,nickname) values(?,password(?),?)")){
-//			stmt.setString(1, user.getEmail());
-//			stmt.setString(2, user.getPassword());
-//			stmt.setString(3, user.getNickName());
-//			
-//			if(stmt.executeUpdate() == 0) {
-//				throw new Exception("회원 데이터 저장 실패!");
-//			}
-//		}
+		sqlSession.insert("UserMapper.insert",user);
+		
 	}
 	
 	@Override
