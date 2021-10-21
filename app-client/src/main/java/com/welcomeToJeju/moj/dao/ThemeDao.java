@@ -10,10 +10,8 @@ public interface ThemeDao {
 	Theme search(String title) throws Exception;
 	List<Theme> findByUserNo(int userNo) throws Exception;
 	void update(Theme theme) throws Exception;
-	String delete(String themeTitle) throws Exception;
+	public String delete(Theme theme) throws Exception;
 //	public void hashtagInsert(String hashtag) throws Exception;
-	void placeInsert(Place place) throws Exception;
-	String placeDelete(Place place) throws Exception;
 	List<Theme> hashtagSearch(String hashtagName) throws Exception;
 	void likedThemeInsert(int themeNo,int userNo) throws Exception;
 	void likedThemeDelete(int themeNo,int userNo) throws Exception;

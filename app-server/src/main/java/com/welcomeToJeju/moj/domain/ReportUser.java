@@ -1,4 +1,4 @@
-package com.bitcamp.goodplace.domain;
+package com.welcomeToJeju.moj.domain;
 
 public class ReportUser extends Report{
   String reportedUserName;

@@ -1,14 +1,14 @@
-package com.bitcamp.goodplace.Table;
+package com.welcomeToJeju.moj.Table;
 
 import java.util.ArrayList;
 
 import java.util.Map;
 
-import com.bitcamp.goodplace.domain.Theme;
-import com.bitcamp.goodplace.domain.User;
-import com.bitcamp.server.DataProcessor;
-import com.bitcamp.server.Request;
-import com.bitcamp.server.Response;
+import com.welcomeToJeju.moj.domain.Theme;
+import com.welcomeToJeju.moj.domain.User;
+import com.welcomeToJeju.server.DataProcessor;
+import com.welcomeToJeju.server.Request;
+import com.welcomeToJeju.server.Response;
 
 public class UserTable extends JsonDataTable<User> implements DataProcessor {
 

@@ -1,4 +1,4 @@
-package com.bitcamp.server;
+package com.welcomeToJeju.server;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -8,11 +8,11 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Set;
 
-import com.bitcamp.goodplace.Table.JsonDataTable;
-import com.bitcamp.goodplace.Table.ReportTable;
-import com.bitcamp.goodplace.Table.ThemeTable;
-import com.bitcamp.goodplace.Table.UserTable;
 import com.google.gson.Gson;
+import com.welcomeToJeju.moj.Table.JsonDataTable;
+import com.welcomeToJeju.moj.Table.ReportTable;
+import com.welcomeToJeju.moj.Table.ThemeTable;
+import com.welcomeToJeju.moj.Table.UserTable;
 
 public class RequestProcessor extends Thread {
 	Socket socket;

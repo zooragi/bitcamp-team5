@@ -19,7 +19,7 @@ public class SearchUserHandler implements Command {
 
     while (true) {
       String input = Prompt.inputString("유저 닉네임(취소 : 엔터) > ");
-      User user = userDao.search(input);
+      User user = userDao.findByName(input);
       
       if(user == null) {
       	System.out.println("등록된 회원 아닙니다");

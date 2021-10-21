@@ -24,15 +24,15 @@ public class NetThemeDao implements ThemeDao{
 		}
 	}
 	
-	@Override
-	public List<Theme> findAll() throws Exception {
-		requestAgent.request("theme.list", null);
-    if (requestAgent.getStatus().equals(RequestAgent.FAIL)) {
-      throw new Exception(requestAgent.getObject(String.class));
-    }
-
-    return new ArrayList<>(requestAgent.getObjects(Theme.class));
-	}
+//	@Override
+//	public List<Theme> findAll() throws Exception {
+//		requestAgent.request("theme.list", null);
+//    if (requestAgent.getStatus().equals(RequestAgent.FAIL)) {
+//      throw new Exception(requestAgent.getObject(String.class));
+//    }
+//
+//    return new ArrayList<>(requestAgent.getObjects(Theme.class));
+//	}
 
 	@Override
 	public void update(Theme theme) throws Exception {
@@ -42,14 +42,14 @@ public class NetThemeDao implements ThemeDao{
     }
 	}
 
-	@Override
-	public String delete(String themeTitle) throws Exception {
-		requestAgent.request("theme.delete", themeTitle);
-    if (requestAgent.getStatus().equals(RequestAgent.FAIL)) {
-      throw new Exception(requestAgent.getObject(String.class));
-    }
-		return requestAgent.getObject(String.class);
-	}
+//	@Override
+//	public String delete(String themeTitle) throws Exception {
+//		requestAgent.request("theme.delete", themeTitle);
+//    if (requestAgent.getStatus().equals(RequestAgent.FAIL)) {
+//      throw new Exception(requestAgent.getObject(String.class));
+//    }
+//		return requestAgent.getObject(String.class);
+//	}
 
 	@Override
 	public void placeInsert(Place place) throws Exception {
@@ -118,6 +118,18 @@ public class NetThemeDao implements ThemeDao{
     }
 
     return new ArrayList<>(requestAgent.getObjects(Theme.class));
+	}
+
+	@Override
+	public List<Theme> findByUserNo(int userNo) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String delete(Theme theme) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
   
 }

@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
 import com.welcomeToJeju.context.UserContextListener;
 import com.welcomeToJeju.menu.Menu;
 import com.welcomeToJeju.menu.MenuFilter;
@@ -15,7 +19,7 @@ import com.welcomeToJeju.moj.dao.ThemeDao;
 import com.welcomeToJeju.moj.dao.UserDao;
 import com.welcomeToJeju.moj.dao.impl.MariadbPlaceDao;
 import com.welcomeToJeju.moj.dao.impl.MariadbThemeDao;
-import com.welcomeToJeju.moj.dao.impl.MariadbUserDao;
+import com.welcomeToJeju.moj.dao.impl.MybatisUserDao;
 import com.welcomeToJeju.moj.dao.impl.NetReportDao;
 import com.welcomeToJeju.moj.handler.AllThemeListHandler;
 import com.welcomeToJeju.moj.handler.AuthDisplayLoginUserHandler;
@@ -60,7 +64,7 @@ import com.welcomeToJeju.util.Prompt;
 
 public class ClientApp {
 	static RequestAgent requestAgent;
-	
+	SqlSession sqlSession;
 	Connection con;
 	
   HashMap<String,Command> commandMap = new HashMap<>();
@@ -105,10 +109,13 @@ public class ClientApp {
   public ClientApp() throws Exception{
   	requestAgent = new RequestAgent("127.0.0.1",8888);
   	
+    sqlSession = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream(
+        "com/eomcs/pms/conf/mybatis-config.xml")).openSession();
+  	
   	con = DriverManager.getConnection( //
         "jdbc:mysql://localhost:3306/jejudb?user=jeju&password=1111");
   	
-  	UserDao userDao = new MariadbUserDao(con);
+  	UserDao userDao = new MybatisUserDao(sqlSession);
   	ThemeDao themeDao = new MariadbThemeDao(con);
   	PlaceDao placeDao = new MariadbPlaceDao(con);
   	NetReportDao reportDao = new NetReportDao(requestAgent);

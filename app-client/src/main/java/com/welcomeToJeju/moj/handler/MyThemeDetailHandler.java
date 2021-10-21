@@ -26,7 +26,7 @@ public class MyThemeDetailHandler implements Command {
   public void execute(CommandRequest request) throws Exception {
     Theme searchedTheme;
     
-    ArrayList<Theme> themeList = (ArrayList<Theme>) themeDao.findAll();
+    ArrayList<Theme> themeList = (ArrayList<Theme>) themeDao.findByUserNo(AuthLoginHandler.getLoginUser().getNo());
     findMyThemeList(themeList);
     
     System.out.println("[테마 상세보기]");

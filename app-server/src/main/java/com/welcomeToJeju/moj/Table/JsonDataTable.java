@@ -1,4 +1,4 @@
-package com.bitcamp.goodplace.Table;
+package com.welcomeToJeju.moj.Table;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -11,12 +11,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.bitcamp.goodplace.domain.Report;
-import com.bitcamp.goodplace.domain.ReportTheme;
-import com.bitcamp.goodplace.domain.ReportUser;
-import com.bitcamp.server.Request;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.welcomeToJeju.moj.domain.Report;
+import com.welcomeToJeju.moj.domain.ReportTheme;
+import com.welcomeToJeju.moj.domain.ReportUser;
+import com.welcomeToJeju.server.Request;
 
 // 역할
 // - 데이터를 처리하는 클래스가 공통으로 가져야할 필드나 메서드를 정의한다.

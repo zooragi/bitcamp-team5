@@ -17,11 +17,11 @@ public class AllThemeListHandler implements Command{
 	public void execute(CommandRequest request) throws Exception {
 		System.out.println("[전체 테마 목록보기]");
 		
-		ArrayList<Theme> themeList = (ArrayList<Theme>) themeDao.findAll();
+		ArrayList<Theme> themeList = (ArrayList<Theme>) themeDao.findByUserNo(AuthLoginHandler.getLoginUser().getNo());
 
 		int i = 1;
 		for (Theme theme : themeList) {
-			if (!theme.isPublic())
+			if (theme.isPublic() == 0)
 				continue;
 			System.out.printf("<%d>\n", i++);
 			System.out.println("테마 이름 > " + theme.getTitle());

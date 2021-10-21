@@ -4,14 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import com.welcomeToJeju.moj.dao.ThemeDao;
-import com.welcomeToJeju.moj.domain.Place;
 import com.welcomeToJeju.moj.domain.Theme;
-import com.welcomeToJeju.moj.domain.User;
-import com.welcomeToJeju.request.RequestAgent;
 
 public class MariadbThemeDao implements ThemeDao{
 	Connection con;
@@ -90,24 +86,6 @@ public class MariadbThemeDao implements ThemeDao{
   		}
 		}
 		return theme.getTitle();
-	}
-
-	@Override
-	public void placeInsert(Place place) throws Exception {
-//		requestAgent.request("theme.place.insert", place);
-//		if(requestAgent.getStatus().equals(RequestAgent.FAIL)) {
-//			throw new Exception(requestAgent.getObject(String.class));
-//		}
-	}
-
-	@Override
-	public String placeDelete(Place place) throws Exception {
-//		requestAgent.request("theme.place.delete", place);
-//    if (requestAgent.getStatus().equals(RequestAgent.FAIL)) {
-//      throw new Exception(requestAgent.getObject(String.class));
-//    }
-//		return requestAgent.getObject(String.class);
-		return null;
 	}
 
 	@Override

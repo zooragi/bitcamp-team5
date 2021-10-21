@@ -1,4 +1,4 @@
-package com.bitcamp.server;
+package com.welcomeToJeju.server;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -6,9 +6,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import com.bitcamp.goodplace.domain.Report;
-import com.bitcamp.goodplace.domain.ReportTheme;
-import com.bitcamp.goodplace.domain.ReportUser;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
@@ -17,6 +14,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
+import com.welcomeToJeju.moj.domain.Report;
+import com.welcomeToJeju.moj.domain.ReportTheme;
+import com.welcomeToJeju.moj.domain.ReportUser;
 
 public class Request {
 	String command;

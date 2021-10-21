@@ -1,14 +1,14 @@
-package com.bitcamp.goodplace.Table;
+package com.welcomeToJeju.moj.Table;
 
 import java.util.ArrayList;
 
-import com.bitcamp.goodplace.domain.Report;
-import com.bitcamp.goodplace.domain.ReportTheme;
-import com.bitcamp.goodplace.domain.ReportUser;
-import com.bitcamp.server.DataProcessor;
-import com.bitcamp.server.Request;
-import com.bitcamp.server.Response;
 import com.google.gson.Gson;
+import com.welcomeToJeju.moj.domain.Report;
+import com.welcomeToJeju.moj.domain.ReportTheme;
+import com.welcomeToJeju.moj.domain.ReportUser;
+import com.welcomeToJeju.server.DataProcessor;
+import com.welcomeToJeju.server.Request;
+import com.welcomeToJeju.server.Response;
 
 public class ReportTable extends JsonDataTable<Report> implements DataProcessor{
 

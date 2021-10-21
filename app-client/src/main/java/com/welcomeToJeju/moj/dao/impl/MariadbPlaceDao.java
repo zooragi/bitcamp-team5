@@ -8,7 +8,6 @@ import java.util.List;
 
 import com.welcomeToJeju.moj.dao.PlaceDao;
 import com.welcomeToJeju.moj.domain.Place;
-import com.welcomeToJeju.moj.domain.Theme;
 
 public class MariadbPlaceDao implements PlaceDao{
 	Connection con;

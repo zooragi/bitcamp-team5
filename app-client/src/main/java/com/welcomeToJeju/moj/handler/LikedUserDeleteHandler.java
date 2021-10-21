@@ -25,7 +25,7 @@ public class LikedUserDeleteHandler implements Command {
 			return;
 		}
 
-		User likedUser = userDao.search(input);
+		User likedUser = userDao.findByName(input);
 
 		if (likedUser == null) {
 			System.out.println("등록된 유저 없음!");

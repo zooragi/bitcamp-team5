@@ -33,14 +33,14 @@ public class NetUserDao implements UserDao{
     }
   }
 	
-	@Override
-	public User search(String name) throws Exception {
-		requestAgent.request("user.search", name);
-		if(requestAgent.getStatus().equals(RequestAgent.FAIL)) {
-			throw new Exception(requestAgent.getObject(String.class));
-		}
-		return requestAgent.getObject(User.class);
-	}
+//	@Override
+//	public User search(String name) throws Exception {
+//		requestAgent.request("user.search", name);
+//		if(requestAgent.getStatus().equals(RequestAgent.FAIL)) {
+//			throw new Exception(requestAgent.getObject(String.class));
+//		}
+//		return requestAgent.getObject(User.class);
+//	}
 
 	@Override
 	public void update(User user) throws Exception {
@@ -83,12 +83,30 @@ public class NetUserDao implements UserDao{
   }
   
   @Override
-  public List<String> likedUserFindAll(int loginUserNo) throws Exception {
+  public List<User> likedUserFindAll(int loginUserNo) throws Exception {
     requestAgent.request("user.likedUser.list",Integer.toString(loginUserNo));
     if(!requestAgent.getStatus().equals(RequestAgent.SUCCESS)) {
       return null;
     }
-    return new ArrayList<>(requestAgent.getObjects(String.class));
+    return new ArrayList<>(requestAgent.getObjects(User.class));
   }
+
+	@Override
+	public User findByNo(int userNo) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public User findByName(String nickname) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public User selectOneByEmailPassword(String email, String password) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

@@ -1,14 +1,14 @@
-package com.bitcamp.goodplace;
+package com.welcomeToJeju.moj;
 
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 
-import com.bitcamp.goodplace.Table.ReportTable;
-import com.bitcamp.goodplace.Table.ThemeTable;
-import com.bitcamp.goodplace.Table.UserTable;
-import com.bitcamp.server.DataProcessor;
-import com.bitcamp.server.RequestProcessor;
+import com.welcomeToJeju.moj.Table.ReportTable;
+import com.welcomeToJeju.moj.Table.ThemeTable;
+import com.welcomeToJeju.moj.Table.UserTable;
+import com.welcomeToJeju.server.DataProcessor;
+import com.welcomeToJeju.server.RequestProcessor;
 
 public class ServerApp {
 	public static void main(String[] args) throws Exception{

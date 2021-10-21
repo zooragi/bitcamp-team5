@@ -82,13 +82,14 @@ public class MariadbUserDao implements UserDao{
 	@Override
 	public User findByName(String nickname) throws Exception {
 		try(PreparedStatement stmt = con.prepareStatement(
-				"select email, nickname, created_dt from jeju_user where nickname=?")){
+				"select user_no, email, nickname, created_dt from jeju_user where nickname=?")){
 			stmt.setString(1, nickname);
 			try(ResultSet rs = stmt.executeQuery()){
 				if(!rs.next()) {
 					return null;
 				}
 				User user = new User();
+				user.setNo(rs.getInt("user_no"));
 				user.setEmail(rs.getString("email"));
 				user.setNickName(rs.getString("nickname"));
 				user.setRegisteredDate(rs.getDate("created_dt"));
@@ -142,12 +143,12 @@ public class MariadbUserDao implements UserDao{
 				"Insert into jeju_liked_user(user_no,user_no2) values(?,?)")){
 			stmt.setInt(1, loginUserNo);
 			stmt.setInt(2, likedUserNo);
-			
 			if(stmt.executeUpdate() == 0) {
 				throw new Exception("회원 데이터 저장 실패!");
 			}
 		}
 }
+  
   public void userLikedUserDelete(int likedUserNo, int loginUserNo) throws Exception {
 		try(PreparedStatement stmt = con.prepareStatement(
 				"delete from jeju_liked_user where user_no=? and user_no2=?")){
@@ -169,7 +170,7 @@ public class MariadbUserDao implements UserDao{
   			+" nickname,"
   			+" created_dt" 
   			+" from jeju_user ju"
-  			+" join (select jlu.user_no2 from jeju_user ju natural join jeju_liked_user jlu where user_no=?) jlu"
+  			+" join (select jlu.user_no2 from jeju_liked_user jlu where user_no=?) jlu"
   			+" on jlu.user_no2 = ju.user_no;")){
   		
   		stmt.setInt(1, loginUserNo);

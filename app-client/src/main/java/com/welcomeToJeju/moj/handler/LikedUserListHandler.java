@@ -19,15 +19,15 @@ public class LikedUserListHandler implements Command {
 
     User loginUser = AuthLoginHandler.getLoginUser();
 
-    Collection<String> likedUserList = userDao.likedUserFindAll(loginUser.getNo());
+    Collection<User> likedUserList = userDao.likedUserFindAll(loginUser.getNo());
     if (likedUserList.isEmpty()) {
       System.out.println("좋아하는 유저 없음!");
       return;
     }
 
     int index = 1;
-    for (String user : likedUserList ) {
-      System.out.printf("<%d> 닉네임 > %s \n", index++, user);
+    for (User user : likedUserList ) {
+      System.out.printf("<%d> 닉네임 > %s \n", index++, user.getNickName());
     }
   }
 

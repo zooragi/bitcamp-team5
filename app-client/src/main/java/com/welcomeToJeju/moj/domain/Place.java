@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Place {
   private int no;
-  private Theme theme;
+  private int themeNo;
   private String storeName;
   private String storeAddress;
   private List<String> photos = new ArrayList<>();
@@ -15,7 +15,7 @@ public class Place {
 
   @Override
   public String toString() {
-    return "Place [no=" + no + ", theme=" + theme + ", storeName=" + storeName + ", storeAddress="
+    return "Place [no=" + no + ", themeNo=" + themeNo + ", storeName=" + storeName + ", storeAddress="
         + storeAddress + ", photos=" + photos + ", comments=" + comments + ", xCoord=" + xCoord
         + ", yCoord=" + yCoord + "]";
   }
@@ -26,11 +26,11 @@ public class Place {
   public void setNo(int no) {
     this.no = no;
   }
-  public Theme getTheme() {
-    return theme;
+  public int getThemeNo() {
+    return themeNo;
   }
-  public void setTheme(Theme theme) {
-    this.theme = theme;
+  public void setThemeNo(int themeNo) {
+    this.themeNo = themeNo;
   }
   public String getStoreName() {
     return storeName;

@@ -1,4 +1,4 @@
-package com.bitcamp.server;
+package com.welcomeToJeju.server;
 
 public class Response {
 	public static final String SUCCESS = "success";

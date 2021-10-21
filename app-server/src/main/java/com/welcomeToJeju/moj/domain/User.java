@@ -1,4 +1,4 @@
-package com.bitcamp.goodplace.domain;
+package com.welcomeToJeju.moj.domain;
 
 import java.sql.Date;
 import java.util.ArrayList;

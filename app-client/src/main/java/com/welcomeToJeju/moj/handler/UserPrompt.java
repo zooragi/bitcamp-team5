@@ -71,9 +71,9 @@ public class UserPrompt {
 		return reportedThemes;
 	}
 	
-	public boolean isAlreadyRegisterLikedUser(User user,int userNo) throws Exception {
-		for(int no: user.getLikedUserNo()) {
-			if(no == userNo) {
+	public boolean isAlreadyRegisterLikedUser(User user,ArrayList<User> list) throws Exception {
+		for(User u : list) {
+			if(user.getNo() == u.getNo()) {
 				return true;
 			}
 		}
