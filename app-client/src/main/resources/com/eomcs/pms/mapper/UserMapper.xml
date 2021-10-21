@@ -7,7 +7,7 @@
   
   <resultMap type="User" id="UserMap">
     <id column="user_no" property="no"/> 
-    <result column="nickname" property="nickname"/>
+    <result column="nickname" property="nickName"/>
     <result column="email" property="email"/>
     <result column="password" property="password"/>
     <result column="created_dt" property="registeredDate"/>
@@ -15,7 +15,7 @@
   
   <select id="findAll" resultMap="UserMap">
 		select 
-			no, 
+			user_no, 
 			email, 
 			nickname, 
 			created_dt 
@@ -23,6 +23,16 @@
 			jeju_user
   </select>
  
+ 	<select id="selectOneByEmailPassword" resultMap="UserMap" parameterType="map">
+	 	select 
+			user_no, 
+			email, 
+			nickname 
+		from 
+			jeju_user 
+		where 
+			email=#{email} and password=password(#{password})
+ 	</select>
   
  <!--
  

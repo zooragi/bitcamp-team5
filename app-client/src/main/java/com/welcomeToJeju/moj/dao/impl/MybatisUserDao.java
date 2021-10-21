@@ -1,9 +1,7 @@
 package com.welcomeToJeju.moj.dao.impl;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -35,24 +33,10 @@ public class MybatisUserDao implements UserDao{
 	
 	@Override
 	public User selectOneByEmailPassword(String email, String password) throws Exception {
-//		try(PreparedStatement stmt = con.prepareStatement(
-//				"select user_no, email, nickname from jeju_user where email=? and password=password(?)")){
-//			
-//			stmt.setString(1, email);
-//			stmt.setString(2, password);
-//			
-//			try(ResultSet rs = stmt.executeQuery()){
-//				if(!rs.next()) {
-//					return null;
-//				}
-//				User user = new User();
-//				user.setNo(rs.getInt("user_no"));
-//				user.setEmail(rs.getString("email"));
-//				user.setNickName(rs.getString("nickname"));
-//				return user;
-//			}
-//		}
-		return null;
+		HashMap<String,String> params = new HashMap<>();
+		params.put("email", email);
+		params.put("password", password);
+		return sqlSession.selectOne("UserMapper.selectOneByEmailPassword", params);
 	}
 
 	@Override
@@ -123,24 +107,6 @@ public class MybatisUserDao implements UserDao{
 	@Override
 	public List<User> findAll() throws Exception {
 		return sqlSession.selectList("UserMapper.findAll");
-//		try(PreparedStatement stmt = con.prepareStatement(
-//				"select user_no, email, nickname, created_dt from jeju_user");
-//				ResultSet rs = stmt.executeQuery()){
-//			
-//			ArrayList<User> list = new ArrayList<>();
-//			
-//			while(rs.next()) {
-//				User user = new User();
-//				
-//				user.setNo(rs.getInt("user_no"));
-//				user.setEmail(rs.getString("email"));
-//				user.setNickName(rs.getString("nickname"));
-//				user.setRegisteredDate(rs.getDate("created_dt"));
-//				
-//				list.add(user);
-//			}
-//			return list;
-//		}
 	}
 	
   @Override
