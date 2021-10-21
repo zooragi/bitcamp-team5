@@ -92,63 +92,6 @@
 			(select jlu.user_no2 from jeju_liked_user jlu where user_no=#{no}) lu
 		on lu.user_no2 = ju.user_no
   </select>
-
-
- <!--
-  <select id="findByNo" resultMap="MemberMap" parameterType="int">
-    select 
-      member_no,
-      name,
-      email,
-      photo,
-      tel,
-      created_dt 
-    from 
-      pms_member 
-    where 
-      member_no=#{no}
-  </select>
-
-  <update id="update" parameterType="member">
-    update pms_member set
-      name=#{name},
-      email=#{email},
-      password=password(#{password}),
-      photo=#{photo},
-      tel=#{tel}
-    where 
-      member_no=#{no}
-  </update>
-  
-  
-  <select id="findByEmailAndPassword" resultMap="MemberMap" parameterType="map">
-    select 
-      member_no,
-      name,
-      email,
-      photo,
-      tel,
-      created_dt 
-    from 
-      pms_member
-    where 
-      email=#{email} and password=password(#{password})
-  </select>
-  
-  <select id="findByName" resultMap="MemberMap" parameterType="string">
-    select 
-      member_no,
-      name,
-      email,
-      photo,
-      tel,
-      created_dt 
-    from 
-      pms_member
-    where 
-      name=#{value}
-  </select>
-  --> 
 </mapper>
 
 

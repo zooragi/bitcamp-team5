@@ -6,7 +6,7 @@ import java.util.List;
 public class Theme implements Comparable<Theme>{
   private int no;
   private String title;
-  private int themeOwnerNo;
+  private User themeOwner;
   private int viewCount;
   private int isPublic;
   private int isShare;
@@ -15,11 +15,11 @@ public class Theme implements Comparable<Theme>{
 
   private List<Place> placeList = new ArrayList<Place>();
   private List<String> hashtags = new ArrayList<String>();
-  private List<Integer> likedThemeUserNo = new ArrayList<Integer>();
+  private List<User> likedThemeUser = new ArrayList<User>();
 
   @Override
   public String toString() {
-    return "Theme [no=" + no + ", title=" + title + ", themeOwnerName=" + themeOwnerNo + ", viewCount=" + viewCount
+    return "Theme [no=" + no + ", title=" + title + ", themeOwnerName=" + themeOwner + ", viewCount=" + viewCount
         + ", isPublic=" + isPublic + ", isShare=" + isShare + ", placeList=" + placeList + ", hashtags=" + hashtags
         + ", category=" + category + ", reportedCount=" + reportedCount + "]";
   }
@@ -88,12 +88,12 @@ public class Theme implements Comparable<Theme>{
     this.isShare = isShare;
   }
 
-  public int getThemeOwnerNo() {
-    return themeOwnerNo;
+  public User getThemeOwner() {
+    return themeOwner;
   }
 
-  public void setThemeOwnerNo(int themeOwnerNo) {
-    this.themeOwnerNo = themeOwnerNo;
+  public void setThemeOwner(User themeOwner) {
+    this.themeOwner = themeOwner;
   }
 
   @Override
@@ -109,12 +109,12 @@ public class Theme implements Comparable<Theme>{
     this.no = no;
   }
 
-	public List<Integer> getLikedThemeUserNo() {
-		return likedThemeUserNo;
+	public List<User> getLikedThemeUser() {
+		return likedThemeUser;
 	}
 
-	public void setLikedThemeUserNo(List<Integer> likedThemeUserNo) {
-		this.likedThemeUserNo = likedThemeUserNo;
+	public void setLikedThemeUser(List<User> likedThemeUser) {
+		this.likedThemeUser = likedThemeUser;
 	}
 
 }

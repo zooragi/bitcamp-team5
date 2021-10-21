@@ -27,7 +27,7 @@ public class LikedThemeListHandler implements Command{
   }
 	private void printList(List<Theme> themeList) throws Exception {
 		for (Theme theme : themeList) {
-			System.out.printf("[%s] 테마명 > %s\n", userPrompt.getByUserNo(theme.getThemeOwnerNo()) , theme.getTitle());
+			System.out.printf("[%s] 테마명 > %s\n", userPrompt.getByUserNo(theme.getThemeOwner().getNo()) , theme.getTitle());
 		}
 	}
 }

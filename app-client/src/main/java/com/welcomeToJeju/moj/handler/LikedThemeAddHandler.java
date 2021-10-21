@@ -32,7 +32,7 @@ public class LikedThemeAddHandler implements Command {
       return;
     }
 
-    if (theme.getThemeOwnerNo() == AuthLoginHandler.getLoginUser().getNo()) {
+    if (theme.getThemeOwner().getNo() == AuthLoginHandler.getLoginUser().getNo()) {
       System.out.println("본인의 테마 좋아요 등록 불가!");
       return;
     }

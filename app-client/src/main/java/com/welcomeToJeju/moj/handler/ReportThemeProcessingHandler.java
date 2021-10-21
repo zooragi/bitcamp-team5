@@ -52,7 +52,7 @@ public class ReportThemeProcessingHandler implements Command {
         continue;
       }
 
-      selectedUser = userPrompt.findByNo(countedThemeList.get(selectedNum-1).getThemeOwnerNo()); 
+      selectedUser = userPrompt.findByNo(countedThemeList.get(selectedNum-1).getThemeOwner().getNo()); 
 
       showReportedThemeInfo(reportThemeList,countedThemeList,selectedNum);
 

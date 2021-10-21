@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ThemeMapper">
+  
+  <resultMap type="Theme" id="ThemeMap">
+    <id column="theme_no" property="no"/> 
+    <result column="title" property="title"/>
+    <result column="public" property="public"/>
+    <result column="category" property="category"/>
+    <result column="created_dt" property="registeredDate"/>
+  </resultMap>
+  
+  <select id="findByUserNo" parameterType="int">
+  
+  </select>
+  
+  
+<!-- 
+	<insert id="insert" parameterType="theme">
+	
+	</insert>
+ -->
+
+	
+</mapper>
+
+
+
+
+
+
+

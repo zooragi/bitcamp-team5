@@ -18,7 +18,7 @@ import com.welcomeToJeju.moj.dao.PlaceDao;
 import com.welcomeToJeju.moj.dao.ThemeDao;
 import com.welcomeToJeju.moj.dao.UserDao;
 import com.welcomeToJeju.moj.dao.impl.MariadbPlaceDao;
-import com.welcomeToJeju.moj.dao.impl.MariadbThemeDao;
+import com.welcomeToJeju.moj.dao.impl.MybatisThemeDao;
 import com.welcomeToJeju.moj.dao.impl.MybatisUserDao;
 import com.welcomeToJeju.moj.dao.impl.NetReportDao;
 import com.welcomeToJeju.moj.handler.AllThemeListHandler;
@@ -116,7 +116,7 @@ public class ClientApp {
         "jdbc:mysql://localhost:3306/jejudb?user=jeju&password=1111");
   	
   	UserDao userDao = new MybatisUserDao(sqlSession);
-  	ThemeDao themeDao = new MariadbThemeDao(con);
+  	ThemeDao themeDao = new MybatisThemeDao(sqlSession);
   	PlaceDao placeDao = new MariadbPlaceDao(con);
   	NetReportDao reportDao = new NetReportDao(requestAgent);
     UserPrompt userPrompt = new UserPrompt(userDao);
