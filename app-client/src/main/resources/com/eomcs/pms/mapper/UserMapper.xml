@@ -72,6 +72,14 @@
   	values(#{loginUserNo},#{likedUserNo})
   </select>
   
+	<select id="userLikedUserDelete" parameterType="map">
+		delete from 
+			jeju_liked_user 
+		where 
+			user_no=#{loginUserNo} and 
+			user_no2=#{likedUserNo}
+	</select>
+	
   <select id="likedUserFindAll" resultMap="UserMap" parameterType="int">
 	  select
 			ju.user_no,
@@ -84,6 +92,7 @@
 			(select jlu.user_no2 from jeju_liked_user jlu where user_no=#{no}) lu
 		on lu.user_no2 = ju.user_no
   </select>
+
 
  <!--
   <select id="findByNo" resultMap="MemberMap" parameterType="int">
