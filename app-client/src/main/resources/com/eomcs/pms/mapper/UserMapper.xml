@@ -44,6 +44,33 @@
     where user_no=#{value}
   </delete>
   
+  <update id="update" parameterType="user">
+		update 
+			jeju_user 
+		set 
+			email=#{email}, 
+			password=password(#{password}), 
+			nickname=#{nickname} 
+		where 
+			user_no=#{no}
+  </update>
+  
+  <select id="findByName" resultMap="UserMap" parameterType="String">
+  select 
+		user_no, 
+		email, 
+		nickname, 
+		created_dt 
+	from 
+		jeju_user 
+	where 
+		nickname=#{nickname}
+  </select>
+  
+  <select id="userLikedUserInsert" parameterType="map">
+  	Insert into jeju_liked_user(user_no,user_no2) 
+  	values(#{loginUserNo},#{likedUserNo})
+  </select>
  <!--
   <select id="findByNo" resultMap="MemberMap" parameterType="int">
     select 

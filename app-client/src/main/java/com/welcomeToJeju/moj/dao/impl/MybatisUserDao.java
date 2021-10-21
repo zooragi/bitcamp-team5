@@ -23,6 +23,11 @@ public class MybatisUserDao implements UserDao{
 		sqlSession.insert("UserMapper.insert",user);
 		sqlSession.commit();
 	}
+
+	@Override
+	public List<User> findAll() throws Exception {
+		return sqlSession.selectList("UserMapper.findAll");
+	}
 	
 	@Override
 	public User selectOneByEmailPassword(String email, String password) throws Exception {
@@ -37,6 +42,27 @@ public class MybatisUserDao implements UserDao{
 		sqlSession.delete("UserMapper.delete", userNo);
 		sqlSession.commit();
   }
+	
+	@Override
+	public void update(User user) throws Exception {
+		sqlSession.update("UserMapper.update", user);
+		sqlSession.commit();
+	}
+	
+	
+	@Override
+	public User findByName(String nickname) throws Exception {
+		return sqlSession.selectOne("UserMapper.findByName", nickname);
+	}
+	
+  @Override
+  public void userLikedUserInsert(int likedUserNo, int loginUserNo) throws Exception {
+		HashMap<String,Integer> params = new HashMap<>();
+		params.put("likedUserNo", likedUserNo);
+		params.put("loginUserNo", loginUserNo);
+		sqlSession.insert("UserMapper.userLikedUserInsert", params);
+		sqlSession.commit();
+  }	
 	
 	@Override
 	public User findByNo(int userNo) throws Exception {
@@ -55,60 +81,7 @@ public class MybatisUserDao implements UserDao{
 //		}
 		return null;
 	}
-	
-	@Override
-	public User findByName(String nickname) throws Exception {
-//		try(PreparedStatement stmt = con.prepareStatement(
-//				"select user_no, email, nickname, created_dt from jeju_user where nickname=?")){
-//			stmt.setString(1, nickname);
-//			try(ResultSet rs = stmt.executeQuery()){
-//				if(!rs.next()) {
-//					return null;
-//				}
-//				User user = new User();
-//				user.setNo(rs.getInt("user_no"));
-//				user.setEmail(rs.getString("email"));
-//				user.setNickName(rs.getString("nickname"));
-//				user.setRegisteredDate(rs.getDate("created_dt"));
-//				return user;
-//			}
-//		}
-		return null;
-	}
-	
-	@Override
-	public void update(User user) throws Exception {
-//		try(PreparedStatement stmt = con.prepareStatement(
-//				"update jeju_user set email=?, password=password(?), nickname=? where user_no="+user.getNo())){
-//			
-//			stmt.setString(1, user.getEmail());
-//			stmt.setString(2, user.getPassword());
-//			stmt.setString(3, user.getNickName());
-//			
-//			if(stmt.executeUpdate() == 0) {
-//				throw new Exception("회원 데이터 변경 실패!");
-//			}
-//		}
-	}
 
-	
-	
-	@Override
-	public List<User> findAll() throws Exception {
-		return sqlSession.selectList("UserMapper.findAll");
-	}
-	
-  @Override
-  public void userLikedUserInsert(int likedUserNo, int loginUserNo) throws Exception {
-//		try(PreparedStatement stmt = con.prepareStatement(
-//				"Insert into jeju_liked_user(user_no,user_no2) values(?,?)")){
-//			stmt.setInt(1, loginUserNo);
-//			stmt.setInt(2, likedUserNo);
-//			if(stmt.executeUpdate() == 0) {
-//				throw new Exception("회원 데이터 저장 실패!");
-//			}
-//		}
-  }	
   
   public void userLikedUserDelete(int likedUserNo, int loginUserNo) throws Exception {
 //		try(PreparedStatement stmt = con.prepareStatement(
