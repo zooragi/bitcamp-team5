@@ -22,7 +22,7 @@ public class UserUpdateHandler implements Command {
     temp.setNo(user.getNo());
     temp.setEmail(Prompt.inputString("이메일(" + user.getEmail() + ") > "));
     temp.setPassword(Prompt.inputString("암호 > "));
-    temp.setNickName(Prompt.inputString("닉네임(" + user.getNickName() + ") > "));
+    temp.setNickname(Prompt.inputString("닉네임(" + user.getNickname() + ") > "));
 
     String input = Prompt.inputString("수정하기(y/N) > ");
     if (input.equalsIgnoreCase("n") || input.length() == 0) {

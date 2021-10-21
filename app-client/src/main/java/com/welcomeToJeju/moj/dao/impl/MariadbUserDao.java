@@ -23,7 +23,7 @@ public class MariadbUserDao implements UserDao{
 				"Insert into jeju_user(email,password,nickname) values(?,password(?),?)")){
 			stmt.setString(1, user.getEmail());
 			stmt.setString(2, user.getPassword());
-			stmt.setString(3, user.getNickName());
+			stmt.setString(3, user.getNickname());
 			
 			if(stmt.executeUpdate() == 0) {
 				throw new Exception("회원 데이터 저장 실패!");
@@ -46,7 +46,7 @@ public class MariadbUserDao implements UserDao{
 				User user = new User();
 				user.setNo(rs.getInt("user_no"));
 				user.setEmail(rs.getString("email"));
-				user.setNickName(rs.getString("nickname"));
+				user.setNickname(rs.getString("nickname"));
 				return user;
 			}
 		}
@@ -72,7 +72,7 @@ public class MariadbUserDao implements UserDao{
 				}
 				User user = new User();
 				user.setEmail(rs.getString("email"));
-				user.setNickName(rs.getString("nickname"));
+				user.setNickname(rs.getString("nickname"));
 				user.setRegisteredDate(rs.getDate("created_dt"));
 				return user;
 			}
@@ -91,7 +91,7 @@ public class MariadbUserDao implements UserDao{
 				User user = new User();
 				user.setNo(rs.getInt("user_no"));
 				user.setEmail(rs.getString("email"));
-				user.setNickName(rs.getString("nickname"));
+				user.setNickname(rs.getString("nickname"));
 				user.setRegisteredDate(rs.getDate("created_dt"));
 				return user;
 			}
@@ -105,7 +105,7 @@ public class MariadbUserDao implements UserDao{
 			
 			stmt.setString(1, user.getEmail());
 			stmt.setString(2, user.getPassword());
-			stmt.setString(3, user.getNickName());
+			stmt.setString(3, user.getNickname());
 			
 			if(stmt.executeUpdate() == 0) {
 				throw new Exception("회원 데이터 변경 실패!");
@@ -128,7 +128,7 @@ public class MariadbUserDao implements UserDao{
 				
 				user.setNo(rs.getInt("user_no"));
 				user.setEmail(rs.getString("email"));
-				user.setNickName(rs.getString("nickname"));
+				user.setNickname(rs.getString("nickname"));
 				user.setRegisteredDate(rs.getDate("created_dt"));
 				
 				list.add(user);
@@ -182,7 +182,7 @@ public class MariadbUserDao implements UserDao{
 					User user = new User();
 					user.setNo(rs.getInt("user_no"));
 					user.setEmail(rs.getString("email"));
-					user.setNickName(rs.getString("nickname"));
+					user.setNickname(rs.getString("nickname"));
 					user.setRegisteredDate(rs.getDate("created_dt"));
 					list.add(user);
 				}

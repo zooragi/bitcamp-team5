@@ -25,7 +25,7 @@ public class UserDetailHandler implements Command {
       return;
     }
     System.out.printf("이메일: %s\n", user.getEmail());
-    System.out.printf("닉네임: %s\n", user.getNickName());
+    System.out.printf("닉네임: %s\n", user.getNickname());
     System.out.printf("등록일: %s\n", user.getRegisteredDate());
   }
 }

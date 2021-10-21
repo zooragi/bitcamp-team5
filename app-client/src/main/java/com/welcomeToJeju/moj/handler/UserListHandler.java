@@ -20,7 +20,7 @@ public class UserListHandler implements Command{
     ArrayList<User> list = (ArrayList<User>) userDao.findAll();
     for (User user : list) {
       System.out.printf("회원 번호 > %s\n", user.getNo());
-      System.out.printf("닉네임 > %s\n", user.getNickName());
+      System.out.printf("닉네임 > %s\n", user.getNickname());
       System.out.printf("이메일 > %s\n", user.getEmail());
       System.out.printf("가입일 > %s\n", user.getRegisteredDate());
       System.out.println();

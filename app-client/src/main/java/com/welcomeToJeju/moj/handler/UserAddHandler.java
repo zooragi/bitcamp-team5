@@ -20,7 +20,7 @@ public class UserAddHandler implements Command{
     User user = new User();
 
     user.setEmail(Prompt.inputString("이메일 > "));
-    user.setNickName(Prompt.inputString("닉네임 > "));
+    user.setNickname(Prompt.inputString("닉네임 > "));
     user.setPassword(Prompt.inputString("암호 > "));
     
     userDao.insert(user);

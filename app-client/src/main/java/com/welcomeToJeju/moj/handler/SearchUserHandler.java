@@ -29,7 +29,7 @@ public class SearchUserHandler implements Command {
       user.setViewCount(currentViewCount+1);
       userDao.update(user);
       
-      System.out.printf("[%s]유저의 테마 목록\n", user.getNickName());
+      System.out.printf("[%s]유저의 테마 목록\n", user.getNickname());
       themePrompt.printMyList(user);
       System.out.println();
       

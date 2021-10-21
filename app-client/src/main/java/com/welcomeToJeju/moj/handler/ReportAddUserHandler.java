@@ -48,7 +48,7 @@ public class ReportAddUserHandler implements Command {
       return;
     }
 
-    if(userNickName.equals(AuthLoginHandler.getLoginUser().getNickName())) {
+    if(userNickName.equals(AuthLoginHandler.getLoginUser().getNickname())) {
       System.out.println("본인은 신고 불가!");
       return;
     }

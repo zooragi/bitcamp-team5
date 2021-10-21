@@ -14,7 +14,7 @@ public class UserRankHandler implements Command{
     int i = 1;
     System.out.println("[유저 랭킹]");
     for(User user : userPrompt.rank()) {
-      System.out.printf("%d위. %s (조회수 : %d)\n",i,user.getNickName(),user.getViewCount());
+      System.out.printf("%d위. %s (조회수 : %d)\n",i,user.getNickname(),user.getViewCount());
       i++;
     }
   }

@@ -39,7 +39,7 @@ public class ReportUserProcessingHandler implements Command {
     Collections.sort(countedUserList, (a, b) -> b.getReportedCount() - a.getReportedCount());
 
     for (User user : countedUserList) {
-      System.out.printf("%d. [%d회] %s \n", index++, user.getReportedCount(), user.getNickName());
+      System.out.printf("%d. [%d회] %s \n", index++, user.getReportedCount(), user.getNickname());
     }
 
     while (true) {
@@ -76,13 +76,13 @@ public class ReportUserProcessingHandler implements Command {
 
   private void showReportedThemeInfo(List<ReportUser> reportUserList, List<User> countedUserList, int selectedNum) {
     int index = 1;
-    String selectedReportUserTitle = countedUserList.get(selectedNum - 1).getNickName();
+    String selectedReportUserTitle = countedUserList.get(selectedNum - 1).getNickname();
     for (ReportUser report : reportUserList) {
       if (selectedReportUserTitle.equals(report.getReportedUserName())) {
         System.out.printf("(%s)\n", index++);
         String reportedName = report.getReportedUserName();
         System.out.println("신고 당한 유저 : " + reportedName);
-        System.out.println("신고 한 유저 : " + report.getWriter().getNickName());
+        System.out.println("신고 한 유저 : " + report.getWriter().getNickname());
         System.out.println("신고 내용 : " + report.getContent());
         System.out.println("신고 날짜 : " + report.getRegisteredDate());
         System.out.println("신고 상태 : " + report.getState());

@@ -25,7 +25,7 @@ public class ReportMyListHandler implements Command {
 		reportList.addAll(reportUserList);
 		reportList.addAll(reportThemeList);
 		for (Report report : reportList) {
-			if (AuthLoginHandler.getLoginUser().getNickName().equals(report.getWriter().getNickName())) {
+			if (AuthLoginHandler.getLoginUser().getNickname().equals(report.getWriter().getNickname())) {
 				String reportType = report.getClass().getName().contains("Theme") ? "테마" : "유저";
 				String reportedName = reportType.equals("테마") ? ((ReportTheme) report).getReportedThemeTitle()
 						: ((ReportUser) report).getReportedUserName();

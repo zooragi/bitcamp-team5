@@ -12,7 +12,7 @@ public class LoginListener implements UserContextListener{
     User currentUser = (User) params.get("currentUser");
     System.out.println("**************************************");
     System.out.println("\t    제주옵서예🍊!");
-    System.out.printf("\t* %s님 환영합니다*\t\n",currentUser.getNickName());
+    System.out.printf("\t* %s님 환영합니다*\t\n",currentUser.getNickname());
     System.out.println("**************************************");
     if(currentUser.getWarningCount() > 2) {
       System.out.printf("-----------경고 %d회 누적입니다.------------\n",currentUser.getWarningCount());
