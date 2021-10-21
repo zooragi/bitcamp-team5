@@ -71,6 +71,20 @@
   	Insert into jeju_liked_user(user_no,user_no2) 
   	values(#{loginUserNo},#{likedUserNo})
   </select>
+  
+  <select id="likedUserFindAll" resultMap="UserMap" parameterType="int">
+	  select
+			ju.user_no,
+			email,
+			nickname,
+			created_dt
+		from
+			jeju_user ju
+		join
+			(select jlu.user_no2 from jeju_liked_user jlu where user_no=#{no}) lu
+		on lu.user_no2 = ju.user_no
+  </select>
+
  <!--
   <select id="findByNo" resultMap="MemberMap" parameterType="int">
     select 

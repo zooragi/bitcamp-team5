@@ -64,6 +64,15 @@ public class MybatisUserDao implements UserDao{
 		sqlSession.commit();
   }	
 	
+  @Override
+  public List<User> likedUserFindAll(int loginUserNo) throws Exception {
+  	return sqlSession.selectList("UserMapper.likedUserFindAll", loginUserNo);
+  }
+  
+  @Override
+  public void userLikedUserDelete(int likedUserNo, int loginUserNo) throws Exception {
+}
+  
 	@Override
 	public User findByNo(int userNo) throws Exception {
 //		try(PreparedStatement stmt = con.prepareStatement(
@@ -83,47 +92,8 @@ public class MybatisUserDao implements UserDao{
 	}
 
   
-  public void userLikedUserDelete(int likedUserNo, int loginUserNo) throws Exception {
-//		try(PreparedStatement stmt = con.prepareStatement(
-//				"delete from jeju_liked_user where user_no=? and user_no2=?")){
-//			stmt.setInt(1, loginUserNo);
-//			stmt.setInt(2, likedUserNo);
-//			
-//  		if(stmt.executeUpdate() == 0) {
-//  			throw new Exception("회원 데이터 삭제 실패!");
-//  		}
-//		}
-  }
+
   
-  @Override
-  public List<User> likedUserFindAll(int loginUserNo) throws Exception {
-//  	try(PreparedStatement stmt = con.prepareStatement(
-//  			"select" 
-//  			+" ju.user_no,"
-//  			+" email,"
-//  			+" nickname,"
-//  			+" created_dt" 
-//  			+" from jeju_user ju"
-//  			+" join (select jlu.user_no2 from jeju_liked_user jlu where user_no=?) jlu"
-//  			+" on jlu.user_no2 = ju.user_no;")){
-//  		
-//  		stmt.setInt(1, loginUserNo);
-//  		
-//  		ArrayList<User> list = new ArrayList<>();
-//  		
-//			try(ResultSet rs = stmt.executeQuery()){
-//				while(rs.next()) {
-//					User user = new User();
-//					user.setNo(rs.getInt("user_no"));
-//					user.setEmail(rs.getString("email"));
-//					user.setNickName(rs.getString("nickname"));
-//					user.setRegisteredDate(rs.getDate("created_dt"));
-//					list.add(user);
-//				}
-//			}
-//			return list;
-//		}
-  	return null;
-  }
+
 
 }
