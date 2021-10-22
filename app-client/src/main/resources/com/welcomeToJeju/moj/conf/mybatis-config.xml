@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
-  <properties resource="com/eomcs/pms/conf/jdbc.properties"></properties>
+  <properties resource="com/welcomeToJeju/moj/conf/jdbc.properties"></properties>
 
   <typeAliases>
     <package name="com.welcomeToJeju.moj.domain"/>
@@ -23,7 +23,8 @@
   </environments>
   
   <mappers>
-    <mapper resource="com/eomcs/pms/mapper/UserMapper.xml"/>
+    <mapper resource="com/welcomeToJeju/moj/mapper/UserMapper.xml"/>
+    <mapper resource="com/welcomeToJeju/moj/mapper/ThemeMapper.xml"/>
   </mappers>
 </configuration>
 

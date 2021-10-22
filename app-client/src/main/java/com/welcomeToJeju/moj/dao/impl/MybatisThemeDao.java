@@ -1,14 +1,13 @@
 package com.welcomeToJeju.moj.dao.impl;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
 import com.welcomeToJeju.moj.dao.ThemeDao;
+import com.welcomeToJeju.moj.domain.Category;
 import com.welcomeToJeju.moj.domain.Theme;
 
 public class MybatisThemeDao implements ThemeDao{
@@ -21,51 +20,25 @@ public class MybatisThemeDao implements ThemeDao{
 	
 	@Override
 	public void insert(Theme theme) throws Exception {
-//		try(PreparedStatement stmt = con.prepareStatement(
-//				"Insert into jeju_theme(user_no,title,public,category) values(?,?,?,?)")){
-//			stmt.setInt(1, theme.getThemeOwnerNo());
-//			stmt.setString(2, theme.getTitle());
-//			stmt.setInt(3, theme.isPublic());
-//			stmt.setString(4, theme.getCategory());
-//			
-//			if(stmt.executeUpdate() == 0) {
-//				throw new Exception("회원 데이터 저장 실패!");
-//			}
-//		}
+		sqlSession.insert("ThemeMapper.insert",theme);
 		
+		for(String hashtag : theme.getHashtags()) {
+			HashMap<String,Object> params = new HashMap<>();
+			params.put("themeNo", theme.getNo());
+			params.put("name", hashtag);
+			sqlSession.insert("ThemeMapper.insertHashtags", params);
+		}
+		sqlSession.commit();
 	}
-	
-//	@Override
-//	public void hashtagInsert(Theme) throws Exception{
-//		try(PreparedStatement stmt = con.prepareStatement(
-//				"Insert into jeju_hashtag(hashtag_no,theme_no,name) values(?,?,?)")){
-//			
-//		}
-//	}
-	
 	@Override
 	public List<Theme> findByUserNo(int userNo) throws Exception {
-		return null;
-//		try(PreparedStatement stmt = con.prepareStatement(
-//				"select theme_no, user_no, title, public, category from jeju_theme where user_no="+userNo);
-//				ResultSet rs = stmt.executeQuery()){
-//			ArrayList<Theme> list = new ArrayList<>();
-//			
-//			while(rs.next()) {
-//				Theme theme = new Theme();
-//				
-//				theme.setNo(rs.getInt("theme_no"));
-//				theme.setThemeOwnerNo(rs.getInt("user_no"));
-//				theme.setTitle(rs.getString("title"));
-//				theme.setPublic(rs.getInt("public"));
-//				theme.setCategory(rs.getString("category"));
-//				
-//				list.add(theme);
-//			}
-//			return list;
-//		}
+		System.out.println(userNo);
+		return sqlSession.selectList("ThemeMapper.findByUserNo", userNo);
 	}
 
+	public List<Category> findAllCategory() throws Exception {
+		return sqlSession.selectList("ThemeMapper.findAllCategory");
+	}
 	@Override
 	public void update(Theme theme) throws Exception {
 //		try(PreparedStatement stmt = con.prepareStatement(
