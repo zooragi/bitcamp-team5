@@ -1,11 +1,7 @@
 package com.welcomeToJeju.moj.handler;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.welcomeToJeju.moj.dao.ThemeDao;
 import com.welcomeToJeju.moj.domain.Theme;
-import com.welcomeToJeju.request.RequestAgent;
 import com.welcomeToJeju.util.Prompt;
 
 public class MyThemeAddHandler implements Command {
@@ -28,41 +24,21 @@ public class MyThemeAddHandler implements Command {
 			return;
 		}
 
-		int categoryNum;
-		List<String> categories = new ArrayList<>();
-		categories.add("식당");
-		categories.add("카페");
-		categories.add("관광명소");
-		categories.add("기타");
-		while (true) {
-			int index = 1;
-			for (String category : categories) {
-				System.out.printf("%d. %s ", index++, category);
-			}
-			System.out.println();
-			categoryNum = Prompt.inputInt("카테고리 번호 > ");
-			if (categoryNum > categories.size() || categoryNum < 0) {
-				System.out.println("잘못된 번호!");
-				continue;
-			}
-			System.out.println();
-			break;
-		}
-		theme.setCategory(categories.get(categoryNum - 1));
+		theme.setCategory(new ThemeHandlerHelper(themeDao).promptCategory());
 
-//		while (true) {
-//			String input = Prompt.inputString("해시 태그(완료: 엔터) > ");
-//			if (input.length() == 0)
-//				break;
-//
-//			theme.getHashtags().add(input);
-//		}
+		while (true) {
+			String input = Prompt.inputString("해시 태그(완료: 엔터) > ");
+			if (input.length() == 0)
+				break;
+
+			theme.getHashtags().add(input);
+		}
 
 		String publicOption = Prompt.inputString("공개 설정(Y/n) > ");
 		if (publicOption.equalsIgnoreCase("y") || publicOption.equals("")) {
 			theme.setPublic(1);
 		}
-		theme.setThemeOwner(AuthLoginHandler.getLoginUser());
+		theme.setOwner(AuthLoginHandler.getLoginUser());
 		themeDao.insert(theme);
 
 	}

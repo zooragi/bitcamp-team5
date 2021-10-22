@@ -2,7 +2,7 @@ package com.welcomeToJeju.moj.dao;
 
 import java.util.List;
 
-import com.welcomeToJeju.moj.domain.Place;
+import com.welcomeToJeju.moj.domain.Category;
 import com.welcomeToJeju.moj.domain.Theme;
 
 public interface ThemeDao {
@@ -16,4 +16,5 @@ public interface ThemeDao {
 	void likedThemeInsert(int themeNo,int userNo) throws Exception;
 	void likedThemeDelete(int themeNo,int userNo) throws Exception;
 	List<Theme> likedThemeList(int userNo) throws Exception;
+	public List<Category> findAllCategory() throws Exception;
 }

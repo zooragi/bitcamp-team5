@@ -6,20 +6,19 @@ import java.util.List;
 public class Theme implements Comparable<Theme>{
   private int no;
   private String title;
-  private User themeOwner;
+  private User owner;
   private int viewCount;
   private int isPublic;
   private int isShare;
-  private String category; 
+  private Category category; 
   private int reportedCount = 0;
 
   private List<Place> placeList = new ArrayList<Place>();
   private List<String> hashtags = new ArrayList<String>();
-  private List<User> likedThemeUser = new ArrayList<User>();
-
+  
   @Override
   public String toString() {
-    return "Theme [no=" + no + ", title=" + title + ", themeOwnerName=" + themeOwner + ", viewCount=" + viewCount
+    return "Theme [no=" + no + ", title=" + title + ", themeOwnerName=" + owner + ", viewCount=" + viewCount
         + ", isPublic=" + isPublic + ", isShare=" + isShare + ", placeList=" + placeList + ", hashtags=" + hashtags
         + ", category=" + category + ", reportedCount=" + reportedCount + "]";
   }
@@ -32,11 +31,11 @@ public class Theme implements Comparable<Theme>{
     this.reportedCount = reportedCount;
   }
 
-  public String getCategory() {
+  public Category getCategory() {
     return category;
   }
 
-  public void setCategory(String category) {
+  public void setCategory(Category category) {
     this.category = category;
   }
 
@@ -88,12 +87,12 @@ public class Theme implements Comparable<Theme>{
     this.isShare = isShare;
   }
 
-  public User getThemeOwner() {
-    return themeOwner;
+  public User getOwner() {
+    return owner;
   }
 
-  public void setThemeOwner(User themeOwner) {
-    this.themeOwner = themeOwner;
+  public void setOwner(User owner) {
+    this.owner = owner;
   }
 
   @Override
@@ -108,13 +107,5 @@ public class Theme implements Comparable<Theme>{
   public void setNo(int no) {
     this.no = no;
   }
-
-	public List<User> getLikedThemeUser() {
-		return likedThemeUser;
-	}
-
-	public void setLikedThemeUser(List<User> likedThemeUser) {
-		this.likedThemeUser = likedThemeUser;
-	}
 
 }

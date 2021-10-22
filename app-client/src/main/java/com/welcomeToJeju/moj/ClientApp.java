@@ -110,7 +110,7 @@ public class ClientApp {
   	requestAgent = new RequestAgent("127.0.0.1",8888);
   	
     sqlSession = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream(
-        "com/eomcs/pms/conf/mybatis-config.xml")).openSession();
+        "com/welcomeToJeju/moj/conf/mybatis-config.xml")).openSession();
   	
   	con = DriverManager.getConnection( //
         "jdbc:mysql://localhost:3306/jejudb?user=jeju&password=1111");

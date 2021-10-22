@@ -36,7 +36,7 @@ public class MyThemeDetailHandler implements Command {
     searchedTheme = chooseTheme(myThemeList);
     if(searchedTheme == null) return;
     User user = AuthLoginHandler.getLoginUser();
-    if (!(user.getNo() == searchedTheme.getThemeOwner().getNo()) && user.getEmail().equals("root@test.com")) {
+    if (!(user.getNo() == searchedTheme.getOwner().getNo()) && user.getEmail().equals("root@test.com")) {
       return;
     }
 
@@ -67,7 +67,7 @@ public class MyThemeDetailHandler implements Command {
   private void findMyThemeList(ArrayList<Theme> themeList) {
   	myThemeList.clear();
   	for(Theme theme : themeList) {
-  		if(theme.getThemeOwner().getNo() == (AuthLoginHandler.getLoginUser().getNo())) {
+  		if(theme.getOwner().getNo() == (AuthLoginHandler.getLoginUser().getNo())) {
   			myThemeList.add(theme);
   		}
   	}

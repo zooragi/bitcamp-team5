@@ -10,8 +10,9 @@ public class Place {
   private String storeAddress;
   private List<String> photos = new ArrayList<>();
   private List<String> comments = new ArrayList<>();
-  public String xCoord;
-  public String yCoord;
+  private String xCoord;
+  private String yCoord;
+  private User owner;
 
   @Override
   public String toString() {
@@ -68,6 +69,14 @@ public class Place {
   public void setyCoord(String yCoord) {
     this.yCoord = yCoord;
   }
+
+	public User getOwner() {
+		return owner;
+	}
+
+	public void setOwner(User owner) {
+		this.owner = owner;
+	}
 
 
 }

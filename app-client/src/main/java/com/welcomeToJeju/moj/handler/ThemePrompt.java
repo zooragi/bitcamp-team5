@@ -19,7 +19,7 @@ public class ThemePrompt {
 	public void printMyList(User user) throws Exception {
 		ArrayList<Theme> themeList = (ArrayList<Theme>) themeDao.findAll();
 		for(Theme theme : themeList) {
-			if(theme.getThemeOwner().getNo() == user.getNo() && theme.isPublic() == 1) {
+			if(theme.getOwner().getNo() == user.getNo() && theme.isPublic() == 1) {
 				System.out.printf("테마 > %s\n",theme.getTitle());
 			}
 		}
