@@ -29,8 +29,8 @@ public class MybatisThemeDao implements ThemeDao{
 			sqlSession.insert("ThemeMapper.insertHashtags", params);
 		}
 		sqlSession.commit();
-		
 	}
+
 	@Override
 	public List<Theme> findByUserNo(int userNo) throws Exception {
 		return sqlSession.selectList("ThemeMapper.findByUserNo", userNo);
@@ -71,7 +71,6 @@ public class MybatisThemeDao implements ThemeDao{
 		return sqlSession.selectOne("ThemeMapper.findByName", title);
 	}
 	
-	
 	@Override
 	public List<Theme> likedThemeList(int userNo) throws Exception{
 		return sqlSession.selectList("ThemeMapper.likedThemeList", userNo);
@@ -79,14 +78,11 @@ public class MybatisThemeDao implements ThemeDao{
 	
 	@Override
 	public void likedThemeInsert(int themeNo, int userNo) throws Exception{
-//		HashMap<String, String> params = new HashMap<>();
-//	  params.put("themeNo",Integer.toString(themeNo));
-//	  params.put("userNo",Integer.toString(userNo));
-//	  requestAgent.request("theme.liked.insert", params);
-//		if(requestAgent.getStatus().equals(RequestAgent.FAIL)) {
-//			throw new Exception(requestAgent.getObject(String.class));
-//		}
-		
+		HashMap<String, String> params = new HashMap<>();
+	  params.put("themeNo",Integer.toString(themeNo));
+	  params.put("userNo",Integer.toString(userNo));
+		sqlSession.insert("ThemeMapper.likedThemeInsert", params);
+		sqlSession.commit();
 	}
 	
 	@Override

@@ -116,6 +116,11 @@
 		values(#{owner.no},#{title},#{public},#{category.no})
 	</insert>
 	
+	<insert id="likedThemeInsert" parameterType="map">
+		Insert into jeju_liked_theme(user_no, theme_no)
+		values(#{userNo},#{themeNo})
+	</insert>
+	
 	<insert id="insertHashtags" parameterType="map">
 		insert into jeju_theme_hashtag(theme_no, name)
 		values(#{themeNo},#{name})
