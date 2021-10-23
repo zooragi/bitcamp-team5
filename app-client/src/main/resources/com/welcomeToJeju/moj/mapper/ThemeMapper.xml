@@ -60,6 +60,10 @@
   	delete from jeju_liked_theme where user_no=#{userNo} and theme_no=#{themeNo} 
   </delete>
   
+  <delete id="likedThemeAllDelete" parameterType="int">
+  	delete from jeju_liked_theme where theme_no=#{themeNo}
+  </delete>
+  
   <delete id="hashtagDelete" parameterType="int">
   	delete from jeju_theme_hashtag where theme_no=#{no}
   </delete>

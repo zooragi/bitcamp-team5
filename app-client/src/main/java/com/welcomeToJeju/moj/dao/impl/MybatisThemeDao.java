@@ -56,7 +56,14 @@ public class MybatisThemeDao implements ThemeDao{
 
 	@Override
 	public void delete(Theme theme) throws Exception {
+		HashMap<String, String> params = new HashMap<>();
+	  params.put("themeNo",Integer.toString(theme.getNo()));
+	  params.put("userNo",Integer.toString(theme.getOwner().getNo()));
+	  
 		sqlSession.delete("ThemeMapper.hashtagDelete", theme.getNo());
+		System.out.println(params);
+		sqlSession.delete("ThemeMapper.likedThemeAllDelete", theme.getNo());
+		System.out.println(2);
 		sqlSession.delete("ThemeMapper.delete", theme.getNo());
 		sqlSession.commit();
 	}
