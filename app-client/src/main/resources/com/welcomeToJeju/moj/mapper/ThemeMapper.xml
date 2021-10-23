@@ -95,7 +95,21 @@
 		where th.name=#{name};
   </select>
 
-  
+  <select id="likedThemeList" resultMap="ThemeMap" parameterType="int">
+    select
+			t.theme_no,
+			t.title,
+			t.user_no owner_no,
+			th.name hashtag_name,
+			lt.user_no
+		from
+			jeju_theme t
+			left outer join jeju_theme_hashtag th on t.theme_no=th.theme_no
+			left outer join jeju_liked_theme lt on t.theme_no=lt.theme_no
+		where
+			lt.user_no=#{no}
+  </select>
+ 
 	<insert id="insert" parameterType="theme"
 		useGeneratedKeys="true" keyColumn="theme_no" keyProperty="no">
 		Insert into jeju_theme(user_no,title,public,category_no)

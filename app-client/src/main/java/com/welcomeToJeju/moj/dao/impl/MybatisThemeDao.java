@@ -70,8 +70,12 @@ public class MybatisThemeDao implements ThemeDao{
 	public Theme findByName(String title) throws Exception {
 		return sqlSession.selectOne("ThemeMapper.findByName", title);
 	}
-
-
+	
+	
+	@Override
+	public List<Theme> likedThemeList(int userNo) throws Exception{
+		return sqlSession.selectList("ThemeMapper.likedThemeList", userNo);
+	}
 	
 	@Override
 	public void likedThemeInsert(int themeNo, int userNo) throws Exception{
@@ -95,17 +99,7 @@ public class MybatisThemeDao implements ThemeDao{
 //			throw new Exception(requestAgent.getObject(String.class));
 //		}
 	}
-	
-	@Override
-	public List<Theme> likedThemeList(int userNo) throws Exception{
-//		requestAgent.request("theme.liked.list", Integer.toString(userNo));
-//		
-//    if (requestAgent.getStatus().equals(RequestAgent.FAIL)) {
-//      throw new Exception(requestAgent.getObject(String.class));
-//    }
-//
-//    return new ArrayList<>(requestAgent.getObjects(Theme.class));
-//	}
-	return null;
-	}
+
 }
+
+

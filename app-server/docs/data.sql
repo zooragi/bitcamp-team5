@@ -103,4 +103,13 @@ Insert into jeju_theme_hashtag(hashtag_no, theme_no, name) value(4,4,'흑돼지'
 
 Insert into jeju_theme_hashtag(hashtag_no, theme_no, name) value(5,12,'해산물');
 
+-- 좋아하는 테마
 
+Insert into jeju_liked_theme(user_no, theme_no) values(1,8);
+Insert into jeju_liked_theme(user_no, theme_no) values(1,4);
+Insert into jeju_liked_theme(user_no, theme_no) values(1,10);
+Insert into jeju_liked_theme(user_no, theme_no) values(2,2);
+Insert into jeju_liked_theme(user_no, theme_no) values(2,13);
+Insert into jeju_liked_theme(user_no, theme_no) values(3,3);
+Insert into jeju_liked_theme(user_no, theme_no) values(3,10);
+Insert into jeju_liked_theme(user_no, theme_no) values(3,15);
