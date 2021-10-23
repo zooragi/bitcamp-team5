@@ -42,17 +42,16 @@ public class MybatisThemeDao implements ThemeDao{
 	
 	@Override
 	public void update(Theme theme) throws Exception {
-//		try(PreparedStatement stmt = con.prepareStatement(
-//				"update jeju_theme set title=?, public=?, category=? where theme_no="+theme.getNo())){
-//			
-//			stmt.setString(1, theme.getTitle());
-//			stmt.setInt(2, theme.isPublic());
-//			stmt.setString(3, theme.getCategory());
-//			
-//			if(stmt.executeUpdate() == 0) {
-//				throw new Exception("회원 데이터 변경 실패!");
-//			}
-//		}
+		sqlSession.update("ThemeMapper.update", theme);
+		sqlSession.delete("ThemeMapper.hashtagDelete", theme.getNo());
+		
+		for(String hashtag : theme.getHashtags()) {
+			HashMap<String,Object> params = new HashMap<>();
+			params.put("themeNo", theme.getNo());
+			params.put("name", hashtag);
+			sqlSession.insert("ThemeMapper.insertHashtags", params);
+		}
+		sqlSession.commit();
 	}
 
 	@Override
@@ -63,6 +62,15 @@ public class MybatisThemeDao implements ThemeDao{
 	}
 
 	@Override
+	public List<Theme> hashtagSearch(String hashtagName) throws Exception {
+		return sqlSession.selectList("ThemeMapper.hashtagSearch", hashtagName);
+	}
+
+	
+	
+	
+	
+	@Override
 	public Theme search(String title) throws Exception {
 //		requestAgent.request("theme.search", title);
 //    if (requestAgent.getStatus().equals(RequestAgent.FAIL)) {
@@ -72,16 +80,7 @@ public class MybatisThemeDao implements ThemeDao{
 		return null;
 	}
 
-	@Override
-	public List<Theme> hashtagSearch(String hashtagName) throws Exception {
-//		requestAgent.request("theme.hashtag.search", hashtagName);
-//    if (requestAgent.getStatus().equals(RequestAgent.FAIL)) {
-//      throw new Exception(requestAgent.getObject(String.class));
-//    }
-//		
-//		return new ArrayList<>(requestAgent.getObjects(Theme.class));
-		return null;
-	}
+
 	
 	@Override
 	public void likedThemeInsert(int themeNo, int userNo) throws Exception{

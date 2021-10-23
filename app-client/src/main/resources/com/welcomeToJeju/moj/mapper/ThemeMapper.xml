@@ -34,7 +34,7 @@
   <select id="findByUserNo" resultMap="ThemeMap" parameterType="int">
   	select 
   		t.theme_no, 
-  		user_no owner_no, 
+  		user_no owner_no,
   		title, 
   		public, 
   		c.name category_name,
@@ -46,6 +46,11 @@
   	where 
   		user_no=#{no}
   </select>
+  
+  <update id="update" parameterType="theme">
+  	update jeju_theme set title=?, public=?, category=? 
+  	where theme_no="+theme.getNo()
+  </update>
   
   <delete id="delete" parameterType="int">
   	delete from jeju_theme where theme_no=#{no}
@@ -62,6 +67,18 @@
   	from 
   		jeju_theme_category
   </select>
+  
+  <select id="hashtagSearch" resultMap="ThemeMap" parameterType="String">
+    select
+			title,
+			user_no owner_no,
+			th.name hashtag_name
+		from
+			jeju_theme t
+			join jeju_theme_hashtag th on t.theme_no=th.theme_no
+		where th.name=#{name};
+  </select>
+
   
 	<insert id="insert" parameterType="theme"
 		useGeneratedKeys="true" keyColumn="theme_no" keyProperty="no">
