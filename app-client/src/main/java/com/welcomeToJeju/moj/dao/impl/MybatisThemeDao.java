@@ -87,13 +87,11 @@ public class MybatisThemeDao implements ThemeDao{
 	
 	@Override
 	public void likedThemeDelete(int themeNo,int userNo) throws Exception{
-//		HashMap<String, String> params = new HashMap<>();
-//	  params.put("themeNo",Integer.toString(themeNo));
-//	  params.put("userNo",Integer.toString(userNo));
-//	  requestAgent.request("theme.liked.delete", params);
-//		if(requestAgent.getStatus().equals(RequestAgent.FAIL)) {
-//			throw new Exception(requestAgent.getObject(String.class));
-//		}
+		HashMap<String, String> params = new HashMap<>();
+	  params.put("themeNo",Integer.toString(themeNo));
+	  params.put("userNo",Integer.toString(userNo));
+	  sqlSession.insert("ThemeMapper.likedThemeDelete", params);
+	  sqlSession.commit();
 	}
 
 }
