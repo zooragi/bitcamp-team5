@@ -66,18 +66,9 @@ public class MybatisThemeDao implements ThemeDao{
 		return sqlSession.selectList("ThemeMapper.hashtagSearch", hashtagName);
 	}
 
-	
-	
-	
-	
 	@Override
-	public Theme search(String title) throws Exception {
-//		requestAgent.request("theme.search", title);
-//    if (requestAgent.getStatus().equals(RequestAgent.FAIL)) {
-//      throw new Exception(requestAgent.getObject(String.class));
-//    }
-//		return requestAgent.getObject(Theme.class);
-		return null;
+	public Theme findByName(String title) throws Exception {
+		return sqlSession.selectOne("ThemeMapper.findByName", title);
 	}
 
 

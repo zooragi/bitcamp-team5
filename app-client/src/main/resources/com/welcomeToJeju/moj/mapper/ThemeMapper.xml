@@ -68,6 +68,22 @@
   		jeju_theme_category
   </select>
   
+  <select id="findByName" resultMap="ThemeMap" parameterType="String">
+    	select 
+  		t.theme_no, 
+  		user_no owner_no,
+  		title, 
+  		public, 
+  		c.name category_name,
+  		h.name hashtag_name
+  	from
+  		jeju_theme t
+ 			left outer join jeju_theme_hashtag h on t.theme_no=h.theme_no
+ 			join jeju_theme_category c on c.category_no=t.category_no
+  	where 
+  		t.title=#{title}
+  </select>
+  
   <select id="hashtagSearch" resultMap="ThemeMap" parameterType="String">
     select
 			title,

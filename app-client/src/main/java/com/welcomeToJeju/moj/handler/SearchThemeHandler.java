@@ -22,7 +22,7 @@ public class SearchThemeHandler implements Command {
         System.out.println("테마 검색 취소!");
         return;
       }
-      Theme theme = themeDao.search(input);
+      Theme theme = themeDao.findByName(input);
       
       if(theme == null) {
       	System.out.println("검색된 테마가 없음");
