@@ -4,7 +4,6 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="ThemeMapper">
-  
   <resultMap type="Theme" id="ThemeMap">
     <id column="theme_no" property="no"/> 
     <result column="title" property="title"/>
@@ -12,34 +11,34 @@
     <result column="created_dt" property="registeredDate"/>
     
     <association property="owner" javaType="User">
-  	  <id column="user_no" property="no"/> 
-	    <result column="nickname" property="nickname"/>
-	    <result column="email" property="email"/>
+  	  <id column="owner_no" property="no"/> 
+	    <result column="owner_nickname" property="nickname"/>
+	    <result column="owner_email" property="email"/>
     </association>
     
     <association property="category" javaType="Category">
 	    <id column="category_no" property="no"/>
-	    <result column="c_name" property="name"/>
+	    <result column="category_name" property="name"/>
     </association>
      
     <collection property="hashtags" ofType="String">
-	    <result column="h_name" property="name"/>
+	    <result column="hashtag_name" property="name"/>
     </collection>
   </resultMap>
   
   <resultMap type="Category" id="CategoryMap">
     <id column="category_no" property="no"/>
-	  <result column="c_name" property="name"/>
+	  <result column="name" property="name"/>
   </resultMap>
   
   <select id="findByUserNo" resultMap="ThemeMap" parameterType="int">
   	select 
   		t.theme_no, 
-  		user_no, 
+  		user_no owner_no, 
   		title, 
   		public, 
-  		c.name c_name,
-  		h.name h_name
+  		c.name category_name,
+  		h.name hashtag_name
   	from
   		jeju_theme t
  			left outer join jeju_theme_hashtag h on t.theme_no=h.theme_no
@@ -47,6 +46,14 @@
   	where 
   		user_no=#{no}
   </select>
+  
+  <delete id="delete" parameterType="int">
+  	delete from jeju_theme where theme_no=#{no}
+  </delete>
+  
+  <delete id="hashtagDelete" parameterType="int">
+  	delete from jeju_theme_hashtag where theme_no=#{no}
+  </delete>
   
   <select id="findAllCategory" resultMap="CategoryMap">
   	select

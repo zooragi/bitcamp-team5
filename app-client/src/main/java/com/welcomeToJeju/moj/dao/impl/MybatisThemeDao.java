@@ -29,16 +29,17 @@ public class MybatisThemeDao implements ThemeDao{
 			sqlSession.insert("ThemeMapper.insertHashtags", params);
 		}
 		sqlSession.commit();
+		
 	}
 	@Override
 	public List<Theme> findByUserNo(int userNo) throws Exception {
-		System.out.println(userNo);
 		return sqlSession.selectList("ThemeMapper.findByUserNo", userNo);
 	}
 
 	public List<Category> findAllCategory() throws Exception {
 		return sqlSession.selectList("ThemeMapper.findAllCategory");
 	}
+	
 	@Override
 	public void update(Theme theme) throws Exception {
 //		try(PreparedStatement stmt = con.prepareStatement(
@@ -55,15 +56,10 @@ public class MybatisThemeDao implements ThemeDao{
 	}
 
 	@Override
-	public String delete(Theme theme) throws Exception {
-		return null;
-//		try(PreparedStatement stmt = con.prepareStatement(
-//				"delete from jeju_theme where theme_no="+theme.getNo())){
-//  		if(stmt.executeUpdate() == 0) {
-//  			throw new Exception("회원 데이터 삭제 실패!");
-//  		}
-//		}
-//		return theme.getTitle();
+	public void delete(Theme theme) throws Exception {
+		sqlSession.delete("ThemeMapper.hashtagDelete", theme.getNo());
+		sqlSession.delete("ThemeMapper.delete", theme.getNo());
+		sqlSession.commit();
 	}
 
 	@Override
