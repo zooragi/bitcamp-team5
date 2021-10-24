@@ -62,7 +62,7 @@
 			user_no=#{no}
   </update>
   
-    <update id="viewCountUpdate" parameterType="map">
+  <update id="viewCountUpdate" parameterType="map">
 		update 
 			jeju_user 
 		set 
@@ -72,15 +72,27 @@
   </update>
   
   <select id="findByName" resultMap="UserMap" parameterType="String">
-  select 
-		user_no, 
-		email, 
-		nickname, 
-		created_dt 
-	from 
-		jeju_user 
-	where 
-		nickname=#{nickname}
+	  select 
+			user_no, 
+			email, 
+			nickname, 
+			created_dt 
+		from 
+			jeju_user 
+		where 
+			nickname=#{nickname}
+  </select>
+  
+  <select id="findByNo" resultMap="UserMap" parameterType="int">
+	  select 
+			user_no, 
+			email, 
+			nickname, 
+			created_dt 
+		from 
+			jeju_user 
+		where 
+			user_no=#{no}
   </select>
   
   <select id="userLikedUserInsert" parameterType="map">

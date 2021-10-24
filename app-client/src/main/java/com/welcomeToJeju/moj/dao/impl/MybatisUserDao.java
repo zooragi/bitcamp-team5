@@ -87,25 +87,7 @@ public class MybatisUserDao implements UserDao{
   
 	@Override
 	public User findByNo(int userNo) throws Exception {
-//		try(PreparedStatement stmt = con.prepareStatement(
-//				"select email, nickname, created_dt from jeju_user where user_no=" + userNo)){
-//			try(ResultSet rs = stmt.executeQuery()){
-//				if(!rs.next()) {
-//					return null;
-//				}
-//				User user = new User();
-//				user.setEmail(rs.getString("email"));
-//				user.setNickName(rs.getString("nickname"));
-//				user.setRegisteredDate(rs.getDate("created_dt"));
-//				return user;
-//			}
-//		}
-		return null;
+		return sqlSession.selectOne("UserMapper.findByNo", userNo);
 	}
-
-  
-
-  
-
 
 }
