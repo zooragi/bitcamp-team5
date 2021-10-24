@@ -39,10 +39,8 @@ public class ThemePrompt {
   	return themeDao.findByTitle(themeTitle);
   }
 	
-	public void increaseReportedCount(Theme theme) throws Exception {
-    int reportCount = theme.getReportedCount();
-    theme.setReportedCount(reportCount+1);
-    themeDao.update(theme);
+	public void increaseReportedCount(int themeNo, int reportedCnt) throws Exception {
+    themeDao.reportedCountUpdate(themeNo, reportedCnt);
 	}
 	
 	public List<Theme> setCountedThemes() throws Exception {

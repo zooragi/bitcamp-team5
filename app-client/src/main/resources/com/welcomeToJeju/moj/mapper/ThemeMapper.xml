@@ -71,9 +71,16 @@
   		theme_no=#{no}
   </update>
   
-    <update id="viewCountUpdate" parameterType="map">
+  <update id="viewCountUpdate" parameterType="map">
   	update jeju_theme set 
   		view_cnt=#{viewCnt}
+  	where 
+  		theme_no=#{themeNo}
+  </update>
+  
+  <update id="reportedCountUpdate" parameterType="map">
+  	update jeju_theme set 
+  		reported_cnt=#{reportedCnt}
   	where 
   		theme_no=#{themeNo}
   </update>
