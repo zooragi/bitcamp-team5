@@ -15,9 +15,11 @@ import com.welcomeToJeju.menu.Menu;
 import com.welcomeToJeju.menu.MenuFilter;
 import com.welcomeToJeju.menu.MenuGroup;
 import com.welcomeToJeju.moj.dao.PlaceDao;
+import com.welcomeToJeju.moj.dao.ReportDao;
 import com.welcomeToJeju.moj.dao.ThemeDao;
 import com.welcomeToJeju.moj.dao.UserDao;
 import com.welcomeToJeju.moj.dao.impl.MybatisPlaceDao;
+import com.welcomeToJeju.moj.dao.impl.MybatisReportDao;
 import com.welcomeToJeju.moj.dao.impl.MybatisThemeDao;
 import com.welcomeToJeju.moj.dao.impl.MybatisUserDao;
 import com.welcomeToJeju.moj.dao.impl.NetReportDao;
@@ -118,7 +120,7 @@ public class ClientApp {
   	UserDao userDao = new MybatisUserDao(sqlSession);
   	ThemeDao themeDao = new MybatisThemeDao(sqlSession);
   	PlaceDao placeDao = new MybatisPlaceDao(sqlSession);
-  	NetReportDao reportDao = new NetReportDao(requestAgent);
+  	ReportDao reportDao = new MybatisReportDao(sqlSession);
     UserPrompt userPrompt = new UserPrompt(userDao);
   	ThemePrompt themePrompt = new ThemePrompt(themeDao);
   	
@@ -142,7 +144,7 @@ public class ClientApp {
     commandMap.put("/theme/all", new AllThemeListHandler(themeDao));
     
     commandMap.put("/place/add", new PlaceAddHandler(placeDao));
-    commandMap.put("/place/delete", new PlaceDeleteHandler(themeDao));
+    commandMap.put("/place/delete", new PlaceDeleteHandler(themeDao, placeDao));
     commandMap.put("/place/list", new PlaceListHandler(placeDao));
     
     commandMap.put("/likedTheme/add", new LikedThemeAddHandler(themeDao));

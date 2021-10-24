@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.welcomeToJeju.moj.dao.ReportDao;
 import com.welcomeToJeju.moj.domain.Report;
+import com.welcomeToJeju.moj.domain.ReportStatus;
 import com.welcomeToJeju.moj.domain.ReportUser;
 import com.welcomeToJeju.moj.domain.User;
 import com.welcomeToJeju.util.Prompt;
@@ -24,26 +25,13 @@ public class ReportAddUserHandler implements Command {
   public void execute(CommandRequest request) throws Exception {
 
     System.out.println("[유저 신고하기]");
-    int uniqueNum;
-    ArrayList<Report> reportList = (ArrayList<Report>) reportDao.findAll();
-    
-		loop: while (true) {
-			uniqueNum = Prompt.inputInt("고유 번호(취소 : 엔터) > ");
-			for (Report r : reportList) {
-				if (r.getNo() == uniqueNum) {
-					System.out.println("존재하는 번호입니다. 다시 입력 하시오.");
-					continue loop;
-				}
-			}
-			break;
-		}
 
     ReportUser reportUser = new ReportUser();
 
     String userNickName = Prompt.inputString("신고할 유저 닉네임 >");
-    User ReportedUser = userPrompt.findByName(userNickName);
+    User reportedUser = userPrompt.findByName(userNickName);
     
-    if (ReportedUser == null) {
+    if (reportedUser == null) {
       System.out.println("등록된 유저 없음!");
       return;
     }
@@ -53,19 +41,20 @@ public class ReportAddUserHandler implements Command {
       return;
     }
     
-    reportUser.setReportedUserName(userNickName);
+    reportUser.setReportedUser(reportedUser);
 
     System.out.println();
+    ReportStatus reportStatus = new ReportStatus();
+    reportStatus.setNo(100);
 
     String content = Prompt.inputString("신고 사유 > ");
-    reportUser.setNo(uniqueNum);
     reportUser.setContent(content);
     reportUser.setRegisteredDate(new Date(System.currentTimeMillis()));
     reportUser.setWriter(AuthLoginHandler.getLoginUser());
-    reportUser.setState(Report.WAITING);
+    reportUser.setState(reportStatus);
     
-    reportDao.userInsert(reportUser);
-    userPrompt.increaseReportedCount(ReportedUser);
+    reportDao.reportUserInsert(reportUser);
+//    userPrompt.increaseReportedCount(reportedUser);
     System.out.println("유저 신고 완료!");
 
   }

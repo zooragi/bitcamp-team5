@@ -113,3 +113,39 @@ Insert into jeju_liked_theme(user_no, theme_no) values(2,13);
 Insert into jeju_liked_theme(user_no, theme_no) values(3,3);
 Insert into jeju_liked_theme(user_no, theme_no) values(3,10);
 Insert into jeju_liked_theme(user_no, theme_no) values(3,15);
+
+-- 신고 상태
+Insert into jeju_report_status(report_status_no, title) values(100,'대기');
+Insert into jeju_report_status(report_status_no, title) values(101,'완료');
+
+-- 유저 신고
+Insert into jeju_report_user(user_no, user_no2, content, report_status_no)
+values(2,3,'못생겼어요',101);
+
+Insert into jeju_report_user(user_no, user_no2, content, report_status_no)
+values(2,4,'잘생겼어요',100);
+
+Insert into jeju_report_user(user_no, user_no2, content, report_status_no)
+values(2,5,'너무 예뻐요',101);
+
+Insert into jeju_report_user(user_no, user_no2, content, report_status_no)
+values(3,6,'못생겼어요',101);
+
+Insert into jeju_report_user(user_no, user_no2, content, report_status_no)
+values(3,5,'못생겼어요',101);
+
+-- 테마 신고
+Insert into jeju_report_theme(user_no, theme_no, content, report_status_no)
+values(2,1,'장소가 별로예여',101);
+
+Insert into jeju_report_theme(user_no, theme_no, content, report_status_no)
+values(2,2,'장소가 별로 없어요',100);
+
+Insert into jeju_report_theme(user_no, theme_no, content, report_status_no)
+values(2,3,'테마 이름이 별로예요',101);
+
+Insert into jeju_report_theme(user_no, theme_no, content, report_status_no)
+values(3,4,'그냥 오늘 기분이 안좋아요',101);
+
+Insert into jeju_report_theme(user_no, theme_no, content, report_status_no)
+values(3,5,'열받네',101);

@@ -33,8 +33,9 @@ public class MybatisReportDao implements ReportDao{
 	}
 
 	@Override
-	public void userInsert(ReportUser report) throws Exception {
-		
+	public void reportUserInsert(ReportUser report) throws Exception {
+		sqlSession.insert("ReportMapper.reportUserInsert", report);
+		sqlSession.commit();
 	}
 
 	@Override

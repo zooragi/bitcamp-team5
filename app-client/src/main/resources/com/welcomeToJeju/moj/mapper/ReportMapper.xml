@@ -100,6 +100,11 @@
 		values(#{writer.no},#{reportedTheme.no},#{content},#{state.no});
 	</insert>
 	
+	<insert id="reportUserInsert" parameterType="ReportUser">
+		Insert into jeju_report_user(user_no, user_no2, content, report_status_no)
+		values(#{writer.no},#{reportedUser.no},#{content},#{state.no});
+	</insert>
+	
 </mapper>
 
 
