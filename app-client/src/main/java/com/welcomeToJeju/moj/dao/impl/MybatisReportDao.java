@@ -28,8 +28,8 @@ public class MybatisReportDao implements ReportDao{
 	}
 	
 	@Override
-	public List<ReportUser> findUserAll(int userNo) throws Exception {
-		return sqlSession.selectList("ReportMapper.findUserAll", userNo);
+	public List<ReportUser> userReportFindByUserNo(int userNo) throws Exception {
+		return sqlSession.selectList("ReportMapper.userReportFindByUserNo", userNo);
 	}
 
 	@Override

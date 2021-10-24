@@ -25,7 +25,7 @@ public class ReportUserProcessingHandler implements Command {
   public void execute(CommandRequest request) throws Exception {
 
     List<User> countedUserList = new ArrayList<>();
-    List<ReportUser> reportUserList = reportDao.findUserAll();
+    List<ReportUser> reportUserList = reportDao.userReportFindByUserNo(AuthLoginHandler.getLoginUser().getNo());
     User selectedUser;
     int index = 1;
 
@@ -78,9 +78,9 @@ public class ReportUserProcessingHandler implements Command {
     int index = 1;
     String selectedReportUserTitle = countedUserList.get(selectedNum - 1).getNickname();
     for (ReportUser report : reportUserList) {
-      if (selectedReportUserTitle.equals(report.getReportedUserName())) {
+      if (selectedReportUserTitle.equals(report.getReportedUser().getNickname())) {
         System.out.printf("(%s)\n", index++);
-        String reportedName = report.getReportedUserName();
+        String reportedName = report.getReportedUser().getNickname();
         System.out.println("신고 당한 유저 : " + reportedName);
         System.out.println("신고 한 유저 : " + report.getWriter().getNickname());
         System.out.println("신고 내용 : " + report.getContent());

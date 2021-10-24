@@ -56,7 +56,7 @@
 		<result column="report_status_title" property="title" />
 	</resultMap>
 
-	<select id="findUserAll" resultMap="ReportUserMap"
+	<select id="userReportFindByUserNo" resultMap="ReportUserMap"
 		parameterType="int">
 		select
 			content,
