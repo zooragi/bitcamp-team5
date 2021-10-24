@@ -18,7 +18,7 @@ public class ReportMyListHandler implements Command {
 	@Override
 	public void execute(CommandRequest request) throws Exception {
 		ArrayList<ReportUser> reportUserList = (ArrayList<ReportUser>) reportDao.userReportFindByUserNo(AuthLoginHandler.getLoginUser().getNo());
-		ArrayList<ReportTheme> reportThemeList = (ArrayList<ReportTheme>) reportDao.findThemeAll(AuthLoginHandler.getLoginUser().getNo());
+		ArrayList<ReportTheme> reportThemeList = (ArrayList<ReportTheme>) reportDao.themeReportFindByUserNo(AuthLoginHandler.getLoginUser().getNo());
 		ArrayList<Report> reportList = new ArrayList<>();
 		reportList.addAll(reportUserList);
 		reportList.addAll(reportThemeList);

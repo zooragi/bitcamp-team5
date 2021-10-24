@@ -26,7 +26,7 @@ public class ReportThemeProcessingHandler implements Command {
   public void execute(CommandRequest request) throws Exception {
 
     List<Theme> countedThemeList = new ArrayList<>();
-    List<ReportTheme> reportThemeList = reportDao.findThemeAll();
+    List<ReportTheme> reportThemeList = reportDao.themeReportFindByUserNo(AuthLoginHandler.getLoginUser().getNo());
     User selectedUser;
     int index = 1;
 
@@ -79,9 +79,9 @@ public class ReportThemeProcessingHandler implements Command {
     int index = 1;
     String selectedReportThemeTitle = countedThemeList.get(selectedNum-1).getTitle();
     for (ReportTheme report : reportThemeList) {
-      if(selectedReportThemeTitle.equals(report.getReportedThemeTitle())) {
+      if(selectedReportThemeTitle.equals(report.getReportedTheme().getTitle())) {
         System.out.printf("<%s>\n", index++);
-        String reportedTitle =report.getReportedThemeTitle();
+        String reportedTitle =report.getReportedTheme().getTitle();
         System.out.println("신고 당한 테마 > " + reportedTitle);
         System.out.println("신고 한 유저 > " + report.getWriter().getNickname());
         System.out.println("신고 내용 > " + report.getContent());

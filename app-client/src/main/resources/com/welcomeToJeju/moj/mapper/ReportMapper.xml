@@ -76,7 +76,7 @@
 		where jru.user_no=#{no}
 	</select>
 
-	<select id="findThemeAll" resultMap="ReportThemeMap"
+	<select id="themeReportFindByUserNo" resultMap="ReportThemeMap"
 		parameterType="int">
 		select
 			content,

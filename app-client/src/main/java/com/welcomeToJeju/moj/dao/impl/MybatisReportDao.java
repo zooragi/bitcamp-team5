@@ -23,8 +23,8 @@ public class MybatisReportDao implements ReportDao{
 	}
 	
 	@Override
-	public List<ReportTheme> findThemeAll(int userNo) throws Exception {
-		return sqlSession.selectList("ReportMapper.findThemeAll", userNo);
+	public List<ReportTheme> themeReportFindByUserNo(int userNo) throws Exception {
+		return sqlSession.selectList("ReportMapper.themeReportFindByUserNo", userNo);
 	}
 	
 	@Override
