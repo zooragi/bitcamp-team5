@@ -63,7 +63,8 @@ public class ReportThemeProcessingHandler implements Command {
       String isWaring = Prompt.inputString("경고주기 (y/N) > ");
 
       if(isWaring.equalsIgnoreCase("y")) {
-      	userPrompt.increaseWariningCount(selectedUser);
+      	int count = selectedUser.getWarningCount() + 1;
+        userPrompt.increaseWariningCount(selectedUser.getNo(),count);
         break;
       } else if (isWaring.equalsIgnoreCase("n")) {
         return;
@@ -86,7 +87,7 @@ public class ReportThemeProcessingHandler implements Command {
         System.out.println("신고 한 유저 > " + report.getWriter().getNickname());
         System.out.println("신고 내용 > " + report.getContent());
         System.out.println("신고 날짜 > " + report.getRegisteredDate());
-        System.out.println("신고 상태 > " + report.getState());
+        System.out.println("신고 상태 > " + report.getState().getTitle());
       }
     }
 
