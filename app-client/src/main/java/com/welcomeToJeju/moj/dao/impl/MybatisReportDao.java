@@ -18,8 +18,13 @@ public class MybatisReportDao implements ReportDao{
   }
   
 	@Override
-	public List<Report> findAll() throws Exception {
-		return null;
+	public List<ReportTheme> themeReportAll() throws Exception{
+		return sqlSession.selectList("ReportMapper.themeReportAll");
+	}
+	
+	@Override
+	public List<ReportUser> userReportAll() throws Exception{
+		return sqlSession.selectList("ReportMapper.userReportAll");
 	}
 	
 	@Override

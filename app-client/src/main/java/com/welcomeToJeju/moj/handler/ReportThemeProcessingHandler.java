@@ -26,7 +26,7 @@ public class ReportThemeProcessingHandler implements Command {
   public void execute(CommandRequest request) throws Exception {
 
     List<Theme> countedThemeList = new ArrayList<>();
-    List<ReportTheme> reportThemeList = reportDao.themeReportFindByUserNo(AuthLoginHandler.getLoginUser().getNo());
+    List<ReportTheme> reportThemeList = reportDao.themeReportAll();
     User selectedUser;
     int index = 1;
 

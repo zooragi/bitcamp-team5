@@ -25,7 +25,7 @@ public class ReportUserProcessingHandler implements Command {
   public void execute(CommandRequest request) throws Exception {
 
     List<User> countedUserList = new ArrayList<>();
-    List<ReportUser> reportUserList = reportDao.userReportFindByUserNo(AuthLoginHandler.getLoginUser().getNo());
+    List<ReportUser> reportUserList = reportDao.userReportAll();
     User selectedUser;
     int index = 1;
 
