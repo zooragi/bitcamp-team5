@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="PlaceMapper">
+	<resultMap type="Place" id="PlaceMap">
+		<id column="place_no" property="no"/>
+		<result column="theme_no" property="themeNo"/>
+		<result column="place_name" property="storeName"/>
+		<result column="place_address" property="storeAddress"/>
+		<result column="x_coord" property="xCoord"/>
+		<result column="y_coord" property="yCoord"/>
+		
+    <association property="owner" javaType="User">
+  	  <id column="owner_no" property="no"/> 
+	    <result column="owner_nickname" property="nickname"/>
+	    <result column="owner_email" property="email"/>
+    </association>
+		
+    <collection property="photos" ofType="String">
+	    <result column="file_path" property="file_path"/>
+    </collection>
+    
+    <collection property="comments" ofType="String">
+	    <result column="comment" property="comment"/>
+    </collection>
+		
+	</resultMap>
+
+	<insert id="insert" parameterType="place">
+		Insert into jeju_place(theme_no, place_name, place_address, x_coord, y_coord, user_no)
+		values(themeNo,storeName,storeAddress,xCoord,yCoord,owner.no)
+	</insert>
+	
+	<insert id="photoInsert" parameterType="map">
+		Insert into jeju_place_photo(place_no,user_no, file_path)
+		values(#{placeNo},#{userNo},#{filePath})
+	</insert>
+	
+	<insert id="commentInsert" parameterType="String">
+		Insert into jeju_place_comment(place_no,user_no, comment)
+		values(#{placeNo},#{userNo},#{comment})
+	</insert>
+	
+	<select id="findByThemeNo" resultMap="PlaceMap" parameterType="int">
+		select 
+			theme_no,
+			place_name,
+			place_address,
+			x_coord,
+			y_coord,
+			p.user_no owner_no,
+			pp.file_path file_path,
+			c.comment comment
+		from 
+			jeju_place p
+			join jeju_place_photo pp on p.place_no=pp.place_no
+			join jeju_place_comment c on p.place_no=c.place_no
+		where 
+			theme_no=#{no};
+			
+	</select>
+
+
+</mapper>
+
+
+
+
+
+
+

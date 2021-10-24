@@ -74,7 +74,17 @@ public class PlaceAddHandler implements Command {
       place.setxCoord(selectedPlace.getX());
       place.setyCoord(selectedPlace.getY());
       place.setThemeNo(theme.getNo());
-
+      place.setOwner(AuthLoginHandler.getLoginUser());
+      
+      ArrayList<String> photos = new ArrayList<>();
+      while(true) {
+      	String photo = Prompt.inputString("사진 (종료 : 엔터) > ");
+      	if(photo.length() == 0) break;
+      	photos.add(photo);
+      }
+      
+      place.setPhotos(photos);
+      
       break;
     }
 

@@ -18,7 +18,6 @@ public class MyThemeListHandler implements Command {
     int i = 1 ;
     
     ArrayList<Theme> themeList = (ArrayList<Theme>) themeDao.findByUserNo(AuthLoginHandler.getLoginUser().getNo());
-    System.out.println(themeList);
     if (themeList.size() == 0) {
       System.out.println("등록된 테마 없음!");
       return;

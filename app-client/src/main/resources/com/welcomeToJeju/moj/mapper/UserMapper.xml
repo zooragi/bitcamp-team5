@@ -43,6 +43,13 @@
     delete from jeju_user 
     where user_no=#{value}
   </delete>
+
+  <delete id="userLikedUserAllDelete" parameterType="int">
+		delete from 
+			jeju_liked_user 
+		where 
+			user_no=#{loginUserNo}
+	</delete>
   
   <update id="update" parameterType="user">
 		update 
@@ -72,13 +79,13 @@
   	values(#{loginUserNo},#{likedUserNo})
   </select>
   
-	<select id="userLikedUserDelete" parameterType="map">
+	<delete id="userLikedUserDelete" parameterType="map">
 		delete from 
 			jeju_liked_user 
 		where 
 			user_no=#{loginUserNo} and 
 			user_no2=#{likedUserNo}
-	</select>
+	</delete>
 	
   <select id="likedUserFindAll" resultMap="UserMap" parameterType="int">
 	  select

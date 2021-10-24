@@ -17,7 +17,7 @@ import com.welcomeToJeju.menu.MenuGroup;
 import com.welcomeToJeju.moj.dao.PlaceDao;
 import com.welcomeToJeju.moj.dao.ThemeDao;
 import com.welcomeToJeju.moj.dao.UserDao;
-import com.welcomeToJeju.moj.dao.impl.MariadbPlaceDao;
+import com.welcomeToJeju.moj.dao.impl.MybatisPlaceDao;
 import com.welcomeToJeju.moj.dao.impl.MybatisThemeDao;
 import com.welcomeToJeju.moj.dao.impl.MybatisUserDao;
 import com.welcomeToJeju.moj.dao.impl.NetReportDao;
@@ -117,7 +117,7 @@ public class ClientApp {
   	
   	UserDao userDao = new MybatisUserDao(sqlSession);
   	ThemeDao themeDao = new MybatisThemeDao(sqlSession);
-  	PlaceDao placeDao = new MariadbPlaceDao(con);
+  	PlaceDao placeDao = new MybatisPlaceDao(sqlSession);
   	NetReportDao reportDao = new NetReportDao(requestAgent);
     UserPrompt userPrompt = new UserPrompt(userDao);
   	ThemePrompt themePrompt = new ThemePrompt(themeDao);

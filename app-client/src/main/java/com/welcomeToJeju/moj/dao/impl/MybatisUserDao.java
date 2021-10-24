@@ -39,6 +39,7 @@ public class MybatisUserDao implements UserDao{
 
 	@Override
   public void delete(int userNo) throws Exception {
+		sqlSession.delete("UserMapper.userLikedUserAllDelete", userNo);
 		sqlSession.delete("UserMapper.delete", userNo);
 		sqlSession.commit();
   }
@@ -74,7 +75,7 @@ public class MybatisUserDao implements UserDao{
 		HashMap<String,Integer> params = new HashMap<>();
 		params.put("likedUserNo", likedUserNo);
 		params.put("loginUserNo", loginUserNo);
-		sqlSession.insert("UserMapper.userLikedUserDelete", params);
+		sqlSession.delete("UserMapper.userLikedUserDelete", params);
 		sqlSession.commit();
 }
   

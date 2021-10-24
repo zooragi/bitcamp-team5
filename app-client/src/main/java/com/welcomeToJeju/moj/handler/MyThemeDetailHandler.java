@@ -78,7 +78,7 @@ public class MyThemeDetailHandler implements Command {
   	int i = 1;
     for (Theme theme : themeList) {
       System.out.printf("<%d>\n", i++);
-      System.out.printf("테마 제목 > [%s] %s\n", theme.getCategory(), theme.getTitle());
+      System.out.printf("테마 제목 > [%s] %s\n", theme.getCategory().getName(), theme.getTitle());
       System.out.println();
     }
   }

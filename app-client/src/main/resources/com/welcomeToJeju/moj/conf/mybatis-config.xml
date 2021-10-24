@@ -25,6 +25,7 @@
   <mappers>
     <mapper resource="com/welcomeToJeju/moj/mapper/UserMapper.xml"/>
     <mapper resource="com/welcomeToJeju/moj/mapper/ThemeMapper.xml"/>
+    <mapper resource="com/welcomeToJeju/moj/mapper/PlaceMapper.xml"/>
   </mappers>
 </configuration>
 
