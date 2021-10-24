@@ -56,6 +56,15 @@ public class MybatisThemeDao implements ThemeDao{
 		}
 		sqlSession.commit();
 	}
+	
+	@Override
+	public void viewCountUpdate(int themeNo, int viewCnt) throws Exception{
+		HashMap<String,Object> params = new HashMap<>();
+		params.put("themeNo", themeNo);
+		params.put("viewCnt", viewCnt);
+		sqlSession.update("ThemeMapper.viewCountUpdate", params);
+		sqlSession.commit();
+	}
 
 	@Override
 	public void delete(Theme theme) throws Exception {

@@ -49,7 +49,13 @@ public class MybatisUserDao implements UserDao{
 		sqlSession.update("UserMapper.update", user);
 		sqlSession.commit();
 	}
-	
+	public void viewCountUpdate(int userNo, int viewCnt) throws Exception{
+		HashMap<String,Object> params = new HashMap<>();
+		params.put("userNo", userNo);
+		params.put("viewCnt", viewCnt);
+		sqlSession.update("UserMapper.viewCountUpdate", params);
+		sqlSession.commit();
+	}
 	
 	@Override
 	public User findByName(String nickname) throws Exception {
