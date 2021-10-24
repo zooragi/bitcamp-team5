@@ -31,6 +31,9 @@ public class MybatisThemeDao implements ThemeDao{
 		sqlSession.commit();
 	}
 
+	public List<Theme> findAll() throws Exception {
+		return sqlSession.selectList("ThemeMapper.findAll");
+	}
 	@Override
 	public List<Theme> findByUserNo(int userNo) throws Exception {
 		return sqlSession.selectList("ThemeMapper.findByUserNo", userNo);
