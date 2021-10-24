@@ -71,6 +71,24 @@
 			user_no=#{userNo}
   </update>
   
+  <update id="reportedCountUpdate" parameterType="map">
+		update 
+			jeju_user 
+		set 
+			reported_cnt=#{reportedCnt}
+		where 
+			user_no=#{userNo}
+  </update>
+  
+  <update id="warnedCountUpdate" parameterType="map">
+		update 
+			jeju_user
+		set 
+			warned_cnt=#{warnedCnt}
+		where 
+			user_no=#{userNo}
+  </update>
+  
   <select id="findByName" resultMap="UserMap" parameterType="String">
 	  select 
 			user_no, 

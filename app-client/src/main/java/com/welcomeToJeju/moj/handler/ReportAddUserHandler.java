@@ -54,7 +54,8 @@ public class ReportAddUserHandler implements Command {
     reportUser.setState(reportStatus);
     
     reportDao.reportUserInsert(reportUser);
-//    userPrompt.increaseReportedCount(reportedUser);
+    int count = reportedUser.getReportedCount() + 1;
+    userPrompt.increaseReportedCount(reportedUser.getNo(), count);
     System.out.println("유저 신고 완료!");
 
   }

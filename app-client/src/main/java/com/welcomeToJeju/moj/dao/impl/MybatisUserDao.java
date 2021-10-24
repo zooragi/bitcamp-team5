@@ -49,11 +49,31 @@ public class MybatisUserDao implements UserDao{
 		sqlSession.update("UserMapper.update", user);
 		sqlSession.commit();
 	}
+	
+	@Override
 	public void viewCountUpdate(int userNo, int viewCnt) throws Exception{
 		HashMap<String,Object> params = new HashMap<>();
 		params.put("userNo", userNo);
 		params.put("viewCnt", viewCnt);
 		sqlSession.update("UserMapper.viewCountUpdate", params);
+		sqlSession.commit();
+	}
+	
+	@Override
+	public void warnedCountUpdate(int userNo, int warnedCnt) throws Exception{
+		HashMap<String,Object> params = new HashMap<>();
+		params.put("userNo", userNo);
+		params.put("warnedCnt", warnedCnt);
+		sqlSession.update("UserMapper.warnedCountUpdate", params);
+		sqlSession.commit();
+	}
+	
+	@Override
+	public void reportedCountUpdate(int userNo, int reportedCnt) throws Exception{
+		HashMap<String,Object> params = new HashMap<>();
+		params.put("userNo", userNo);
+		params.put("reportedCnt", reportedCnt);
+		sqlSession.update("UserMapper.reportedCountUpdate", params);
 		sqlSession.commit();
 	}
 	

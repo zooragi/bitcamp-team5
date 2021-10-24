@@ -11,6 +11,7 @@ public interface UserDao {
 	void delete(int userNo) throws Exception;
 	void update(User user) throws Exception;
 	void viewCountUpdate(int userNo, int viewCnt) throws Exception;
+	void reportedCountUpdate(int userNo, int reportedCnt) throws Exception;
 	void warnedCountUpdate(int userNo, int warnedCnt) throws Exception;
 	List<User> findAll() throws Exception;
 	User selectOneByEmailPassword(String email,String password) throws Exception;
