@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.welcomeToJeju.moj.dao.ThemeDao;
+import com.welcomeToJeju.moj.domain.Category;
 import com.welcomeToJeju.moj.domain.Theme;
 import com.welcomeToJeju.moj.domain.User;
 import com.welcomeToJeju.request.RequestAgent;
@@ -29,35 +30,15 @@ public class MyThemeUpdateHandler implements Command {
     }
 
     String newTitle = Prompt.inputString("테마 제목 > ");
-    List<String> categories = new ArrayList<>();
-    categories.add("식당");
-    categories.add("카페");
-    categories.add("관광명소");
-    categories.add("기타");
-    
-    while (true) {
-      int index = 1;
-      for(String category : categories) {
-        System.out.printf("%d. %s ",index++,category);
-      }
-      System.out.println();
-      categoryNum = Prompt.inputInt("카테고리 번호 > ");
-      if(categoryNum > categories.size() || categoryNum < 0) {
-        System.out.println("잘못된 번호!");
-        continue;
-      }
-      System.out.println();
-      break;
-    }
 
-//    List<String> hashtagList = new ArrayList<>();
-//
-//    while (true) {
-//      String input = Prompt.inputString("해시 태그(완료: 엔터) > ");
-//      if (input.length() == 0)
-//        break;
-//      hashtagList.add(input);
-//    }
+    List<String> hashtagList = new ArrayList<>();
+    Category category = new ThemeHandlerHelper(themeDao).promptCategory();
+    while (true) {
+      String input = Prompt.inputString("해시 태그(완료: 엔터) > ");
+      if (input.length() == 0)
+        break;
+      hashtagList.add(input);
+    }
 
     int isPublic = 0;
 
@@ -65,7 +46,7 @@ public class MyThemeUpdateHandler implements Command {
     if (publicOption.equalsIgnoreCase("y") || publicOption.equals("")) {
       isPublic = 1;
     }
-
+    
     String input = Prompt.inputString("수정하기(y/N) > ");
     if (input.equalsIgnoreCase("n") || input.length() == 0) {
       System.out.println("테마 수정 취소!");
@@ -73,8 +54,8 @@ public class MyThemeUpdateHandler implements Command {
     }
 
     theme.setTitle(newTitle);
-//    theme.setHashtags(hashtagList);
-    theme.setCategory(categories.get(categoryNum-1));
+    theme.setHashtags(hashtagList);
+    theme.setCategory(category);
     theme.setPublic(isPublic);
     
     themeDao.update(theme);

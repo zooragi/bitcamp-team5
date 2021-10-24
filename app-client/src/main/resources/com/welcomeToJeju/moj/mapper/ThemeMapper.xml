@@ -63,8 +63,12 @@
   </select>
   
   <update id="update" parameterType="theme">
-  	update jeju_theme set title=?, public=?, category=? 
-  	where theme_no="+theme.getNo()
+  	update jeju_theme set 
+  		title=#{title}, 
+  		public=#{public}, 
+  		category_no=#{category.no} 
+  	where 
+  		theme_no=#{no}
   </update>
   
   <delete id="delete" parameterType="int">
