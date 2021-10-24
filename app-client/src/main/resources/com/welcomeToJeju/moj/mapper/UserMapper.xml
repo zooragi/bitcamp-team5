@@ -62,6 +62,15 @@
 			user_no=#{no}
   </update>
   
+    <update id="viewCountUpdate" parameterType="map">
+		update 
+			jeju_user 
+		set 
+			view_cnt=#{viewCnt}
+		where 
+			user_no=#{userNo}
+  </update>
+  
   <select id="findByName" resultMap="UserMap" parameterType="String">
   select 
 		user_no, 

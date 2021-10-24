@@ -26,8 +26,7 @@ public class SearchUserHandler implements Command {
       	continue;
       }
       int currentViewCount = user.getViewCount();
-      user.setViewCount(currentViewCount+1);
-      userDao.update(user);
+      userDao.viewCountUpdate(user.getNo() ,currentViewCount+1);
       
       System.out.printf("[%s]유저의 테마 목록\n", user.getNickname());
       themePrompt.printMyList(user);
