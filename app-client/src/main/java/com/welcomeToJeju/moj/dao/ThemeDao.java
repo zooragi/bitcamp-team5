@@ -7,7 +7,7 @@ import com.welcomeToJeju.moj.domain.Theme;
 
 public interface ThemeDao {
 	void insert(Theme theme) throws Exception;
-	Theme findByName(String title) throws Exception
+	Theme findByTitle(String title) throws Exception;
 	List<Theme> findByUserNo(int userNo) throws Exception;
 	void update(Theme theme) throws Exception;
 	public void delete(Theme theme) throws Exception;

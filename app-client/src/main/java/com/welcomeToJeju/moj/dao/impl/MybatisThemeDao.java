@@ -74,8 +74,8 @@ public class MybatisThemeDao implements ThemeDao{
 	}
 
 	@Override
-	public Theme findByName(String title) throws Exception {
-		return sqlSession.selectOne("ThemeMapper.findByName", title);
+	public Theme findByTitle(String title) throws Exception {
+		return sqlSession.selectOne("ThemeMapper.findByTitle", title);
 	}
 	
 	@Override

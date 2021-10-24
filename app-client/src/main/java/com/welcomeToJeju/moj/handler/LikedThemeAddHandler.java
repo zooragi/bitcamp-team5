@@ -24,7 +24,7 @@ public class LikedThemeAddHandler implements Command {
       return;
     }
 
-    Theme theme = themeDao.findByName(title);
+    Theme theme = themeDao.findByTitle(title);
 
     if (theme == null) {
       System.out.println("등록된 테마 없음!");

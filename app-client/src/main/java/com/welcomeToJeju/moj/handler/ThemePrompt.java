@@ -16,35 +16,29 @@ public class ThemePrompt {
 		this.themeDao = themeDao;
 	}
 	
-	public void printMyList(User user) throws Exception {
-		ArrayList<Theme> themeList = (ArrayList<Theme>) themeDao.findAll();
-		for(Theme theme : themeList) {
-			if(theme.getOwner().getNo() == user.getNo() && theme.isPublic() == 1) {
-				System.out.printf("테마 > %s\n",theme.getTitle());
-			}
-		}
-	}
-	
-	public ArrayList<Theme> rank() throws Exception {
-		ArrayList<Theme> themeList = (ArrayList<Theme>) themeDao.findAll();
-		ArrayList<Theme> ascThemeList = new ArrayList<>();
-		for (Theme theme : themeList) {
-			if (theme.isPublic() == 1)
-				ascThemeList.add(theme);
-		}
-
-		Collections.sort(ascThemeList);
-		return ascThemeList;
-	}
+//	public void printMyList(User user) throws Exception {
+//		ArrayList<Theme> themeList = (ArrayList<Theme>) themeDao.findAll();
+//		for(Theme theme : themeList) {
+//			if(theme.getOwner().getNo() == user.getNo() && theme.isPublic() == 1) {
+//				System.out.printf("테마 > %s\n",theme.getTitle());
+//			}
+//		}
+//	}
+//	
+//	public ArrayList<Theme> rank() throws Exception {
+//		ArrayList<Theme> themeList = (ArrayList<Theme>) themeDao.findAll();
+//		ArrayList<Theme> ascThemeList = new ArrayList<>();
+//		for (Theme theme : themeList) {
+//			if (theme.isPublic() == 1)
+//				ascThemeList.add(theme);
+//		}
+//
+//		Collections.sort(ascThemeList);
+//		return ascThemeList;
+//	}
 	
 	public Theme findByTitle(String themeTitle) throws Exception {
-  	ArrayList<Theme> themeList = (ArrayList<Theme>) themeDao.findAll();
-      for(Theme theme : themeList)
-        if(theme.getTitle().equals(themeTitle)) {
-          return theme;
-        }
-    
-    return null;
+  	return themeDao.findByTitle(themeTitle);
   }
 	
 	public void increaseReportedCount(Theme theme) throws Exception {
@@ -53,14 +47,14 @@ public class ThemePrompt {
     themeDao.update(theme);
 	}
 	
-	public List<Theme> setCountedThemes() throws Exception {
-		ArrayList<Theme> themeList = (ArrayList<Theme>) themeDao.findAll();
-		ArrayList<Theme> reportedThemes = new ArrayList<>();
-		for(Theme theme : themeList) {
-			if(theme.getReportedCount() != 0) {
-				reportedThemes.add(theme);
-			}
-		}
-		return reportedThemes;
-	}
+//	public List<Theme> setCountedThemes() throws Exception {
+//		ArrayList<Theme> themeList = (ArrayList<Theme>) themeDao.findAll();
+//		ArrayList<Theme> reportedThemes = new ArrayList<>();
+//		for(Theme theme : themeList) {
+//			if(theme.getReportedCount() != 0) {
+//				reportedThemes.add(theme);
+//			}
+//		}
+//		return reportedThemes;
+//	}
 }

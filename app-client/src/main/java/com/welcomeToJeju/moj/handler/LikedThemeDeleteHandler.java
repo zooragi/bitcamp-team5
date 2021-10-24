@@ -27,7 +27,7 @@ public class LikedThemeDeleteHandler implements Command {
 			return;
 		}
 
-		Theme theme = themeDao.findByName(title);
+		Theme theme = themeDao.findByTitle(title);
 
     while(true) {
     	String input = Prompt.inputString("정말로 삭제 하시겠습니까?(y/N) : ");
