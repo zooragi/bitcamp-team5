@@ -9,6 +9,8 @@
     <result column="title" property="title"/>
     <result column="public" property="public"/>
     <result column="created_dt" property="registeredDate"/>
+    <result column="reported_cnt" property="reportedCount"/>
+    <result column="view_cnt" property="viewCount"/>
     
     <association property="owner" javaType="User">
   	  <id column="owner_no" property="no"/> 
@@ -37,7 +39,9 @@
   		t.theme_no, 
   		user_no owner_no,
   		title, 
-  		public, 
+  		public,
+  		view_cnt,
+  		reported_cnt,
   		c.name category_name,
   		h.name hashtag_name
   	from
@@ -52,6 +56,8 @@
   		user_no owner_no,
   		title, 
   		public, 
+  		view_cnt,
+  		reported_cnt,
   		c.name category_name,
   		h.name hashtag_name
   	from
@@ -115,6 +121,8 @@
   		user_no owner_no,
   		title, 
   		public, 
+  		view_cnt,
+  		reported_cnt,
   		c.name category_name,
   		h.name hashtag_name
   	from
