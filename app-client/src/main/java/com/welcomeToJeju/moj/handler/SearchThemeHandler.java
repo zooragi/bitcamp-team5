@@ -30,9 +30,8 @@ public class SearchThemeHandler implements Command {
       }
       
       int currentCount = theme.getViewCount();
-      theme.setViewCount(currentCount+1);
       
-      themeDao.update(theme);
+      themeDao.viewCountUpdate(theme.getNo(), currentCount+1);
       PlaceHandlerHelper.printPlaceInfo(theme);
       
       return;

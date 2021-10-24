@@ -71,6 +71,13 @@
   		theme_no=#{no}
   </update>
   
+    <update id="viewCountUpdate" parameterType="map">
+  	update jeju_theme set 
+  		view_cnt=#{viewCnt}
+  	where 
+  		theme_no=#{themeNo}
+  </update>
+  
   <delete id="delete" parameterType="int">
   	delete from jeju_theme where theme_no=#{no}
   </delete>

@@ -11,6 +11,7 @@ public interface ThemeDao {
 	Theme findByTitle(String title) throws Exception;
 	List<Theme> findByUserNo(int userNo) throws Exception;
 	void update(Theme theme) throws Exception;
+	void viewCountUpdate(int themeNo, int viewCnt) throws Exception;
 	public void delete(Theme theme) throws Exception;
 	List<Theme> hashtagSearch(String hashtagName) throws Exception;
 	void likedThemeInsert(int themeNo,int userNo) throws Exception;
