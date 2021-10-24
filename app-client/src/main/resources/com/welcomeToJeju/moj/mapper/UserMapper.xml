@@ -11,6 +11,9 @@
     <result column="email" property="email"/>
     <result column="password" property="password"/>
     <result column="created_dt" property="registeredDate"/>
+    <result column="warned_cnt" property="warningCount"/>
+    <result column="reported_cnt" property="reportedCount"/>
+    <result column="view_cnt" property="viewCount"/>
   </resultMap>
   
   <select id="findAll" resultMap="UserMap">
@@ -18,7 +21,10 @@
 			user_no, 
 			email, 
 			nickname, 
-			created_dt 
+			created_dt,
+			warned_cnt,
+			reported_cnt,
+			view_cnt
 		from 
 			jeju_user
   </select>
@@ -27,7 +33,10 @@
 	 	select 
 			user_no, 
 			email, 
-			nickname 
+			nickname,
+			warned_cnt,
+			reported_cnt,
+			view_cnt
 		from 
 			jeju_user 
 		where 
@@ -94,7 +103,10 @@
 			user_no, 
 			email, 
 			nickname, 
-			created_dt 
+			created_dt,
+			warned_cnt,
+			reported_cnt,
+			view_cnt 
 		from 
 			jeju_user 
 		where 
@@ -106,7 +118,10 @@
 			user_no, 
 			email, 
 			nickname, 
-			created_dt 
+			created_dt,
+			warned_cnt,
+			reported_cnt,
+			view_cnt
 		from 
 			jeju_user 
 		where 
@@ -131,7 +146,10 @@
 			ju.user_no,
 			email,
 			nickname,
-			created_dt
+			created_dt,
+			warned_cnt,
+			reported_cnt,
+			view_cnt
 		from
 			jeju_user ju
 		join
