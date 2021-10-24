@@ -11,21 +11,23 @@ public class Report {
   private int no;
   private String content;
   private User writer;
-  private String state;
+  private ReportStatus state;
   private Date registeredDate;
 //  private String reportedType;
 //  private String reportedSubject;
 //  private int reportedCount;
 	
-	public String getState() {
-    return state;
-  }
+
   @Override
 	public String toString() {
 		return "Report [no=" + no + ", content=" + content + ", writer=" + writer + ", state=" + state + ", registeredDate="
 				+ registeredDate + "]";
 	}
-	public void setState(String state) {
+  
+	public ReportStatus getState() {
+    return state;
+  }
+	public void setState(ReportStatus state) {
     this.state = state;
   }
   public int getNo() {

@@ -8,8 +8,8 @@ import com.welcomeToJeju.moj.domain.ReportUser;
 
 public interface ReportDao {
 	void userInsert(ReportUser report) throws Exception;
-	void themeInsert(ReportTheme report) throws Exception;
+	void reportThemeInsert(ReportTheme report) throws Exception;
 	List<Report> findAll() throws Exception;
-	List<ReportTheme> findThemeAll() throws Exception;
-	List<ReportUser> findUserAll() throws Exception;
+	List<ReportTheme> findThemeAll(int userNo) throws Exception;
+	List<ReportUser> findUserAll(int userNo) throws Exception;
 }

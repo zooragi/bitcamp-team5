@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ReportMapper">
+	<!-- 유저 신고 -->
+	<resultMap type="ReportUser" id="ReportUserMap">
+		<id column="report_user_no" property="no" />
+		<result column="content" property="content" />
+		<result column="created_dt" property="registeredDate" />
+
+		<association property="writer" javaType="user">
+			<id column="writer_no" property="no" />
+			<result column="writer_nickname" property="nickname" />
+			<result column="writer_email" property="email" />
+		</association>
+
+		<association property="reportedUser" javaType="user">
+			<id column="reported_user_no" property="no" />
+			<result column="reported_user_nickname" property="nickname" />
+			<result column="reported_user_email" property="email" />
+		</association>
+
+		<association property="state" javaType="ReportStatus">
+			<id column="status_no" property="no" />
+			<result column="status_title" property="title" />
+		</association>
+	</resultMap>
+
+	<!-- 테마 신고 -->
+	<resultMap type="ReportTheme" id="ReportThemeMap">
+		<id column="report_theme_no" property="no" />
+		<result column="content" property="content" />
+		<result column="created_dt" property="registeredDate" />
+
+		<association property="writer" javaType="user">
+			<id column="writer_no" property="no" />
+			<result column="writer_nickname" property="nickname" />
+			<result column="writer_email" property="email" />
+		</association>
+
+		<association property="reportedTheme" javaType="theme">
+			<id column="reported_theme_no" property="no" />
+			<result column="reported_theme_title" property="title" />
+		</association>
+
+		<association property="state" javaType="ReportStatus">
+			<id column="status_no" property="no" />
+			<result column="status_title" property="title" />
+		</association>
+	</resultMap>
+
+	<resultMap type="ReportStatus" id="ReportStatusMap">
+		<id column="report_status_no" property="no" />
+		<result column="report_status_title" property="title" />
+	</resultMap>
+
+	<select id="findUserAll" resultMap="ReportUserMap"
+		parameterType="int">
+		select
+			content,
+			ju.user_no writer_no,
+			ju.nickname writer_nickname,
+			ju.email writer_email,
+			ju2.user_no reported_user_no,
+			ju2.nickname reported_user_nickname,
+			ju2.email reported_user_email,
+			jrs.title status_title,
+			jru.created_dt 
+		from
+			jeju_report_user jru
+			join jeju_user ju on ju.user_no=jru.user_no
+			join jeju_user ju2 on ju2.user_no=jru.user_no2
+			join jeju_report_status jrs on jrs.report_status_no=jru.report_status_no
+		where jru.user_no=#{no}
+	</select>
+
+	<select id="findThemeAll" resultMap="ReportThemeMap"
+		parameterType="int">
+		select
+			content,
+			ju.user_no writer_no,
+			ju.nickname writer_nickname,
+			ju.email writer_email,
+			jt.theme_no reported_theme_no,
+			jt.title reported_theme_title,
+			jrs.title status_title,
+			jrt.created_dt 
+		from
+			jeju_report_theme jrt
+			join jeju_user ju on ju.user_no=jrt.user_no
+			join jeju_theme jt on jt.theme_no=jrt.theme_no
+			join jeju_report_status jrs on jrs.report_status_no=jrt.report_status_no
+		where jrt.user_no=#{no}
+	</select>
+
+	<insert id="reportThemeInsert" parameterType="ReportTheme">
+		Insert into jeju_report_theme(user_no, theme_no, content, report_status_no)
+		values(#{writer.no},#{reportedTheme.no},#{content},#{state.no});
+	</insert>
+	
+</mapper>
+
+
+
+
+
+
+
