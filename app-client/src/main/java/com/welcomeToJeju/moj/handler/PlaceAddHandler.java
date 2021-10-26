@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import com.google.gson.Gson;
 import com.welcomeToJeju.moj.dao.PlaceDao;
+import com.welcomeToJeju.moj.domain.Comment;
+import com.welcomeToJeju.moj.domain.Photo;
 import com.welcomeToJeju.moj.domain.Place;
 import com.welcomeToJeju.moj.domain.Theme;
 import com.welcomeToJeju.util.KakaoMapApi;
@@ -76,10 +78,12 @@ public class PlaceAddHandler implements Command {
       place.setThemeNo(theme.getNo());
       place.setOwner(AuthLoginHandler.getLoginUser());
       
-      ArrayList<String> photos = new ArrayList<>();
+      ArrayList<Photo> photos = new ArrayList<>();
       while(true) {
-      	String photo = Prompt.inputString("사진 (종료 : 엔터) > ");
-      	if(photo.length() == 0) break;
+      	Photo photo = new Photo();
+      	String photoName = Prompt.inputString("사진 (종료 : 엔터) > ");
+      	if(photoName.length() == 0) break;
+      	photo.setFilePath(photoName);
       	photos.add(photo);
       }
       
@@ -87,8 +91,10 @@ public class PlaceAddHandler implements Command {
       
       break;
     }
-
-    place.getComments().add(Prompt.inputString("장소 후기 > "));
+    Comment comment = new Comment();
+    String comment_content = Prompt.inputString("장소 후기 > ");
+    comment.setComment(comment_content);
+    place.getComments().add(comment);
     placeDao.insert(place);
     
     System.out.println("장소 등록 완료!");
