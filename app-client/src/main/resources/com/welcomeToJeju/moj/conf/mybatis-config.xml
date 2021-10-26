@@ -23,10 +23,16 @@
   </environments>
   
   <mappers>
+<!-- 방법 1
     <mapper resource="com/welcomeToJeju/moj/mapper/UserMapper.xml"/>
     <mapper resource="com/welcomeToJeju/moj/mapper/ThemeMapper.xml"/>
     <mapper resource="com/welcomeToJeju/moj/mapper/PlaceMapper.xml"/>
     <mapper resource="com/welcomeToJeju/moj/mapper/ReportMapper.xml"/>
+-->
+
+<!-- 방법2 -->
+    <package name="com.welcomeToJeju.moj.dao"/>
+    
   </mappers>
 </configuration>
 
