@@ -8,8 +8,8 @@ public class Place {
   private int themeNo;
   private String storeName;
   private String storeAddress;
-  private List<String> photos = new ArrayList<>();
-  private List<String> comments = new ArrayList<>();
+  private List<Photo> photos = new ArrayList<>();
+  private List<Comment> comments = new ArrayList<>();
   private String xCoord;
   private String yCoord;
   private User owner;
@@ -45,16 +45,16 @@ public class Place {
   public void setStoreAddress(String storeAddress) {
     this.storeAddress = storeAddress;
   }
-  public List<String> getPhotos() {
+  public List<Photo> getPhotos() {
     return photos;
   }
-  public void setPhotos(List<String> photos) {
+  public void setPhotos(List<Photo> photos) {
     this.photos = photos;
   }
-  public List<String> getComments() {
+  public List<Comment> getComments() {
     return comments;
   }
-  public void setComments(List<String> comments) {
+  public void setComments(List<Comment> comments) {
     this.comments = comments;
   }
   public String getxCoord() {
