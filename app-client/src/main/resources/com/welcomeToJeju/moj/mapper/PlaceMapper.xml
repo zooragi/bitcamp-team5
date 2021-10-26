@@ -46,15 +46,15 @@
 	</insert>
 	
   <delete id="delete" parameterType="int">
-  	delete from jeju_place where place_no={no} 
+  	delete from jeju_place where place_no=#{no} 
   </delete>
 	
   <delete id="deletePhoto" parameterType="int">
-  	delete from jeju_place_photo where place_no={no} 
+  	delete from jeju_place_photo where place_no=#{no} 
   </delete>
 	
   <delete id="deleteComment" parameterType="int">
-  	delete from jeju_place_comment where place_no={no} 
+  	delete from jeju_place_comment where place_no=#{no} 
   </delete>
 	
 	<select id="findByThemeNo" resultMap="PlaceMap" parameterType="int">

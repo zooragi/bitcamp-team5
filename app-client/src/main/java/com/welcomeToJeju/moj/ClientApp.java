@@ -1,6 +1,7 @@
 package com.welcomeToJeju.moj;
 
 import java.sql.Connection;
+
 import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +23,6 @@ import com.welcomeToJeju.moj.dao.impl.MybatisPlaceDao;
 import com.welcomeToJeju.moj.dao.impl.MybatisReportDao;
 import com.welcomeToJeju.moj.dao.impl.MybatisThemeDao;
 import com.welcomeToJeju.moj.dao.impl.MybatisUserDao;
-import com.welcomeToJeju.moj.dao.impl.NetReportDao;
 import com.welcomeToJeju.moj.handler.AllThemeListHandler;
 import com.welcomeToJeju.moj.handler.AuthDisplayLoginUserHandler;
 import com.welcomeToJeju.moj.handler.AuthLoginHandler;
@@ -80,7 +80,6 @@ public class ClientApp {
       super(title);
       this.menuId = menuId;
     }
-
     public MenuItem(String title, int enableState, String menuId) {
       super(title, enableState);
       this.menuId = menuId;

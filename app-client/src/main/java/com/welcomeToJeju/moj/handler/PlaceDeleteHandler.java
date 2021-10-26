@@ -1,17 +1,21 @@
 package com.welcomeToJeju.moj.handler;
 
+import java.util.ArrayList;
+
+import com.welcomeToJeju.moj.dao.PlaceDao;
 import com.welcomeToJeju.moj.dao.ThemeDao;
 import com.welcomeToJeju.moj.domain.Place;
 import com.welcomeToJeju.moj.domain.Theme;
-import com.welcomeToJeju.request.RequestAgent;
 import com.welcomeToJeju.util.Prompt;
 
 public class PlaceDeleteHandler implements Command{
 
 	ThemeDao themeDao;
-	
-  public PlaceDeleteHandler(ThemeDao themeDao) {
+	PlaceDao placeDao;
+  	
+  public PlaceDeleteHandler(ThemeDao themeDao,PlaceDao placeDao) {
   	this.themeDao = themeDao;
+  	this.placeDao = placeDao;
   }
   
   @Override
@@ -20,14 +24,15 @@ public class PlaceDeleteHandler implements Command{
       System.out.println("[장소 삭제하기]");
 
       Theme theme = (Theme) request.getAttribute("theme");
-      theme = themeDao.findByName(theme.getTitle());
+      theme = themeDao.findByTitle(theme.getTitle());
       
       if (theme == null) {
         System.out.println("등록된 테마 없음!");
         return;
       }
+      ArrayList<Place> list = (ArrayList<Place>) placeDao.findByThemeNo(theme.getNo());
       
-      Place place = PlaceHandlerHelper.promptPlace(theme);
+      Place place = PlaceHandlerHelper.promptPlace(list);
       
       String input = Prompt.inputString("삭제하기(y/N) > ");
       if (input.equalsIgnoreCase("n") || input.length() == 0) {
@@ -36,9 +41,9 @@ public class PlaceDeleteHandler implements Command{
         return;
       }
 
-      String deletedPlace = themeDao.placeDelete(place);
+      placeDao.delete(place);
       
-      System.out.printf("%s 삭제하기 완료!\n",deletedPlace);
+      System.out.printf("삭제하기 완료!\n");
       return;
     }
   }
