@@ -30,34 +30,19 @@ public class UserPrompt {
 	}
 
   public User findByNo(int userNo) throws Exception {
-  	ArrayList<User> userList = (ArrayList<User>) userDao.findAll();
-    for (User user : userList) {
-      if (user.getNo() == userNo) {
-        return user;
-      }
-    }
-    return null;
+  	return userDao.findByNo(userNo);
   }
   
   public User findByName(String userName) throws Exception {
-  	ArrayList<User> userList = (ArrayList<User>) userDao.findAll();
-    for (User user : userList) {
-      if (user.getNickname().equals(userName)) {
-        return user;
-      }
-    }
-    return null;
+    return userDao.findByName(userName);
   }
   
-	public void increaseReportedCount(User user) throws Exception {
-    int reportCount = user.getReportedCount();
-    user.setReportedCount(reportCount+1);
-    userDao.update(user);
+	public void increaseReportedCount(int userNo, int reportedCnt) throws Exception {
+    userDao.reportedCountUpdate(userNo, reportedCnt);
 	}
-	public void increaseWariningCount(User user) throws Exception {
-    int count = user.getWarningCount();
-    user.setWarningCount(++count);
-    userDao.update(user);
+	
+	public void increaseWariningCount(int userNo, int warningCnt) throws Exception {
+    userDao.warnedCountUpdate(userNo, warningCnt);
 	}
 	
 	public List<User> setCountedUser() throws Exception {

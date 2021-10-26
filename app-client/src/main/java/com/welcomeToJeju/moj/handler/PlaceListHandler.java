@@ -22,7 +22,6 @@ public class PlaceListHandler implements Command {
 
 		Theme theme = (Theme) request.getAttribute("theme");
 		ArrayList<Place> list = (ArrayList<Place>) placeDao.findByThemeNo(theme.getNo());
-		System.out.println(list);
 		System.out.printf("[%s] 테마 제목 > %s\n", theme.getCategory().getName(), theme.getTitle());
 
 		int index = 1;

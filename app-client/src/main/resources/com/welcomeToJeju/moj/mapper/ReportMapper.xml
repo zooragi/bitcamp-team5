@@ -56,8 +56,24 @@
 		<result column="report_status_title" property="title" />
 	</resultMap>
 
-	<select id="userReportFindByUserNo" resultMap="ReportUserMap"
-		parameterType="int">
+	<sql id="themeReportSelect">
+		select
+			content,
+			ju.user_no writer_no,
+			ju.nickname writer_nickname,
+			ju.email writer_email,
+			jt.theme_no reported_theme_no,
+			jt.title reported_theme_title,
+			jrs.title status_title,
+			jrt.created_dt 
+		from
+			jeju_report_theme jrt
+			join jeju_user ju on ju.user_no=jrt.user_no
+			join jeju_theme jt on jt.theme_no=jrt.theme_no
+			join jeju_report_status jrs on jrs.report_status_no=jrt.report_status_no
+	</sql>
+
+	<sql id="userReportSelect">
 		select
 			content,
 			ju.user_no writer_no,
@@ -73,27 +89,26 @@
 			join jeju_user ju on ju.user_no=jru.user_no
 			join jeju_user ju2 on ju2.user_no=jru.user_no2
 			join jeju_report_status jrs on jrs.report_status_no=jru.report_status_no
+	</sql>
+
+	<select id="userReportAll" resultMap="ReportUserMap">
+		<include refid="userReportSelect"/>	
+	</select>
+	
+	<select id="themeReportAll" resultMap="ReportThemeMap">
+		<include refid="themeReportSelect"/>
+	</select>
+
+	<select id="userReportFindByUserNo" resultMap="ReportUserMap" parameterType="int">
+		<include refid="userReportSelect"/>	
 		where jru.user_no=#{no}
 	</select>
 
-	<select id="themeReportFindByUserNo" resultMap="ReportThemeMap"
-		parameterType="int">
-		select
-			content,
-			ju.user_no writer_no,
-			ju.nickname writer_nickname,
-			ju.email writer_email,
-			jt.theme_no reported_theme_no,
-			jt.title reported_theme_title,
-			jrs.title status_title,
-			jrt.created_dt 
-		from
-			jeju_report_theme jrt
-			join jeju_user ju on ju.user_no=jrt.user_no
-			join jeju_theme jt on jt.theme_no=jrt.theme_no
-			join jeju_report_status jrs on jrs.report_status_no=jrt.report_status_no
+	<select id="themeReportFindByUserNo" resultMap="ReportThemeMap" parameterType="int">
+		<include refid="themeReportSelect"/>	
 		where jrt.user_no=#{no}
 	</select>
+
 
 	<insert id="reportThemeInsert" parameterType="ReportTheme">
 		Insert into jeju_report_theme(user_no, theme_no, content, report_status_no)
