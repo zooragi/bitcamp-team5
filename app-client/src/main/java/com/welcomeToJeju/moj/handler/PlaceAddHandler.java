@@ -1,6 +1,9 @@
 package com.welcomeToJeju.moj.handler;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.apache.ibatis.session.SqlSession;
 
 import com.google.gson.Gson;
 import com.welcomeToJeju.moj.dao.PlaceDao;
@@ -15,9 +18,10 @@ import com.welcomeToJeju.util.Prompt;
 public class PlaceAddHandler implements Command {
 
 	PlaceDao placeDao;
-	
-  public PlaceAddHandler(PlaceDao placeDao) {
+	SqlSession sqlSession;
+  public PlaceAddHandler(PlaceDao placeDao, SqlSession sqlSession) {
   	this.placeDao = placeDao;
+  	this.sqlSession = sqlSession;
   }
 	
   @Override
@@ -97,6 +101,25 @@ public class PlaceAddHandler implements Command {
     place.getComments().add(comment);
     placeDao.insert(place);
     
+		HashMap<String,Object> param1 = new HashMap<>();
+		HashMap<String,Object> param2 = new HashMap<>();
+    
+		for(Comment cmt : place.getComments()) {
+			param1.put("placeNo", place.getNo());
+			param1.put("userNo", place.getOwner().getNo());
+			param1.put("comment", cmt.getComment());
+			placeDao.commentInsert(param1);
+		}
+		
+		
+		for(Photo photo : place.getPhotos()) {
+			param2.put("placeNo", place.getNo());
+			param2.put("userNo", place.getOwner().getNo());
+			param2.put("filePath", photo.getFilePath());
+			placeDao.photoInsert(param2);
+		}
+    
+		sqlSession.commit();
     System.out.println("장소 등록 완료!");
   }
 }

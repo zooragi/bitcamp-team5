@@ -1,5 +1,7 @@
 package com.welcomeToJeju.moj.handler;
 
+import org.apache.ibatis.session.SqlSession;
+
 import com.welcomeToJeju.moj.dao.UserDao;
 import com.welcomeToJeju.moj.domain.User;
 import com.welcomeToJeju.util.Prompt;
@@ -7,9 +9,10 @@ import com.welcomeToJeju.util.Prompt;
 public class UserUpdateHandler implements Command {
 
   UserDao userDao;
-
-  public UserUpdateHandler(UserDao userDao) {
+  SqlSession sqlSession;
+  public UserUpdateHandler(UserDao userDao,SqlSession sqlSession) {
     this.userDao = userDao;
+    this.sqlSession = sqlSession;
   }
 
   public void execute(CommandRequest request) throws Exception {
@@ -31,6 +34,7 @@ public class UserUpdateHandler implements Command {
     }
 
     userDao.update(temp);
+    sqlSession.commit();
     System.out.println("회원 수정 완료!");
   }
 }

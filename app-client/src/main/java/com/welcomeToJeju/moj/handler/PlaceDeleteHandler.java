@@ -2,6 +2,8 @@ package com.welcomeToJeju.moj.handler;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.SqlSession;
+
 import com.welcomeToJeju.moj.dao.PlaceDao;
 import com.welcomeToJeju.moj.dao.ThemeDao;
 import com.welcomeToJeju.moj.domain.Place;
@@ -12,10 +14,12 @@ public class PlaceDeleteHandler implements Command{
 
 	ThemeDao themeDao;
 	PlaceDao placeDao;
-  	
-  public PlaceDeleteHandler(ThemeDao themeDao,PlaceDao placeDao) {
+  SqlSession sqlSession;
+  
+  public PlaceDeleteHandler(ThemeDao themeDao,PlaceDao placeDao,SqlSession sqlSession) {
   	this.themeDao = themeDao;
   	this.placeDao = placeDao;
+  	this.sqlSession = sqlSession;
   }
   
   @Override
@@ -41,8 +45,10 @@ public class PlaceDeleteHandler implements Command{
         return;
       }
 
-      placeDao.delete(place);
-      
+      placeDao.commentDelete(place.getNo());
+      placeDao.photoDelete(place.getNo());
+      placeDao.delete(place.getNo());
+      sqlSession.commit();
       System.out.printf("삭제하기 완료!\n");
       return;
     }

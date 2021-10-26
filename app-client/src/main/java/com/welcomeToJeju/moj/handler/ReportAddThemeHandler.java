@@ -3,6 +3,8 @@ package com.welcomeToJeju.moj.handler;
 import java.sql.Date;
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.SqlSession;
+
 import com.welcomeToJeju.moj.dao.ReportDao;
 import com.welcomeToJeju.moj.domain.Report;
 import com.welcomeToJeju.moj.domain.ReportStatus;
@@ -14,10 +16,11 @@ public class ReportAddThemeHandler implements Command{
 
 	ReportDao reportDao;
 	ThemePrompt themePrompt;
-	
-  public ReportAddThemeHandler(ReportDao reportDao,ThemePrompt themePrompt) {
+	SqlSession sqlSession;
+  public ReportAddThemeHandler(ReportDao reportDao,ThemePrompt themePrompt,SqlSession sqlSession) {
   	this.reportDao = reportDao;
   	this.themePrompt = themePrompt;
+  	this.sqlSession = sqlSession;
   }
 
   @Override
@@ -58,6 +61,7 @@ public class ReportAddThemeHandler implements Command{
     int count = reportedTheme.getReportedCount() + 1;
     
     themePrompt.increaseReportedCount(reportedTheme.getNo(),count);
+    sqlSession.commit();
     
     System.out.println("테마 신고 완료!");
 

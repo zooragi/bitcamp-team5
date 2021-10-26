@@ -2,6 +2,7 @@ package com.welcomeToJeju.moj.handler;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import com.welcomeToJeju.moj.dao.ThemeDao;
@@ -40,7 +41,10 @@ public class ThemePrompt {
   }
 	
 	public void increaseReportedCount(int themeNo, int reportedCnt) throws Exception {
-    themeDao.reportedCountUpdate(themeNo, reportedCnt);
+		HashMap<String,Object> params = new HashMap<>();
+		params.put("themeNo", themeNo);
+		params.put("reportedCnt", reportedCnt);
+    themeDao.reportedCountUpdate(params);
 	}
 	
 	public List<Theme> setCountedThemes() throws Exception {

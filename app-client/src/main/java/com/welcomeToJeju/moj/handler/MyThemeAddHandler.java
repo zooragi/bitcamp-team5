@@ -1,5 +1,9 @@
 package com.welcomeToJeju.moj.handler;
 
+import java.util.HashMap;
+
+import org.apache.ibatis.session.SqlSession;
+
 import com.welcomeToJeju.moj.dao.ThemeDao;
 import com.welcomeToJeju.moj.domain.Theme;
 import com.welcomeToJeju.util.Prompt;
@@ -7,9 +11,11 @@ import com.welcomeToJeju.util.Prompt;
 public class MyThemeAddHandler implements Command {
 
 	ThemeDao themeDao;
+	SqlSession sqlSession;
 	
-  public MyThemeAddHandler(ThemeDao themeDao) {
+  public MyThemeAddHandler(ThemeDao themeDao,SqlSession sqlSession) {
   	this.themeDao = themeDao;
+  	this.sqlSession = sqlSession;
   }
 
 	public void execute(CommandRequest request) throws Exception {
@@ -39,7 +45,17 @@ public class MyThemeAddHandler implements Command {
 			theme.setPublic(1);
 		}
 		theme.setOwner(AuthLoginHandler.getLoginUser());
+		
 		themeDao.insert(theme);
+		for(String hashtag : theme.getHashtags()) {
+			HashMap<String,Object> params = new HashMap<>();
+			params.put("themeNo", theme.getNo());
+			params.put("name", hashtag);
+			themeDao.insertHashtags(params);
+		}
+		
+		
+		sqlSession.commit();
 
 	}
 

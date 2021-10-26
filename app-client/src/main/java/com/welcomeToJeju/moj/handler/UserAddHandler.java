@@ -1,6 +1,6 @@
 package com.welcomeToJeju.moj.handler;
 
-import java.sql.Date;
+import org.apache.ibatis.session.SqlSession;
 
 import com.welcomeToJeju.moj.dao.UserDao;
 import com.welcomeToJeju.moj.domain.User;
@@ -8,9 +8,10 @@ import com.welcomeToJeju.util.Prompt;
 
 public class UserAddHandler implements Command{
 	UserDao userDao;
-	
-  public UserAddHandler(UserDao userDao) {
+	SqlSession sqlSession;
+  public UserAddHandler(UserDao userDao,SqlSession sqlSession) {
   	this.userDao = userDao;
+  	this.sqlSession = sqlSession;
   }
 
   public void execute(CommandRequest request) throws Exception{
@@ -24,6 +25,7 @@ public class UserAddHandler implements Command{
     user.setPassword(Prompt.inputString("암호 > "));
     
     userDao.insert(user);
+    sqlSession.commit();
   
     System.out.println("회원 등록 완료");
   }

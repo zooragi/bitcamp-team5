@@ -39,11 +39,11 @@ public class AuthLoginHandler implements Command{
     String email = Prompt.inputString("이메일 > ");
     String password = Prompt.inputString("암호 > ");
 
-    Map<String,String> params = new HashMap<String,String>();
+    HashMap<String,String> params = new HashMap<String,String>();
     params.put("email", email);
     params.put("password", password);
     
-    user = userDao.selectOneByEmailPassword(email, password);
+    user = userDao.selectOneByEmailPassword(params);
     
     if(user == null) {
     	System.out.println("이메일과 암호가 일치하는 회원을 찾을 수 없습니다.");

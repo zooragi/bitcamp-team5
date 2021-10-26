@@ -1,5 +1,6 @@
 package com.welcomeToJeju.moj.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.welcomeToJeju.moj.domain.User;
@@ -10,13 +11,14 @@ public interface UserDao {
 	User findByName(String nickname) throws Exception;
 	void delete(int userNo) throws Exception;
 	void update(User user) throws Exception;
-	void viewCountUpdate(int userNo, int viewCnt) throws Exception;
-	void reportedCountUpdate(int userNo, int reportedCnt) throws Exception;
-	void warnedCountUpdate(int userNo, int warnedCnt) throws Exception;
+	void viewCountUpdate(HashMap<String,Object> params) throws Exception;
+	void reportedCountUpdate(HashMap<String,Object> params) throws Exception;
+	void warnedCountUpdate(HashMap<String,Object> params) throws Exception;
 	List<User> findAll() throws Exception;
-	User selectOneByEmailPassword(String email,String password) throws Exception;
-	void userLikedUserInsert(int likedUser, int loginUserNo) throws Exception;
-	void userLikedUserDelete(int likedUser, int loginUserNo) throws Exception;
+	User selectOneByEmailPassword(HashMap<String,String> params) throws Exception;
+	void userLikedUserInsert(HashMap<String,Integer> params) throws Exception;
+	void userLikedUserDelete(HashMap<String,Integer> params) throws Exception;
+	void userLikedUserAllDelete(int userNo) throws Exception;
 	List<User> likedUserFindAll(int loginUserNo) throws Exception;
 	
 }

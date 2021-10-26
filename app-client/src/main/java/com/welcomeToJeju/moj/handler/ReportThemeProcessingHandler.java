@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+
 import com.welcomeToJeju.moj.dao.ReportDao;
 import com.welcomeToJeju.moj.domain.ReportTheme;
 import com.welcomeToJeju.moj.domain.Theme;
@@ -15,11 +17,12 @@ public class ReportThemeProcessingHandler implements Command {
 	ReportDao reportDao;
 	ThemePrompt themePrompt;
 	UserPrompt userPrompt;
-	
-  public ReportThemeProcessingHandler(ReportDao reportDao, ThemePrompt themePrompt,UserPrompt userPrompt) {
+	SqlSession sqlSession;
+  public ReportThemeProcessingHandler(ReportDao reportDao, ThemePrompt themePrompt,UserPrompt userPrompt,SqlSession sqlSession) {
   	this.reportDao = reportDao;
   	this.themePrompt = themePrompt;
   	this.userPrompt = userPrompt;
+  	this.sqlSession = sqlSession;
   }
 
   @Override
@@ -73,6 +76,7 @@ public class ReportThemeProcessingHandler implements Command {
         continue;
       }
     }
+    sqlSession.commit();
     
   }
 

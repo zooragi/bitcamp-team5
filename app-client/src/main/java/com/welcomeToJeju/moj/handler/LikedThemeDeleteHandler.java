@@ -1,6 +1,8 @@
 package com.welcomeToJeju.moj.handler;
 
-import java.util.List;
+import java.util.HashMap;
+
+import org.apache.ibatis.session.SqlSession;
 
 import com.welcomeToJeju.moj.dao.ThemeDao;
 import com.welcomeToJeju.moj.domain.Theme;
@@ -9,9 +11,10 @@ import com.welcomeToJeju.util.Prompt;
 public class LikedThemeDeleteHandler implements Command {
 
 	ThemeDao themeDao;
-
-	public LikedThemeDeleteHandler(ThemeDao themeDao) {
+	SqlSession sqlSession;
+	public LikedThemeDeleteHandler(ThemeDao themeDao,SqlSession sqlSession) {
 		this.themeDao = themeDao;
+		this.sqlSession = sqlSession;
 	}
 
 	@Override
@@ -41,8 +44,11 @@ public class LikedThemeDeleteHandler implements Command {
     		continue;
     	}
     }
-
-		themeDao.likedThemeDelete(theme.getNo(), AuthLoginHandler.getLoginUser().getNo());
+		HashMap<String, String> params = new HashMap<>();
+	  params.put("themeNo",Integer.toString(theme.getNo()));
+	  params.put("userNo",Integer.toString(AuthLoginHandler.getLoginUser().getNo()));
+	  themeDao.likedThemeDelete(params);
+	  sqlSession.commit();
 		System.out.println("좋아요 삭제하기 완료!");
 	}
 

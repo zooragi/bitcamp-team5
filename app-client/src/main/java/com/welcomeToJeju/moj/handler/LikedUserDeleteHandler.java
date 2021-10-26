@@ -1,5 +1,9 @@
 package com.welcomeToJeju.moj.handler;
 
+import java.util.HashMap;
+
+import org.apache.ibatis.session.SqlSession;
+
 import com.welcomeToJeju.moj.dao.UserDao;
 import com.welcomeToJeju.moj.domain.User;
 import com.welcomeToJeju.util.Prompt;
@@ -8,10 +12,11 @@ public class LikedUserDeleteHandler implements Command {
 
   UserDao userDao;
   UserPrompt userPrompt;
-  
-  public LikedUserDeleteHandler(UserDao userDao,UserPrompt userPrompt) {
+  SqlSession sqlSession;
+  public LikedUserDeleteHandler(UserDao userDao,UserPrompt userPrompt,SqlSession sqlSession) {
     this.userDao = userDao;
     this.userPrompt = userPrompt;
+    this.sqlSession = sqlSession;
   }
 
 
@@ -36,8 +41,10 @@ public class LikedUserDeleteHandler implements Command {
       System.out.println("본인은 삭제 불가!");
       return;
     }
-    
-    userDao.userLikedUserDelete(likedUser.getNo(), AuthLoginHandler.getLoginUser().getNo());
+		HashMap<String,Integer> params = new HashMap<>();
+		params.put("likedUserNo", likedUser.getNo());
+		params.put("loginUserNo", AuthLoginHandler.getLoginUser().getNo());
+		userDao.userLikedUserDelete(params);
 
     System.out.println("좋아하는 유저 삭제 완료!");
 	}

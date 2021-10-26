@@ -2,6 +2,7 @@ package com.welcomeToJeju.moj.handler;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import com.welcomeToJeju.moj.dao.UserDao;
@@ -38,11 +39,17 @@ public class UserPrompt {
   }
   
 	public void increaseReportedCount(int userNo, int reportedCnt) throws Exception {
-    userDao.reportedCountUpdate(userNo, reportedCnt);
+		HashMap<String,Object> params = new HashMap<>();
+		params.put("userNo", userNo);
+		params.put("reportedCnt", reportedCnt);
+    userDao.reportedCountUpdate(params);
 	}
 	
 	public void increaseWariningCount(int userNo, int warningCnt) throws Exception {
-    userDao.warnedCountUpdate(userNo, warningCnt);
+		HashMap<String,Object> params = new HashMap<>();
+		params.put("userNo", userNo);
+		params.put("warnedCnt", warningCnt);
+    userDao.warnedCountUpdate(params);
 	}
 	
 	public List<User> setCountedUser() throws Exception {

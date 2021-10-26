@@ -1,8 +1,6 @@
 package com.welcomeToJeju.moj;
 
 import java.sql.Connection;
-
-import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,10 +17,6 @@ import com.welcomeToJeju.moj.dao.PlaceDao;
 import com.welcomeToJeju.moj.dao.ReportDao;
 import com.welcomeToJeju.moj.dao.ThemeDao;
 import com.welcomeToJeju.moj.dao.UserDao;
-import com.welcomeToJeju.moj.dao.impl.MybatisPlaceDao;
-import com.welcomeToJeju.moj.dao.impl.MybatisReportDao;
-import com.welcomeToJeju.moj.dao.impl.MybatisThemeDao;
-import com.welcomeToJeju.moj.dao.impl.MybatisUserDao;
 import com.welcomeToJeju.moj.handler.AllThemeListHandler;
 import com.welcomeToJeju.moj.handler.AuthDisplayLoginUserHandler;
 import com.welcomeToJeju.moj.handler.AuthLoginHandler;
@@ -113,55 +107,53 @@ public class ClientApp {
     sqlSession = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream(
         "com/welcomeToJeju/moj/conf/mybatis-config.xml")).openSession();
   	
-  	con = DriverManager.getConnection( //
-        "jdbc:mysql://localhost:3306/jejudb?user=jeju&password=1111");
+  	UserDao userDao = sqlSession.getMapper(UserDao.class);
+  	ThemeDao themeDao = sqlSession.getMapper(ThemeDao.class);
+  	PlaceDao placeDao = sqlSession.getMapper(PlaceDao.class);
+  	ReportDao reportDao = sqlSession.getMapper(ReportDao.class);
   	
-  	UserDao userDao = new MybatisUserDao(sqlSession);
-  	ThemeDao themeDao = new MybatisThemeDao(sqlSession);
-  	PlaceDao placeDao = new MybatisPlaceDao(sqlSession);
-  	ReportDao reportDao = new MybatisReportDao(sqlSession);
     UserPrompt userPrompt = new UserPrompt(userDao);
   	ThemePrompt themePrompt = new ThemePrompt(themeDao);
   	
-    commandMap.put("/user/add", new UserAddHandler(userDao));
+    commandMap.put("/user/add", new UserAddHandler(userDao,sqlSession));
     commandMap.put("/user/list", new UserListHandler(userDao));
-    commandMap.put("/user/delete", new UserDeleteHandler(userDao));
+    commandMap.put("/user/delete", new UserDeleteHandler(userDao,sqlSession));
     commandMap.put("/user/detail", new UserDetailHandler(userDao));
-    commandMap.put("/user/update", new UserUpdateHandler(userDao));
-    commandMap.put("/auth/unregistered", new UserDeleteHandler(userDao));
-    commandMap.put("/auth/edit", new UserUpdateHandler(userDao));
+    commandMap.put("/user/update", new UserUpdateHandler(userDao,sqlSession));
+    commandMap.put("/auth/unregistered", new UserDeleteHandler(userDao,sqlSession));
+    commandMap.put("/auth/edit", new UserUpdateHandler(userDao,sqlSession));
     commandMap.put("/auth/displayLoginUer", new AuthDisplayLoginUserHandler());
     
     commandMap.put("/auth/login", new AuthLoginHandler(userDao,userListeners));
     commandMap.put("/auth/logout", new AuthLogoutHandler(userListeners));
     
-    commandMap.put("/myTheme/add", new MyThemeAddHandler(themeDao));
+    commandMap.put("/myTheme/add", new MyThemeAddHandler(themeDao,sqlSession));
     commandMap.put("/myTheme/list", new MyThemeListHandler(themeDao));
     commandMap.put("/myTheme/detail", new MyThemeDetailHandler(themeDao));
-    commandMap.put("/myTheme/delete", new MyThemeDeleteHandler(themeDao));
-    commandMap.put("/myTheme/update", new MyThemeUpdateHandler(themeDao));
+    commandMap.put("/myTheme/delete", new MyThemeDeleteHandler(themeDao,sqlSession));
+    commandMap.put("/myTheme/update", new MyThemeUpdateHandler(themeDao,sqlSession));
     commandMap.put("/theme/all", new AllThemeListHandler(themeDao));
     
-    commandMap.put("/place/add", new PlaceAddHandler(placeDao));
-    commandMap.put("/place/delete", new PlaceDeleteHandler(themeDao, placeDao));
+    commandMap.put("/place/add", new PlaceAddHandler(placeDao,sqlSession));
+    commandMap.put("/place/delete", new PlaceDeleteHandler(themeDao, placeDao,sqlSession));
     commandMap.put("/place/list", new PlaceListHandler(placeDao));
     
-    commandMap.put("/likedTheme/add", new LikedThemeAddHandler(themeDao));
-    commandMap.put("/likedTheme/delete", new LikedThemeDeleteHandler(themeDao));
+    commandMap.put("/likedTheme/add", new LikedThemeAddHandler(themeDao,sqlSession));
+    commandMap.put("/likedTheme/delete", new LikedThemeDeleteHandler(themeDao,sqlSession));
     commandMap.put("/likedTheme/list", new LikedThemeListHandler(themeDao,userPrompt));
 
-    commandMap.put("/likedUser/add", new LikedUserAddHandler(userDao,userPrompt));
+    commandMap.put("/likedUser/add", new LikedUserAddHandler(userDao,userPrompt,sqlSession));
     commandMap.put("/likedUser/list", new LikedUserListHandler(userDao));
-    commandMap.put("/likedUser/delete", new LikedUserDeleteHandler(userDao,userPrompt));
+    commandMap.put("/likedUser/delete", new LikedUserDeleteHandler(userDao,userPrompt,sqlSession));
     
-    commandMap.put("/report/theme", new ReportAddThemeHandler(reportDao,themePrompt));
-    commandMap.put("/report/user", new ReportAddUserHandler(reportDao,userPrompt));
+    commandMap.put("/report/theme", new ReportAddThemeHandler(reportDao,themePrompt,sqlSession));
+    commandMap.put("/report/user", new ReportAddUserHandler(reportDao,userPrompt,sqlSession));
     commandMap.put("/report/list", new ReportMyListHandler(reportDao));
-    commandMap.put("/report/themeProcess", new ReportThemeProcessingHandler(reportDao,themePrompt,userPrompt));
-    commandMap.put("/report/userProcess", new ReportUserProcessingHandler(reportDao,themePrompt,userPrompt));
+    commandMap.put("/report/themeProcess", new ReportThemeProcessingHandler(reportDao,themePrompt,userPrompt,sqlSession));
+    commandMap.put("/report/userProcess", new ReportUserProcessingHandler(reportDao,themePrompt,userPrompt,sqlSession));
     
-    commandMap.put("/search/searchTheme", new SearchThemeHandler(themeDao));
-    commandMap.put("/search/searchUser", new SearchUserHandler(userDao,themePrompt));
+    commandMap.put("/search/searchTheme", new SearchThemeHandler(themeDao,sqlSession));
+    commandMap.put("/search/searchUser", new SearchUserHandler(userDao,themePrompt,sqlSession));
     commandMap.put("/search/searchHashtag", new SearchHashtagHandler(themeDao,userPrompt));
     
     commandMap.put("/rank/themeRank", new RealTimeRankHandler(themePrompt));

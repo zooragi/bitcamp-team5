@@ -1,11 +1,10 @@
 package com.welcomeToJeju.moj.handler;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
 
 import com.welcomeToJeju.moj.dao.ReportDao;
-import com.welcomeToJeju.moj.domain.Report;
 import com.welcomeToJeju.moj.domain.ReportStatus;
 import com.welcomeToJeju.moj.domain.ReportUser;
 import com.welcomeToJeju.moj.domain.User;
@@ -15,10 +14,11 @@ public class ReportAddUserHandler implements Command {
 
 	ReportDao reportDao;
 	UserPrompt userPrompt;
-	
-  public ReportAddUserHandler(ReportDao reportDao,UserPrompt userPrompt) {
+	SqlSession sqlSession;
+  public ReportAddUserHandler(ReportDao reportDao,UserPrompt userPrompt,SqlSession sqlSession) {
   	this.reportDao = reportDao;
   	this.userPrompt = userPrompt;
+  	this.sqlSession = sqlSession;
   }
 
   @Override
@@ -56,6 +56,7 @@ public class ReportAddUserHandler implements Command {
     reportDao.reportUserInsert(reportUser);
     int count = reportedUser.getReportedCount() + 1;
     userPrompt.increaseReportedCount(reportedUser.getNo(), count);
+    sqlSession.commit();
     System.out.println("유저 신고 완료!");
 
   }
