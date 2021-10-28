@@ -166,6 +166,18 @@
   		jeju_user
   	order by view_cnt desc
   </select>
+  
+  <select id="bringReportedUser" resultMap="UserMap">
+  	select
+  		user_no,
+  		nickname,
+  		reported_cnt  		
+  	from
+  		jeju_user
+  	where
+  		reported_cnt > 0
+  	order by reported_cnt desc
+  </select>
 </mapper>
 
 

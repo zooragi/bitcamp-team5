@@ -2,11 +2,13 @@ package com.welcomeToJeju.moj.handler;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
 import com.welcomeToJeju.moj.dao.ReportDao;
+import com.welcomeToJeju.moj.dao.UserDao;
 import com.welcomeToJeju.moj.domain.ReportUser;
 import com.welcomeToJeju.moj.domain.User;
 import com.welcomeToJeju.util.Prompt;
@@ -15,12 +17,12 @@ public class ReportUserProcessingHandler implements Command {
 
 	ReportDao reportDao;
 	ThemePrompt themePrompt;
-	UserPrompt userPrompt;
+	UserDao userDao;
 	SqlSession sqlSession;
-  public ReportUserProcessingHandler(ReportDao reportDao, ThemePrompt themePrompt,UserPrompt userPrompt,SqlSession sqlSession) {
+  public ReportUserProcessingHandler(ReportDao reportDao, ThemePrompt themePrompt,UserDao userDao,SqlSession sqlSession) {
   	this.reportDao  = reportDao;
   	this.themePrompt = themePrompt;
-  	this.userPrompt = userPrompt;
+  	this.userDao = userDao;
   	this.sqlSession = sqlSession;
   }
 
@@ -38,8 +40,7 @@ public class ReportUserProcessingHandler implements Command {
       return;
     }
 
-    countedUserList = userPrompt.setCountedUser();
-    Collections.sort(countedUserList, (a, b) -> b.getReportedCount() - a.getReportedCount());
+    countedUserList = userDao.bringReportedUser();
 
     for (User user : countedUserList) {
       System.out.printf("%d. [%d회] %s \n", index++, user.getReportedCount(), user.getNickname());
@@ -66,7 +67,10 @@ public class ReportUserProcessingHandler implements Command {
       
       if (isWaring.equalsIgnoreCase("y")) {
       	int count = selectedUser.getWarningCount() + 1;
-        userPrompt.increaseWariningCount(selectedUser.getNo(),count);
+    		HashMap<String,Object> params = new HashMap<>();
+    		params.put("userNo", selectedUser.getNo());
+    		params.put("warnedCnt", count);
+        userDao.updateWarnedCount(params);
         break;
       } else if (isWaring.equalsIgnoreCase("n")) {
         return;

@@ -21,5 +21,5 @@ public interface UserDao {
 	void deleteAllLikedUser(int userNo) throws Exception;
 	List<User> findAllLikedUser(int loginUserNo) throws Exception;
 	List<User> sortUserByViewCount() throws Exception;
-	
+	List<User> bringReportedUser() throws Exception;
 }
