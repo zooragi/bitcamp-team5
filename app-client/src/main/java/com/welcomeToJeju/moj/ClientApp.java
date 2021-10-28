@@ -154,7 +154,7 @@ public class ClientApp {
     
     commandMap.put("/search/searchTheme", new SearchThemeHandler(themeDao,sqlSession));
     commandMap.put("/search/searchUser", new SearchUserHandler(userDao,themePrompt,sqlSession));
-    commandMap.put("/search/searchHashtag", new SearchHashtagHandler(themeDao,userPrompt));
+    commandMap.put("/search/searchHashtag", new SearchHashtagHandler(themeDao,userDao));
     
     commandMap.put("/rank/themeRank", new RealTimeRankHandler(themePrompt));
     commandMap.put("/rank/userRank", new UserRankHandler(userDao));

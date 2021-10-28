@@ -11,11 +11,11 @@ import com.welcomeToJeju.util.Prompt;
 public class SearchHashtagHandler implements Command {
 
 	ThemeDao themeDao;
-	UserPrompt userPrompt;
+	UserDao userDao;
 	
-  public SearchHashtagHandler(ThemeDao themeDao,UserPrompt userPrompt) {
+  public SearchHashtagHandler(ThemeDao themeDao,UserDao userDao) {
   	this.themeDao = themeDao;
-  	this.userPrompt = userPrompt;
+  	this.userDao = userDao;
   }
 
   public void execute(CommandRequest request) throws Exception {
@@ -45,7 +45,7 @@ public class SearchHashtagHandler implements Command {
   
 	private void printList(List<Theme> themeList) throws Exception {
 		for (Theme theme : themeList) {
-			System.out.printf("[%s] 테마명 > %s\n", userPrompt.getByUserNo(theme.getOwner().getNo()) , theme.getTitle());
+			System.out.printf("[%s] 테마명 > %s\n", userDao.findByNo(theme.getOwner().getNo()).getNickname(), theme.getTitle());
 		}
 	}
 }
