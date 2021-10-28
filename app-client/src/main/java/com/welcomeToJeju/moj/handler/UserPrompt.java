@@ -42,14 +42,14 @@ public class UserPrompt {
 		HashMap<String,Object> params = new HashMap<>();
 		params.put("userNo", userNo);
 		params.put("reportedCnt", reportedCnt);
-    userDao.reportedCountUpdate(params);
+    userDao.updateReportedCount(params);
 	}
 	
 	public void increaseWariningCount(int userNo, int warningCnt) throws Exception {
 		HashMap<String,Object> params = new HashMap<>();
 		params.put("userNo", userNo);
 		params.put("warnedCnt", warningCnt);
-    userDao.warnedCountUpdate(params);
+    userDao.updateWarnedCount(params);
 	}
 	
 	public List<User> setCountedUser() throws Exception {
@@ -61,15 +61,6 @@ public class UserPrompt {
 			}
 		}
 		return reportedThemes;
-	}
-	
-	public boolean isAlreadyRegisterLikedUser(User user,ArrayList<User> list) throws Exception {
-		for(User u : list) {
-			if(user.getNo() == u.getNo()) {
-				return true;
-			}
-		}
-		return false;
 	}
 	
 	public String getByUserNo(int userNo) throws Exception {

@@ -29,7 +29,7 @@
 			jeju_user
   </select>
  
- 	<select id="findByEmailAndPassword" resultMap="UserMap" parameterType="map">
+ 	<select id="selectOneByEmailPassword" resultMap="UserMap" parameterType="map">
 	 	select 
 			user_no, 
 			email, 
@@ -53,7 +53,7 @@
     where user_no=#{value}
   </delete>
 
-  <delete id="deleteAllLikedUser" parameterType="int">
+  <delete id="userLikedUserAllDelete" parameterType="int">
 		delete from 
 			jeju_liked_user 
 		where 
@@ -71,7 +71,7 @@
 			user_no=#{no}
   </update>
   
-  <update id="updateViewCount" parameterType="map">
+  <update id="viewCountUpdate" parameterType="map">
 		update 
 			jeju_user 
 		set 
@@ -80,7 +80,7 @@
 			user_no=#{userNo}
   </update>
   
-  <update id="updateReportedCount" parameterType="map">
+  <update id="reportedCountUpdate" parameterType="map">
 		update 
 			jeju_user 
 		set 
@@ -89,7 +89,7 @@
 			user_no=#{userNo}
   </update>
   
-  <update id="updateWarnedCount" parameterType="map">
+  <update id="warnedCountUpdate" parameterType="map">
 		update 
 			jeju_user
 		set 
@@ -128,12 +128,12 @@
 			user_no=#{no}
   </select>
   
-  <select id="insertLikedUser" parameterType="map">
+  <select id="userLikedUserInsert" parameterType="map">
   	Insert into jeju_liked_user(user_no,user_no2) 
   	values(#{loginUserNo},#{likedUserNo})
   </select>
   
-	<delete id="deleteLikedUser" parameterType="map">
+	<delete id="userLikedUserDelete" parameterType="map">
 		delete from 
 			jeju_liked_user 
 		where 
@@ -141,7 +141,7 @@
 			user_no2=#{likedUserNo}
 	</delete>
 	
-  <select id="findAllLikedUser" resultMap="UserMap" parameterType="int">
+  <select id="likedUserFindAll" resultMap="UserMap" parameterType="int">
 	  select
 			ju.user_no,
 			email,

@@ -35,7 +35,7 @@ public class SearchUserHandler implements Command {
   		HashMap<String,Object> params = new HashMap<>();
   		params.put("userNo", user.getNo());
   		params.put("viewCnt", currentViewCount+1);
-      userDao.viewCountUpdate(params);
+      userDao.updateViewCount(params);
       
       System.out.printf("[%s]유저의 테마 목록\n", user.getNickname());
       themePrompt.printMyList(user);

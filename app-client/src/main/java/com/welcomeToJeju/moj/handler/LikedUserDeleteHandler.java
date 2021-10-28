@@ -44,7 +44,7 @@ public class LikedUserDeleteHandler implements Command {
 		HashMap<String,Integer> params = new HashMap<>();
 		params.put("likedUserNo", likedUser.getNo());
 		params.put("loginUserNo", AuthLoginHandler.getLoginUser().getNo());
-		userDao.userLikedUserDelete(params);
+		userDao.deleteLikedUser(params);
 
     System.out.println("좋아하는 유저 삭제 완료!");
 	}

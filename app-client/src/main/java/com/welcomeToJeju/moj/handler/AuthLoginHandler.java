@@ -43,7 +43,7 @@ public class AuthLoginHandler implements Command{
     params.put("email", email);
     params.put("password", password);
     
-    user = userDao.selectOneByEmailPassword(params);
+    user = userDao.findByEmailAndPassword(params);
     
     if(user == null) {
     	System.out.println("이메일과 암호가 일치하는 회원을 찾을 수 없습니다.");

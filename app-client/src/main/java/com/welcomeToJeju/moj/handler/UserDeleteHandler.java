@@ -28,7 +28,7 @@ public class UserDeleteHandler implements Command {
     }
 
     userDao.delete(no);
-    userDao.userLikedUserAllDelete(no);
+    userDao.deleteAllLikedUser(no);
     sqlSession.commit();
     System.out.println("회원 삭제 완료!");
   }
