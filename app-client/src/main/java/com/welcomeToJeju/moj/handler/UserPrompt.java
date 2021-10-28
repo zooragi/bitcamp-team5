@@ -18,20 +18,13 @@ public class UserPrompt {
   	this.userDao = userDao;
   }
 
-  public User findByNo(int userNo) throws Exception {
-  	return userDao.findByNo(userNo);
-  }
+
   
   public User findByName(String userName) throws Exception {
     return userDao.findByName(userName);
   }
   
-	public void increaseReportedCount(int userNo, int reportedCnt) throws Exception {
-		HashMap<String,Object> params = new HashMap<>();
-		params.put("userNo", userNo);
-		params.put("reportedCnt", reportedCnt);
-    userDao.updateReportedCount(params);
-	}
+
 	
 	public void increaseWariningCount(int userNo, int warningCnt) throws Exception {
 		HashMap<String,Object> params = new HashMap<>();

@@ -2,11 +2,13 @@ package com.welcomeToJeju.moj.handler;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
 import com.welcomeToJeju.moj.dao.ReportDao;
+import com.welcomeToJeju.moj.dao.UserDao;
 import com.welcomeToJeju.moj.domain.ReportTheme;
 import com.welcomeToJeju.moj.domain.Theme;
 import com.welcomeToJeju.moj.domain.User;
@@ -16,12 +18,12 @@ public class ReportThemeProcessingHandler implements Command {
 
 	ReportDao reportDao;
 	ThemePrompt themePrompt;
-	UserPrompt userPrompt;
+	UserDao userDao;
 	SqlSession sqlSession;
-  public ReportThemeProcessingHandler(ReportDao reportDao, ThemePrompt themePrompt,UserPrompt userPrompt,SqlSession sqlSession) {
+  public ReportThemeProcessingHandler(ReportDao reportDao, ThemePrompt themePrompt,UserDao userDao,SqlSession sqlSession) {
   	this.reportDao = reportDao;
   	this.themePrompt = themePrompt;
-  	this.userPrompt = userPrompt;
+  	this.userDao = userDao;
   	this.sqlSession = sqlSession;
   }
 
@@ -55,7 +57,7 @@ public class ReportThemeProcessingHandler implements Command {
         continue;
       }
 
-      selectedUser = userPrompt.findByNo(countedThemeList.get(selectedNum-1).getOwner().getNo()); 
+      selectedUser = userDao.findByNo(countedThemeList.get(selectedNum-1).getOwner().getNo()); 
 
       showReportedThemeInfo(reportThemeList,countedThemeList,selectedNum);
 
@@ -67,7 +69,10 @@ public class ReportThemeProcessingHandler implements Command {
 
       if(isWaring.equalsIgnoreCase("y")) {
       	int count = selectedUser.getWarningCount() + 1;
-        userPrompt.increaseWariningCount(selectedUser.getNo(),count);
+    		HashMap<String,Object> params = new HashMap<>();
+    		params.put("userNo", selectedUser.getNo());
+    		params.put("warnedCnt", count);
+        userDao.updateWarnedCount(params);
         break;
       } else if (isWaring.equalsIgnoreCase("n")) {
         return;
