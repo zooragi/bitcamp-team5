@@ -45,8 +45,8 @@ public class PlaceDeleteHandler implements Command{
         return;
       }
 
-      placeDao.commentDelete(place.getNo());
-      placeDao.photoDelete(place.getNo());
+      placeDao.deleteComment(place.getNo());
+      placeDao.deletePhoto(place.getNo());
       placeDao.delete(place.getNo());
       sqlSession.commit();
       System.out.printf("삭제하기 완료!\n");

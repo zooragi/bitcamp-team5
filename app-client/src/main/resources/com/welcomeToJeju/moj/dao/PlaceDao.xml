@@ -35,12 +35,12 @@
 		values(#{themeNo},#{storeName},#{storeAddress},#{xCoord},#{yCoord},#{owner.no})
 	</insert>
 	
-	<insert id="photoInsert" parameterType="map">
+	<insert id="insertPhoto" parameterType="map">
 		Insert into jeju_place_photo(place_no,user_no, file_path)
 		values(#{placeNo},#{userNo},#{filePath})
 	</insert>
 	
-	<insert id="commentInsert" parameterType="map">
+	<insert id="insertComment" parameterType="map">
 		Insert into jeju_place_comment(place_no,user_no, comment)
 		values(#{placeNo},#{userNo},#{comment})
 	</insert>
@@ -49,11 +49,11 @@
   	delete from jeju_place where place_no=#{no} 
   </delete>
 	
-  <delete id="photoDelete" parameterType="int">
+  <delete id="deletePhoto" parameterType="int">
   	delete from jeju_place_photo where place_no=#{no} 
   </delete>
 	
-  <delete id="commentDelete" parameterType="int">
+  <delete id="deleteComment" parameterType="int">
   	delete from jeju_place_comment where place_no=#{no} 
   </delete>
 	

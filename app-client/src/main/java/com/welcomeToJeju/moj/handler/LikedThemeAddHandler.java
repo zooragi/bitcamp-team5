@@ -59,7 +59,7 @@ public class LikedThemeAddHandler implements Command {
 		HashMap<String, String> params = new HashMap<>();
 	  params.put("themeNo",Integer.toString(theme.getNo()));
 	  params.put("userNo",Integer.toString(AuthLoginHandler.getLoginUser().getNo()));
-    themeDao.likedThemeInsert(params);
+    themeDao.insertLikedTheme(params);
     sqlSession.commit();
 
     System.out.println("좋아요 등록 완료!");

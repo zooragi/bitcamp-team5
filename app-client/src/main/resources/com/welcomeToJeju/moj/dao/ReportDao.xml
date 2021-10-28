@@ -110,12 +110,12 @@
 	</select>
 
 
-	<insert id="reportThemeInsert" parameterType="ReportTheme">
+	<insert id="insertreportTheme" parameterType="ReportTheme">
 		Insert into jeju_report_theme(user_no, theme_no, content, report_status_no)
 		values(#{writer.no},#{reportedTheme.no},#{content},#{state.no});
 	</insert>
 	
-	<insert id="reportUserInsert" parameterType="ReportUser">
+	<insert id="insertreportUser" parameterType="ReportUser">
 		Insert into jeju_report_user(user_no, user_no2, content, report_status_no)
 		values(#{writer.no},#{reportedUser.no},#{content},#{state.no});
 	</insert>

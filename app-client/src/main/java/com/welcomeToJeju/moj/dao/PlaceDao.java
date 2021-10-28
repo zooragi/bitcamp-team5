@@ -7,10 +7,10 @@ import com.welcomeToJeju.moj.domain.Place;
 
 public interface PlaceDao {
 	void insert(Place place) throws Exception;
-	void commentInsert(HashMap<String,Object> param) throws Exception;
-	void photoInsert(HashMap<String,Object> param) throws Exception;
+	void insertComment(HashMap<String,Object> param) throws Exception;
+	void insertPhoto(HashMap<String,Object> param) throws Exception;
 	List<Place> findByThemeNo(int themeNo) throws Exception;
 	void delete(int placeNo) throws Exception;
-	void commentDelete(int placeNo) throws Exception;
-	void photoDelete(int placeNo) throws Exception;
+	void deleteComment(int placeNo) throws Exception;
+	void deletePhoto(int placeNo) throws Exception;
 }

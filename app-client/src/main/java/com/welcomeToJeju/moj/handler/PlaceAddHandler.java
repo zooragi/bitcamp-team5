@@ -108,7 +108,7 @@ public class PlaceAddHandler implements Command {
 			param1.put("placeNo", place.getNo());
 			param1.put("userNo", place.getOwner().getNo());
 			param1.put("comment", cmt.getComment());
-			placeDao.commentInsert(param1);
+			placeDao.insertComment(param1);
 		}
 		
 		
@@ -116,7 +116,7 @@ public class PlaceAddHandler implements Command {
 			param2.put("placeNo", place.getNo());
 			param2.put("userNo", place.getOwner().getNo());
 			param2.put("filePath", photo.getFilePath());
-			placeDao.photoInsert(param2);
+			placeDao.insertPhoto(param2);
 		}
     
 		sqlSession.commit();

@@ -55,7 +55,7 @@ public class ReportAddUserHandler implements Command {
     reportUser.setWriter(AuthLoginHandler.getLoginUser());
     reportUser.setState(reportStatus);
     
-    reportDao.reportUserInsert(reportUser);
+    reportDao.insertreportUser(reportUser);
     int count = reportedUser.getReportedCount() + 1;
 		HashMap<String,Object> params = new HashMap<>();
 		params.put("userNo", reportedUser.getNo());

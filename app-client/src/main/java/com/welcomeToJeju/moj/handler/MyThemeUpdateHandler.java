@@ -61,7 +61,7 @@ public class MyThemeUpdateHandler implements Command {
     theme.setPublic(isPublic);
     
     themeDao.update(theme);
-    themeDao.hashtagDelete(theme.getNo());
+    themeDao.deleteHashtag(theme.getNo());
     
 		for(String hashtag : theme.getHashtags()) {
 			HashMap<String,Object> params = new HashMap<>();

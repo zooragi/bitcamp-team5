@@ -40,7 +40,7 @@ public class SearchThemeHandler implements Command {
   		params.put("themeNo", theme.getNo());
   		params.put("viewCnt", currentCount+1);
       
-      themeDao.viewCountUpdate(params);
+      themeDao.updateViewCount(params);
       PlaceHandlerHelper.printPlaceInfo(theme);
       sqlSession.commit();
       

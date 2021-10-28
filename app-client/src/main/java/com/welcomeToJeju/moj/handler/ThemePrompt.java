@@ -44,7 +44,7 @@ public class ThemePrompt {
 		HashMap<String,Object> params = new HashMap<>();
 		params.put("themeNo", themeNo);
 		params.put("reportedCnt", reportedCnt);
-    themeDao.reportedCountUpdate(params);
+    themeDao.updateReportedCount(params);
 	}
 	
 	public List<Theme> setCountedThemes() throws Exception {

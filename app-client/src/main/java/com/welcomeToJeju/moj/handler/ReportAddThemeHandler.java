@@ -56,7 +56,7 @@ public class ReportAddThemeHandler implements Command{
     reportTheme.setWriter(AuthLoginHandler.getLoginUser());
     reportTheme.setState(reportStatus);
     
-    reportDao.reportThemeInsert(reportTheme);
+    reportDao.insertreportTheme(reportTheme);
     
     int count = reportedTheme.getReportedCount() + 1;
     

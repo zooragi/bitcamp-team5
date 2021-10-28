@@ -47,7 +47,7 @@ public class LikedThemeDeleteHandler implements Command {
 		HashMap<String, String> params = new HashMap<>();
 	  params.put("themeNo",Integer.toString(theme.getNo()));
 	  params.put("userNo",Integer.toString(AuthLoginHandler.getLoginUser().getNo()));
-	  themeDao.likedThemeDelete(params);
+	  themeDao.deleteLikedTheme(params);
 	  sqlSession.commit();
 		System.out.println("좋아요 삭제하기 완료!");
 	}
