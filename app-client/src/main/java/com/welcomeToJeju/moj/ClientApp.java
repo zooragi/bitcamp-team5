@@ -51,7 +51,6 @@ import com.welcomeToJeju.moj.handler.UserAddHandler;
 import com.welcomeToJeju.moj.handler.UserDeleteHandler;
 import com.welcomeToJeju.moj.handler.UserDetailHandler;
 import com.welcomeToJeju.moj.handler.UserListHandler;
-import com.welcomeToJeju.moj.handler.UserPrompt;
 import com.welcomeToJeju.moj.handler.UserRankHandler;
 import com.welcomeToJeju.moj.handler.UserUpdateHandler;
 import com.welcomeToJeju.moj.listener.LoginListener;
@@ -112,7 +111,6 @@ public class ClientApp {
   	PlaceDao placeDao = sqlSession.getMapper(PlaceDao.class);
   	ReportDao reportDao = sqlSession.getMapper(ReportDao.class);
   	
-    UserPrompt userPrompt = new UserPrompt(userDao);
   	ThemePrompt themePrompt = new ThemePrompt(themeDao);
   	
     commandMap.put("/user/add", new UserAddHandler(userDao,sqlSession));
@@ -140,11 +138,11 @@ public class ClientApp {
     
     commandMap.put("/likedTheme/add", new LikedThemeAddHandler(themeDao,sqlSession));
     commandMap.put("/likedTheme/delete", new LikedThemeDeleteHandler(themeDao,sqlSession));
-    commandMap.put("/likedTheme/list", new LikedThemeListHandler(themeDao,userPrompt));
+    commandMap.put("/likedTheme/list", new LikedThemeListHandler(themeDao,userDao));
 
-    commandMap.put("/likedUser/add", new LikedUserAddHandler(userDao,userPrompt,sqlSession));
+    commandMap.put("/likedUser/add", new LikedUserAddHandler(userDao,sqlSession));
     commandMap.put("/likedUser/list", new LikedUserListHandler(userDao));
-    commandMap.put("/likedUser/delete", new LikedUserDeleteHandler(userDao,userPrompt,sqlSession));
+    commandMap.put("/likedUser/delete", new LikedUserDeleteHandler(userDao,sqlSession));
     
     commandMap.put("/report/theme", new ReportAddThemeHandler(reportDao,themePrompt,sqlSession));
     commandMap.put("/report/user", new ReportAddUserHandler(reportDao,userDao,sqlSession));

@@ -11,11 +11,9 @@ import com.welcomeToJeju.util.Prompt;
 public class LikedUserAddHandler implements Command {
 
   UserDao userDao;
-  UserPrompt userPrompt;
   SqlSession sqlSession;
-  public LikedUserAddHandler(UserDao userDao,UserPrompt userPrompt,SqlSession sqlSession) {
+  public LikedUserAddHandler(UserDao userDao,SqlSession sqlSession) {
     this.userDao = userDao;
-    this.userPrompt = userPrompt;
     this.sqlSession = sqlSession;
   }
 

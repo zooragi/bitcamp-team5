@@ -5,16 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.welcomeToJeju.moj.dao.ThemeDao;
+import com.welcomeToJeju.moj.dao.UserDao;
 import com.welcomeToJeju.moj.domain.Theme;
 
 public class LikedThemeListHandler implements Command{
 
   ThemeDao themeDao;
-  UserPrompt userPrompt;
-
-  public LikedThemeListHandler(ThemeDao themeDao,UserPrompt userPrompt) {
+  UserDao userDao;
+  public LikedThemeListHandler(ThemeDao themeDao,UserDao userDao) {
     this.themeDao = themeDao;
-    this.userPrompt = userPrompt;
+    this.userDao = userDao;
   }
 
   @Override
@@ -27,7 +27,7 @@ public class LikedThemeListHandler implements Command{
   }
 	private void printList(List<Theme> themeList) throws Exception {
 		for (Theme theme : themeList) {
-			System.out.printf("[%s] 테마명 > %s\n", userPrompt.getByUserNo(theme.getOwner().getNo()) , theme.getTitle());
+			System.out.printf("[%s] 테마명 > %s\n", userDao.findByNo(theme.getOwner().getNo()).getNickname() , theme.getTitle());
 		}
 	}
 }

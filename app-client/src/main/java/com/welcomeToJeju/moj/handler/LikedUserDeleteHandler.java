@@ -11,11 +11,9 @@ import com.welcomeToJeju.util.Prompt;
 public class LikedUserDeleteHandler implements Command {
 
   UserDao userDao;
-  UserPrompt userPrompt;
   SqlSession sqlSession;
-  public LikedUserDeleteHandler(UserDao userDao,UserPrompt userPrompt,SqlSession sqlSession) {
+  public LikedUserDeleteHandler(UserDao userDao,SqlSession sqlSession) {
     this.userDao = userDao;
-    this.userPrompt = userPrompt;
     this.sqlSession = sqlSession;
   }
 
