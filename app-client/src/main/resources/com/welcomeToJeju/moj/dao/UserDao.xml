@@ -156,6 +156,16 @@
 			(select jlu.user_no2 from jeju_liked_user jlu where user_no=#{no}) lu
 		on lu.user_no2 = ju.user_no
   </select>
+  
+  <select id="sortUserByViewCount" resultMap="UserMap">
+  	select
+  		user_no,
+  		nickname,
+  		view_cnt
+  	from
+  		jeju_user
+  	order by view_cnt desc
+  </select>
 </mapper>
 
 

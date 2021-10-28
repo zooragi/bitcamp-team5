@@ -157,7 +157,7 @@ public class ClientApp {
     commandMap.put("/search/searchHashtag", new SearchHashtagHandler(themeDao,userPrompt));
     
     commandMap.put("/rank/themeRank", new RealTimeRankHandler(themePrompt));
-    commandMap.put("/rank/userRank", new UserRankHandler(userPrompt));
+    commandMap.put("/rank/userRank", new UserRankHandler(userDao));
 
   }
   

@@ -17,18 +17,6 @@ public class UserPrompt {
   public UserPrompt(UserDao userDao) {
   	this.userDao = userDao;
   }
-	
-	public ArrayList<User> rank() throws Exception {
-		ArrayList<User> userList = (ArrayList<User>) userDao.findAll();
-		ArrayList<User> ascThemeList = new ArrayList<>();
-		for (User user : userList) {
-			if(user.getNickname().equals("관리자")) continue;
-				ascThemeList.add(user);
-		}
-
-		Collections.sort(ascThemeList);
-		return ascThemeList;
-	}
 
   public User findByNo(int userNo) throws Exception {
   	return userDao.findByNo(userNo);

@@ -20,5 +20,6 @@ public interface UserDao {
 	void deleteLikedUser(HashMap<String,Integer> params) throws Exception;
 	void deleteAllLikedUser(int userNo) throws Exception;
 	List<User> findAllLikedUser(int loginUserNo) throws Exception;
+	List<User> sortUserByViewCount() throws Exception;
 	
 }
