@@ -1,10 +1,12 @@
 package com.welcomeToJeju.moj.handler;
 
 import java.sql.Date;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.SqlSession;
 
 import com.welcomeToJeju.moj.dao.ReportDao;
+import com.welcomeToJeju.moj.dao.UserDao;
 import com.welcomeToJeju.moj.domain.ReportStatus;
 import com.welcomeToJeju.moj.domain.ReportUser;
 import com.welcomeToJeju.moj.domain.User;
@@ -13,11 +15,11 @@ import com.welcomeToJeju.util.Prompt;
 public class ReportAddUserHandler implements Command {
 
 	ReportDao reportDao;
-	UserPrompt userPrompt;
+	UserDao userDao;
 	SqlSession sqlSession;
-  public ReportAddUserHandler(ReportDao reportDao,UserPrompt userPrompt,SqlSession sqlSession) {
+  public ReportAddUserHandler(ReportDao reportDao,UserDao userDao,SqlSession sqlSession) {
   	this.reportDao = reportDao;
-  	this.userPrompt = userPrompt;
+  	this.userDao = userDao;
   	this.sqlSession = sqlSession;
   }
 
@@ -29,7 +31,7 @@ public class ReportAddUserHandler implements Command {
     ReportUser reportUser = new ReportUser();
 
     String userNickName = Prompt.inputString("신고할 유저 닉네임 >");
-    User reportedUser = userPrompt.findByName(userNickName);
+    User reportedUser = userDao.findByName(userNickName);
     
     if (reportedUser == null) {
       System.out.println("등록된 유저 없음!");
@@ -55,7 +57,10 @@ public class ReportAddUserHandler implements Command {
     
     reportDao.reportUserInsert(reportUser);
     int count = reportedUser.getReportedCount() + 1;
-    userPrompt.increaseReportedCount(reportedUser.getNo(), count);
+		HashMap<String,Object> params = new HashMap<>();
+		params.put("userNo", reportedUser.getNo());
+		params.put("reportedCnt", count);
+    userDao.updateReportedCount(params);
     sqlSession.commit();
     System.out.println("유저 신고 완료!");
 

@@ -147,7 +147,7 @@ public class ClientApp {
     commandMap.put("/likedUser/delete", new LikedUserDeleteHandler(userDao,userPrompt,sqlSession));
     
     commandMap.put("/report/theme", new ReportAddThemeHandler(reportDao,themePrompt,sqlSession));
-    commandMap.put("/report/user", new ReportAddUserHandler(reportDao,userPrompt,sqlSession));
+    commandMap.put("/report/user", new ReportAddUserHandler(reportDao,userDao,sqlSession));
     commandMap.put("/report/list", new ReportMyListHandler(reportDao));
     commandMap.put("/report/themeProcess", new ReportThemeProcessingHandler(reportDao,themePrompt,userDao,sqlSession));
     commandMap.put("/report/userProcess", new ReportUserProcessingHandler(reportDao,themePrompt,userPrompt,sqlSession));
