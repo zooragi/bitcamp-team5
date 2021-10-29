@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.welcomeToJeju.moj.domain.Category;
 import com.welcomeToJeju.moj.domain.Theme;
+import com.welcomeToJeju.moj.domain.User;
 
 public interface ThemeDao {
 	void insert(Theme theme) throws Exception;
@@ -23,5 +24,6 @@ public interface ThemeDao {
 	void deleteLikedTheme(HashMap<String, String> params) throws Exception;
 	List<Theme> likedThemeList(int userNo) throws Exception;
 	List<Category> findAllCategory() throws Exception;
+	List<Theme> sortThemeByViewCount() throws Exception;
 	List<Theme> bringReportedUser() throws Exception;
 }

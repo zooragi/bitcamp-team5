@@ -46,7 +46,6 @@ import com.welcomeToJeju.moj.handler.ReportUserProcessingHandler;
 import com.welcomeToJeju.moj.handler.SearchHashtagHandler;
 import com.welcomeToJeju.moj.handler.SearchThemeHandler;
 import com.welcomeToJeju.moj.handler.SearchUserHandler;
-import com.welcomeToJeju.moj.handler.ThemePrompt;
 import com.welcomeToJeju.moj.handler.UserAddHandler;
 import com.welcomeToJeju.moj.handler.UserDeleteHandler;
 import com.welcomeToJeju.moj.handler.UserDetailHandler;
@@ -111,7 +110,6 @@ public class ClientApp {
   	PlaceDao placeDao = sqlSession.getMapper(PlaceDao.class);
   	ReportDao reportDao = sqlSession.getMapper(ReportDao.class);
   	
-  	ThemePrompt themePrompt = new ThemePrompt(themeDao);
   	
     commandMap.put("/user/add", new UserAddHandler(userDao,sqlSession));
     commandMap.put("/user/list", new UserListHandler(userDao));
@@ -151,10 +149,10 @@ public class ClientApp {
     commandMap.put("/report/userProcess", new ReportUserProcessingHandler(reportDao,userDao,sqlSession));
     
     commandMap.put("/search/searchTheme", new SearchThemeHandler(themeDao,sqlSession));
-    commandMap.put("/search/searchUser", new SearchUserHandler(userDao,themePrompt,sqlSession));
+    commandMap.put("/search/searchUser", new SearchUserHandler(userDao,themeDao,sqlSession));
     commandMap.put("/search/searchHashtag", new SearchHashtagHandler(themeDao,userDao));
     
-    commandMap.put("/rank/themeRank", new RealTimeRankHandler(themePrompt));
+    commandMap.put("/rank/themeRank", new RealTimeRankHandler(themeDao));
     commandMap.put("/rank/userRank", new UserRankHandler(userDao));
 
   }

@@ -1,20 +1,23 @@
 package com.welcomeToJeju.moj.handler;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.welcomeToJeju.moj.dao.ThemeDao;
 import com.welcomeToJeju.moj.dao.UserDao;
+import com.welcomeToJeju.moj.domain.Theme;
 import com.welcomeToJeju.moj.domain.User;
 import com.welcomeToJeju.util.Prompt;
 
 public class SearchUserHandler implements Command {
 	UserDao userDao;
-	ThemePrompt themePrompt;
+	ThemeDao themeDao;
 	SqlSession sqlSession;
-  public SearchUserHandler(UserDao userDao,ThemePrompt themePrompt,SqlSession sqlSession) {
+  public SearchUserHandler(UserDao userDao,ThemeDao themeDao,SqlSession sqlSession) {
   	this.userDao = userDao;
-  	this.themePrompt = themePrompt;
+  	this.themeDao = themeDao;
   	this.sqlSession = sqlSession;
   }
 
@@ -38,7 +41,7 @@ public class SearchUserHandler implements Command {
       userDao.updateViewCount(params);
       
       System.out.printf("[%s]유저의 테마 목록\n", user.getNickname());
-      themePrompt.printMyList(user);
+      printMyList(user);
       System.out.println();
       
       sqlSession.commit();
@@ -46,4 +49,11 @@ public class SearchUserHandler implements Command {
       return;
     }
   }
+  
+	private void printMyList(User user) throws Exception {
+		ArrayList<Theme> themeList = (ArrayList<Theme>) themeDao.findByUserNo(user.getNo());
+		for(Theme theme : themeList) {
+				System.out.printf("테마 > %s\n",theme.getTitle());
+			}
+	}
 }
