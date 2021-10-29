@@ -1,12 +1,12 @@
 package com.welcomeToJeju.moj.handler;
 
 import java.sql.Date;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.SqlSession;
 
 import com.welcomeToJeju.moj.dao.ReportDao;
-import com.welcomeToJeju.moj.domain.Report;
+import com.welcomeToJeju.moj.dao.ThemeDao;
 import com.welcomeToJeju.moj.domain.ReportStatus;
 import com.welcomeToJeju.moj.domain.ReportTheme;
 import com.welcomeToJeju.moj.domain.Theme;
@@ -15,11 +15,11 @@ import com.welcomeToJeju.util.Prompt;
 public class ReportAddThemeHandler implements Command{
 
 	ReportDao reportDao;
-	ThemePrompt themePrompt;
+	ThemeDao themeDao;
 	SqlSession sqlSession;
-  public ReportAddThemeHandler(ReportDao reportDao,ThemePrompt themePrompt,SqlSession sqlSession) {
+  public ReportAddThemeHandler(ReportDao reportDao,ThemeDao themeDao,SqlSession sqlSession) {
   	this.reportDao = reportDao;
-  	this.themePrompt = themePrompt;
+  	this.themeDao = themeDao;
   	this.sqlSession = sqlSession;
   }
 
@@ -32,7 +32,7 @@ public class ReportAddThemeHandler implements Command{
     ReportTheme reportTheme = new ReportTheme();
     
     String themeTitle = Prompt.inputString("신고할 테마 이름 > ");
-    Theme reportedTheme = themePrompt.findByTitle(themeTitle);
+    Theme reportedTheme = themeDao.findByTitle(themeTitle);
     
     if(reportedTheme == null) {
       System.out.println("등록된 테마 없음!");
@@ -59,8 +59,10 @@ public class ReportAddThemeHandler implements Command{
     reportDao.insertreportTheme(reportTheme);
     
     int count = reportedTheme.getReportedCount() + 1;
-    
-    themePrompt.increaseReportedCount(reportedTheme.getNo(),count);
+		HashMap<String,Object> params = new HashMap<>();
+		params.put("themeNo", reportedTheme.getNo());
+		params.put("reportedCnt", count);
+    themeDao.updateReportedCount(params);
     sqlSession.commit();
     
     System.out.println("테마 신고 완료!");
