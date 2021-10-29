@@ -1,13 +1,13 @@
 package com.welcomeToJeju.moj.handler;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
 import com.welcomeToJeju.moj.dao.ReportDao;
+import com.welcomeToJeju.moj.dao.ThemeDao;
 import com.welcomeToJeju.moj.dao.UserDao;
 import com.welcomeToJeju.moj.domain.ReportUser;
 import com.welcomeToJeju.moj.domain.User;
@@ -16,12 +16,10 @@ import com.welcomeToJeju.util.Prompt;
 public class ReportUserProcessingHandler implements Command {
 
 	ReportDao reportDao;
-	ThemePrompt themePrompt;
 	UserDao userDao;
 	SqlSession sqlSession;
-  public ReportUserProcessingHandler(ReportDao reportDao, ThemePrompt themePrompt,UserDao userDao,SqlSession sqlSession) {
+  public ReportUserProcessingHandler(ReportDao reportDao,UserDao userDao,SqlSession sqlSession) {
   	this.reportDao  = reportDao;
-  	this.themePrompt = themePrompt;
   	this.userDao = userDao;
   	this.sqlSession = sqlSession;
   }
