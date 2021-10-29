@@ -40,7 +40,14 @@ public class LikedUserAddHandler implements Command {
 		HashMap<String,Integer> params = new HashMap<>();
 		params.put("likedUserNo", likedUser.getNo());
 		params.put("loginUserNo", AuthLoginHandler.getLoginUser().getNo());
-		userDao.insertLikedUser(params);
+    try {
+    	userDao.insertLikedUser(params);
+    } catch (Exception e) {
+    	System.out.println("이미 등록된 유저!");
+    	return;
+    }
+		
+		
 		sqlSession.commit();
     System.out.println("좋아하는 유저 등록 완료!");
 
