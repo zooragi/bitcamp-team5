@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
 import com.welcomeToJeju.moj.dao.ReportDao;
+import com.welcomeToJeju.moj.dao.ThemeDao;
 import com.welcomeToJeju.moj.dao.UserDao;
 import com.welcomeToJeju.moj.domain.ReportTheme;
 import com.welcomeToJeju.moj.domain.Theme;
@@ -17,12 +18,12 @@ import com.welcomeToJeju.util.Prompt;
 public class ReportThemeProcessingHandler implements Command {
 
 	ReportDao reportDao;
-	ThemePrompt themePrompt;
+	ThemeDao themeDao;
 	UserDao userDao;
 	SqlSession sqlSession;
-  public ReportThemeProcessingHandler(ReportDao reportDao, ThemePrompt themePrompt,UserDao userDao,SqlSession sqlSession) {
+  public ReportThemeProcessingHandler(ReportDao reportDao, ThemeDao themeDao,UserDao userDao,SqlSession sqlSession) {
   	this.reportDao = reportDao;
-  	this.themePrompt = themePrompt;
+  	this.themeDao = themeDao;
   	this.userDao = userDao;
   	this.sqlSession = sqlSession;
   }
@@ -41,8 +42,7 @@ public class ReportThemeProcessingHandler implements Command {
       return;
     }
 
-    countedThemeList = themePrompt.setCountedThemes();
-    Collections.sort(countedThemeList, (a,b) -> b.getReportedCount() - a.getReportedCount());
+    countedThemeList = themeDao.bringReportedUser();
 
     for(Theme theme : countedThemeList) {
       System.out.printf("%d. [%d회] %s \n", index++,theme.getReportedCount(), theme.getTitle());

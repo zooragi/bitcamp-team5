@@ -22,5 +22,6 @@ public interface ThemeDao {
 	void insertLikedTheme(HashMap<String, String> params) throws Exception;
 	void deleteLikedTheme(HashMap<String, String> params) throws Exception;
 	List<Theme> likedThemeList(int userNo) throws Exception;
-	public List<Category> findAllCategory() throws Exception;
+	List<Category> findAllCategory() throws Exception;
+	List<Theme> bringReportedUser() throws Exception;
 }

@@ -159,6 +159,18 @@
 			lt.user_no=#{no}
   </select>
  
+ 	<select id="bringReportedUser" resultMap="ThemeMap">
+ 		select
+ 			theme_no,
+ 			title,
+ 			reported_cnt
+ 		from 
+ 			jeju_theme
+ 		where
+ 			reported_cnt > 0
+ 		order by reported_cnt desc
+ 	</select>
+ 
 	<insert id="insert" parameterType="theme"
 		useGeneratedKeys="true" keyColumn="theme_no" keyProperty="no">
 		Insert into jeju_theme(user_no,title,public,category_no)
