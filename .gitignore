@@ -1,7 +1,15 @@
 app/.project
+app-client/.project
+app-server/.project
 
 app/.classpath
+app-client/.classpath
+app-server/.classpath
 
 app/.settings/
+app-client/.settings/
+app-server/.settings/
 
 app/bin/
+app-client/bin/
+app-server/bin/

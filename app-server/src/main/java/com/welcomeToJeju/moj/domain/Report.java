@@ -15,11 +15,11 @@ public class Report {
   private Date registeredDate;
 
   @Override
-	public String toString() {
-		return "Report [no=" + no + ", content=" + content + ", writer=" + writer + ", state=" + state + ", registeredDate="
-				+ registeredDate + "]";
-	}
-	public String getState() {
+  public String toString() {
+    return "Report [no=" + no + ", content=" + content + ", writer=" + writer + ", state=" + state + ", registeredDate="
+        + registeredDate + "]";
+  }
+  public String getState() {
     return state;
   }
   public void setState(String state) {

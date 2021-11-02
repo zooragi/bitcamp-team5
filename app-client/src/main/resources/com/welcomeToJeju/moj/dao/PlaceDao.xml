@@ -4,80 +4,96 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.welcomeToJeju.moj.dao.PlaceDao">
-	<resultMap type="Place" id="PlaceMap">
-		<id column="place_no" property="no"/>
-		<result column="theme_no" property="themeNo"/>
-		<result column="place_name" property="storeName"/>
-		<result column="place_address" property="storeAddress"/>
-		<result column="x_coord" property="xCoord"/>
-		<result column="y_coord" property="yCoord"/>
-		
+  
+  <resultMap type="Place" id="PlaceMap">
+    <id column="place_no" property="no"/> 
+    <result column="place_name" property="storeName"/>
+    <result column="place_address" property="storeAddress"/>
+    <result column="x_coord" property="xCoord"/>
+    <result column="y_coord" property="yCoord"/>
+    
     <association property="owner" javaType="User">
-  	  <id column="owner_no" property="no"/>
-	    <result column="owner_nickname" property="nickname"/>
-	    <result column="owner_email" property="email"/>
+      <id column="owner_no" property="no"/>
+      <result column="owner_email" property="email"/>
+      <result column="owner_nickname" property="nickName"/>
     </association>
-		
+    
+    <association property="theme" javaType="Theme">
+      <id column="theme_no" property="no"/>
+      <result column="theme_title" property="title"/>
+    </association>
+    
     <collection property="photos" ofType="Photo">
-    	<id column="place_photo_no" property="no"/>
-	    <result column="file_path" property="filePath"/>
+      <id column="place_photo_no" property="no"/>
+      <result column="file_path" property="filePath"/>
     </collection>
     
     <collection property="comments" ofType="Comment">
       <id column="comment_no" property="no"/>
-	    <result column="comment" property="comment"/>
+      <result column="place_no" property="placeNo"/>
+      <result column="user_no" property="userNo"/>
+      <result column="comment" property="comment"/>
     </collection>
-	</resultMap>
-	
-	<insert id="insert" parameterType="place"
-	useGeneratedKeys="true" keyColumn="place_no" keyProperty="no">
-		Insert into jeju_place(theme_no, place_name, place_address, x_coord, y_coord, user_no)
-		values(#{themeNo},#{storeName},#{storeAddress},#{xCoord},#{yCoord},#{owner.no})
-	</insert>
-	
-	<insert id="insertPhoto" parameterType="map">
-		Insert into jeju_place_photo(place_no,user_no, file_path)
-		values(#{placeNo},#{userNo},#{filePath})
-	</insert>
-	
-	<insert id="insertComment" parameterType="map">
-		Insert into jeju_place_comment(place_no,user_no, comment)
-		values(#{placeNo},#{userNo},#{comment})
-	</insert>
-	
+  </resultMap>
+  
+  <insert id="insert" parameterType="Place"
+    useGeneratedKeys="true" keyColumn="place_no" keyProperty="no">
+    insert into jeju_place(theme_no,place_name,place_address,x_coord,y_coord,user_no)
+    values(#{theme.no},#{storeName},#{storeAddress},#{xCoord},#{yCoord},#{owner.no})
+  </insert>
+  
+  <insert id="insertPhoto" parameterType="Map">
+    insert into jeju_place_photo(place_no,file_path,user_no)
+    values(#{placeNo},#{filePath},#{userNo})
+  </insert>
+  
+  <insert id="insertComment" parameterType="Map">
+    insert into jeju_place_comment(place_no,comment,user_no)
+    values(#{placeNo},#{comment},#{userNo})
+  </insert>
+  
   <delete id="delete" parameterType="int">
-  	delete from jeju_place where place_no=#{no} 
+    delete from jeju_place
+    where place_no=#{no}
   </delete>
-	
+  
   <delete id="deletePhoto" parameterType="int">
-  	delete from jeju_place_photo where place_no=#{no} 
+    delete from jeju_place_photo
+    where place_no=#{no}
   </delete>
-	
+  
   <delete id="deleteComment" parameterType="int">
-  	delete from jeju_place_comment where place_no=#{no} 
+    delete from jeju_place_comment
+    where place_no=#{no}
   </delete>
-	
-	<select id="findByThemeNo" resultMap="PlaceMap" parameterType="int">
-		select
-			p.place_no,
-			p.theme_no,
-			p.place_name,
-			p.place_address,
-			p.x_coord,
-			p.y_coord,
-			p.user_no owner_no,
-			pp.file_path,
-			pp.place_photo_no,
-			c.comment,
-			c.comment_no
-		from
-			jeju_place p
-			join jeju_place_photo pp on p.place_no=pp.place_no
-			join jeju_place_comment c on p.place_no=c.place_no
-		where
-			theme_no=#{no}
-	</select>
-
-
+  
+  <select id="findByThemeNo" resultMap="PlaceMap" parameterType="int">
+    select
+      p.place_no,
+      p.theme_no,
+      p.place_name,
+      p.place_address,
+      p.x_coord,
+      p.y_coord,
+      p.user_no owner_no,
+      pp.file_path,
+      pp.place_photo_no,
+      c.comment,
+      c.comment_no
+    from
+      jeju_place p
+      join jeju_place_photo pp on p.place_no=pp.place_no
+      join jeju_place_comment c on p.place_no=c.place_no
+    where
+      theme_no=#{no}
+  </select>
+  
+  <!-- 
+  <select id="findAll" resultMap="PlaceMap">
+  </select>
+  
+  <select id="findByThemeNo" resultMap="PlaceMap" parameterType="int">
+  </select>
+   -->
+  
 </mapper>
-

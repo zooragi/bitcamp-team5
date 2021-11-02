@@ -109,12 +109,12 @@ public class Theme implements Comparable<Theme>{
     this.no = no;
   }
 
-	public List<Integer> getLikedThemeUserNo() {
-		return likedThemeUserNo;
-	}
+  public List<Integer> getLikedThemeUserNo() {
+    return likedThemeUserNo;
+  }
 
-	public void setLikedThemeUserNo(List<Integer> likedThemeUserNo) {
-		this.likedThemeUserNo = likedThemeUserNo;
-	}
+  public void setLikedThemeUserNo(List<Integer> likedThemeUserNo) {
+    this.likedThemeUserNo = likedThemeUserNo;
+  }
 
 }

@@ -10,7 +10,6 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.welcomeToJeju.moj.domain.Report;
@@ -38,7 +37,7 @@ public abstract class JsonDataTable<T> {
   }
 
   @SuppressWarnings("unchecked")
-	private void loadObjects() {
+  private void loadObjects() {
 
     try (BufferedReader in = new BufferedReader(
         new FileReader(filename, Charset.forName("UTF-8")))) {
@@ -47,33 +46,33 @@ public abstract class JsonDataTable<T> {
       while ((str = in.readLine()) != null) { // 파일 전체를 읽는다.
         strBuilder.append(str);
       }
-      
+
       if(this.toString().contains("ReportTable")) {
         Collection<Report> reportChildList = Request.getReportInheritedChildObjects(strBuilder.toString(), "reportedThemeTitle");
         ArrayList<Report> reportThemeList = new ArrayList<>();
         ArrayList<Report> reportUserList = new ArrayList<>();
         for(Report report : reportChildList) {
-        	if(report.getClass().getName().contains("Theme")) {
-        		if(((ReportTheme) report).getReportedThemeTitle().length() != 0){
-        			reportThemeList.add(report);
-        		}
-        	}
+          if(report.getClass().getName().contains("Theme")) {
+            if(((ReportTheme) report).getReportedThemeTitle().length() != 0){
+              reportThemeList.add(report);
+            }
+          }
         }
         for(Report report : reportChildList) {
-        	if(report.getClass().getName().contains("User")) {
-        		if(((ReportUser) report).getReportedUserName() != null){
-        			reportUserList.add(report);
-        		}
-        	}
+          if(report.getClass().getName().contains("User")) {
+            if(((ReportUser) report).getReportedUserName() != null){
+              reportUserList.add(report);
+            }
+          }
         }
-        
+
         list.addAll((Collection<? extends T>) reportThemeList);
         list.addAll((Collection<? extends T>) reportUserList);
-        
+
       } else {
-      	Type type = TypeToken.getParameterized(Collection.class, elementType).getType(); 
-      	Collection<T> collection = new Gson().fromJson(strBuilder.toString(), type);
-      	list.addAll(collection);
+        Type type = TypeToken.getParameterized(Collection.class, elementType).getType(); 
+        Collection<T> collection = new Gson().fromJson(strBuilder.toString(), type);
+        list.addAll(collection);
       }
 
       System.out.printf("%s 데이터 로딩 완료!\n", filename);
@@ -88,7 +87,7 @@ public abstract class JsonDataTable<T> {
         new BufferedWriter(
             new FileWriter(filename, Charset.forName("UTF-8"))))) {
 
-    	out.print(new Gson().toJson(list));
+      out.print(new Gson().toJson(list));
 
       System.out.printf("%s 데이터 출력 완료!\n", filename);
 

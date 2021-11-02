@@ -5,19 +5,19 @@ public class ReportUser extends Report{
   int reportedCount;
 
   @Override
-	public String toString() {
-		return "ReportUser [reportedUserName=" + reportedUserName + ", reportedCount=" + reportedCount + "]";
-	}
+  public String toString() {
+    return "ReportUser [reportedUserName=" + reportedUserName + ", reportedCount=" + reportedCount + "]";
+  }
 
-	public String getReportedUserName() {
-		return reportedUserName;
-	}
+  public String getReportedUserName() {
+    return reportedUserName;
+  }
 
-	public void setReportedUserName(String reportedUserName) {
-		this.reportedUserName = reportedUserName;
-	}
+  public void setReportedUserName(String reportedUserName) {
+    this.reportedUserName = reportedUserName;
+  }
 
-	public int getReportedCount() {
+  public int getReportedCount() {
     return reportedCount;
   }
 

@@ -4,127 +4,120 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.welcomeToJeju.moj.dao.ReportDao">
+
+  <!-- 테마 신고 -->
+  <resultMap type="ReportTheme" id="ReportThemeMap">
+    <id column="report_theme_no" property="no" />
+    <result column="content" property="content" />
+    <result column="created_dt" property="registeredDate" />
+
+    <association property="writer" javaType="user">
+      <id column="writer_no" property="no" />
+      <result column="writer_email" property="email" />
+      <result column="writer_nickname" property="nickname" />
+    </association>
+
+    <association property="reportedTheme" javaType="theme">
+      <id column="reported_theme_no" property="no" />
+      <result column="reported_theme_title" property="title" />
+    </association>
+
+    <association property="status" javaType="ReportStatus">
+      <id column="status_no" property="no" />
+      <result column="status_title" property="title" />
+    </association>
+  </resultMap>
+
+  <resultMap type="ReportStatus" id="ReportStatusMap">
+    <id column="report_status_no" property="no" />
+    <result column="report_status_title" property="title" />
+  </resultMap>
+
 	<!-- 유저 신고 -->
-	<resultMap type="ReportUser" id="ReportUserMap">
-		<id column="report_user_no" property="no" />
+  <resultMap type="ReportUser" id="ReportUserMap">
+    <id column="report_user_no" property="no" />
 		<result column="content" property="content" />
 		<result column="created_dt" property="registeredDate" />
 
 		<association property="writer" javaType="user">
 			<id column="writer_no" property="no" />
-			<result column="writer_nickname" property="nickname" />
 			<result column="writer_email" property="email" />
+			<result column="writer_nickname" property="nickname" />
 		</association>
 
 		<association property="reportedUser" javaType="user">
 			<id column="reported_user_no" property="no" />
-			<result column="reported_user_nickname" property="nickname" />
 			<result column="reported_user_email" property="email" />
+			<result column="reported_user_nickname" property="nickname" />
 		</association>
 
-		<association property="state" javaType="ReportStatus">
+		<association property="status" javaType="ReportStatus">
 			<id column="status_no" property="no" />
 			<result column="status_title" property="title" />
 		</association>
 	</resultMap>
-
-	<!-- 테마 신고 -->
-	<resultMap type="ReportTheme" id="ReportThemeMap">
-		<id column="report_theme_no" property="no" />
-		<result column="content" property="content" />
-		<result column="created_dt" property="registeredDate" />
-
-		<association property="writer" javaType="user">
-			<id column="writer_no" property="no" />
-			<result column="writer_nickname" property="nickname" />
-			<result column="writer_email" property="email" />
-		</association>
-
-		<association property="reportedTheme" javaType="theme">
-			<id column="reported_theme_no" property="no" />
-			<result column="reported_theme_title" property="title" />
-		</association>
-
-		<association property="state" javaType="ReportStatus">
-			<id column="status_no" property="no" />
-			<result column="status_title" property="title" />
-		</association>
-	</resultMap>
-
-	<resultMap type="ReportStatus" id="ReportStatusMap">
-		<id column="report_status_no" property="no" />
-		<result column="report_status_title" property="title" />
-	</resultMap>
-
-	<sql id="themeReportSelect">
-		select
-			content,
-			ju.user_no writer_no,
-			ju.nickname writer_nickname,
-			ju.email writer_email,
-			jt.theme_no reported_theme_no,
-			jt.title reported_theme_title,
-			jrs.title status_title,
-			jrt.created_dt 
-		from
-			jeju_report_theme jrt
-			join jeju_user ju on ju.user_no=jrt.user_no
-			join jeju_theme jt on jt.theme_no=jrt.theme_no
-			join jeju_report_status jrs on jrs.report_status_no=jrt.report_status_no
-	</sql>
-
-	<sql id="userReportSelect">
-		select
-			content,
-			ju.user_no writer_no,
-			ju.nickname writer_nickname,
-			ju.email writer_email,
-			ju2.user_no reported_user_no,
-			ju2.nickname reported_user_nickname,
-			ju2.email reported_user_email,
-			jrs.title status_title,
-			jru.created_dt 
-		from
-			jeju_report_user jru
-			join jeju_user ju on ju.user_no=jru.user_no
-			join jeju_user ju2 on ju2.user_no=jru.user_no2
-			join jeju_report_status jrs on jrs.report_status_no=jru.report_status_no
-	</sql>
-
-	<select id="userReportAll" resultMap="ReportUserMap">
-		<include refid="userReportSelect"/>	
-	</select>
 	
-	<select id="themeReportAll" resultMap="ReportThemeMap">
-		<include refid="themeReportSelect"/>
-	</select>
+	<sql id="selectThemeReport">
+    select
+      content,
+      ju.user_no writer_no,
+      ju.nickname writer_nickname,
+      ju.email writer_email,
+      jt.theme_no reported_theme_no,
+      jt.title reported_theme_title,
+      jrs.title status_title,
+      jrt.created_dt 
+    from
+      jeju_report_theme jrt
+      join jeju_user ju on ju.user_no=jrt.user_no
+      join jeju_theme jt on jt.theme_no=jrt.theme_no
+      join jeju_report_status jrs on jrs.report_status_no=jrt.report_status_no
+  </sql>
 
-	<select id="userReportFindByUserNo" resultMap="ReportUserMap" parameterType="int">
-		<include refid="userReportSelect"/>	
-		where jru.user_no=#{no}
-	</select>
+	<sql id="selectUserReport">
+    select
+      content,
+      ju.user_no writer_no,
+      ju.nickname writer_nickname,
+      ju.email writer_email,
+      ju2.user_no reported_user_no,
+      ju2.nickname reported_user_nickname,
+      ju2.email reported_user_email,
+      jrs.title status_title,
+      jru.created_dt 
+    from
+      jeju_report_user jru
+      join jeju_user ju on ju.user_no=jru.user_no
+      join jeju_user ju2 on ju2.user_no=jru.user_no2
+      join jeju_report_status jrs on jrs.report_status_no=jru.report_status_no
+  </sql>
+  
+  <insert id="insertReportTheme" parameterType="ReportTheme">
+    Insert into jeju_report_theme(user_no, theme_no, content, report_status_no)
+    values(#{writer.no},#{reportedTheme.no},#{content},#{status.no});
+  </insert>
+  
+  <select id="findAllReportTheme" resultMap="ReportThemeMap">
+    <include refid="selectThemeReport"/>
+  </select>
 
-	<select id="themeReportFindByUserNo" resultMap="ReportThemeMap" parameterType="int">
-		<include refid="themeReportSelect"/>	
-		where jrt.user_no=#{no}
-	</select>
-
-
-	<insert id="insertreportTheme" parameterType="ReportTheme">
-		Insert into jeju_report_theme(user_no, theme_no, content, report_status_no)
-		values(#{writer.no},#{reportedTheme.no},#{content},#{state.no});
-	</insert>
+  <select id="reportThemeFindByUserNo" resultMap="ReportThemeMap" parameterType="int">
+    <include refid="selectThemeReport"/>  
+    where jrt.user_no=#{no}
+  </select>
 	
-	<insert id="insertreportUser" parameterType="ReportUser">
-		Insert into jeju_report_user(user_no, user_no2, content, report_status_no)
-		values(#{writer.no},#{reportedUser.no},#{content},#{state.no});
-	</insert>
-	
+	<insert id="insertReportUser" parameterType="ReportUser">
+    Insert into jeju_report_user(user_no, user_no2, content, report_status_no)
+    values(#{writer.no},#{reportedUser.no},#{content},#{status.no});
+  </insert>
+  
+  <select id="findAllReportUser" resultMap="ReportUserMap">
+    <include refid="selectUserReport"/> 
+  </select>
+  
+  <select id="reportUserFindByUserNo" resultMap="ReportUserMap" parameterType="int">
+    <include refid="selectUserReport"/> 
+    where jru.user_no=#{no}
+  </select>
+  	
 </mapper>
-
-
-
-
-
-
-

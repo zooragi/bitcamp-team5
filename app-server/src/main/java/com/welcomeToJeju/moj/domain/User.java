@@ -26,14 +26,14 @@ public class User implements Comparable<User> {
 
 
   public List<Integer> getLikedUserNo() {
-		return likedUserNo;
-	}
+    return likedUserNo;
+  }
 
-	public void setLikedUser(List<Integer> likedUserNo) {
-		this.likedUserNo = likedUserNo;
-	}
+  public void setLikedUser(List<Integer> likedUserNo) {
+    this.likedUserNo = likedUserNo;
+  }
 
-	public int getReportedCount() {
+  public int getReportedCount() {
     return reportedCount;
   }
 

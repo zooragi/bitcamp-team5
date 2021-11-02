@@ -1,7 +1,6 @@
 package com.welcomeToJeju.moj.listener;
 
 import java.util.Map;
-
 import com.welcomeToJeju.context.UserContextListener;
 import com.welcomeToJeju.moj.domain.User;
 
