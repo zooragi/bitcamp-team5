@@ -1,11 +1,19 @@
 package com.welcomeToJeju.util;
 
 public class KakaoVo {
+	private String id;
 	private String address_name;
 	private String x;
 	private String y;
 	private String place_name;
 	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getPlace_name() {
 		return place_name;

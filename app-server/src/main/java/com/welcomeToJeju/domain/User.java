@@ -1,4 +1,4 @@
-package com.welcomeToJeju.moj.domain;
+package com.welcomeToJeju.domain;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -8,30 +8,20 @@ public class User implements Comparable<User> {
   private int no;
   private String email;
   private String password;
-  private String nickName;
+  private String nickname;
   private Date registeredDate;
   private int viewCount;
   private int reportedCount = 0;
   private int warningCount = 0;
 
-  private List<Integer> likedUserNo = new ArrayList<>(); //팔로우 
-
   @Override
   public String toString() {
     return "User [no=" + no + ", email=" + email + ", password=" + password + ", nickName="
-        + nickName + ", registeredDate=" + registeredDate + ", viewCount=" + viewCount
+        + nickname + ", registeredDate=" + registeredDate + ", viewCount=" + viewCount
         + ", reportedCount=" + reportedCount + ", warningCount=" + warningCount + ", likedUsers="
-        + likedUserNo + ", ]";
+         + ", ]";
   }
 
-
-  public List<Integer> getLikedUserNo() {
-		return likedUserNo;
-	}
-
-	public void setLikedUser(List<Integer> likedUserNo) {
-		this.likedUserNo = likedUserNo;
-	}
 
 	public int getReportedCount() {
     return reportedCount;
@@ -76,13 +66,13 @@ public class User implements Comparable<User> {
 
 
 
-  public String getNickName() {
-    return nickName;
+  public String getNickname() {
+    return nickname;
   }
 
 
-  public void setNickName(String nickName) {
-    this.nickName = nickName;
+  public void setNickname(String nickName) {
+    this.nickname = nickName;
   }
 
 
