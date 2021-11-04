@@ -77,12 +77,8 @@ dependencies {
   testImplementation 'junit:junit:4.13.2'
 }
 
-application {
-    // Define the main class for the application.
-    mainClass = 'com.welcomeToJeju.moj.ServerApp'
-}
 eclipse{
     project {
-        name = "welcome-to-jeju-server"
+        name = "good-place-server"
     }
 }
