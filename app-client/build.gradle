@@ -22,26 +22,19 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
 
     // This dependency is used by the application.
-    implementation 'org.mybatis:mybatis:3.5.7'
     implementation 'com.google.guava:guava:30.1-jre'
-    implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.4'
     implementation 'com.google.code.gson:gson:2.8.8'
-}
-
-sourceSets {
-    main {
-        resources {
-            srcDirs "src/main/resources"
-        }
-    }
+    
+    implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.4'
+    implementation 'org.mybatis:mybatis:3.5.7'
 }
 
 application {
     // Define the main class for the application.
-    mainClass = 'com.welcomeToJeju.moj.ClientApp'
+    mainClass = 'com.welcomeToJeJu.moj.ClientApp'
 }
 eclipse{
     project {
-        name = "welcome-to-jeju-client"
+        name = "good-place-client"
     }
 }

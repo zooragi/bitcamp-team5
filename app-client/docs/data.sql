@@ -27,9 +27,9 @@ insert into jeju_theme_category(category_no, name) values(3, '관광명소');
 insert into jeju_theme_category(category_no, name) values(4, '기타');
 
 -- 테마
-insert into jeju_theme(theme_no, user_no, title, share, public, category_no) values(1, 1, '제주맛집', 0, 1, 1);
-insert into jeju_theme(theme_no, user_no, title, share, public, category_no) values(2, 1, '멋진해변', 0, 1, 3);
-insert into jeju_theme(theme_no, user_no, title, share, public, category_no) values(3, 1, '나만의 제주 장소', 0, 0, 4);
+insert into jeju_theme(theme_no, user_no, title, share, public, category_no) values(1, 7, '제주맛집', 0, 1, 1);
+insert into jeju_theme(theme_no, user_no, title, share, public, category_no) values(2, 7, '멋진해변', 0, 1, 3);
+insert into jeju_theme(theme_no, user_no, title, share, public, category_no) values(3, 7, '나만의 제주 장소', 0, 0, 4);
 
 insert into jeju_theme(theme_no, user_no, title, share, public, category_no) values(4, 2, '흑돼지 맛집', 0, 1, 1);
 insert into jeju_theme(theme_no, user_no, title, share, public, category_no) values(5, 2, '드라이브도로', 0, 1, 3);
@@ -50,16 +50,6 @@ insert into jeju_theme(theme_no, user_no, title, share, public, category_no) val
 insert into jeju_theme(theme_no, user_no, title, share, public, category_no) values(16, 6, '가까운 병원', 0, 1, 4);
 insert into jeju_theme(theme_no, user_no, title, share, public, category_no) values(17, 6, '반려동물 동반 가능한 곳', 0, 1, 4);
 insert into jeju_theme(theme_no, user_no, title, share, public, category_no) values(18, 6, '뷰좋은 카페', 0, 1, 2);
-
--- 장소
-insert into jeju_place(place_no, theme_no, place_name, place_address, x_coord, y_coord, user_no) 
-values(1, 2, '함덕해수욕장', '제주특별자치도 제주시 조천읍 함덕리 1004-10', 126.669238934013,33.5430615661113, 1);
-
-insert into jeju_place(place_no, theme_no, place_name, place_address, x_coord, y_coord, user_no) 
-values(2, 4, '모메존흑돼지', '제주특별자치도 제주시 구좌읍 세화리 3645-8', 126.854387077099, 33.5252450907986, 2);
-
-insert into jeju_place(place_no, theme_no, place_name, place_address, x_coord, y_coord, user_no) 
-values(3, 7, '울트라마린', '제주특별자치도 제주시 한경면 판포리 1611', 126.20606435314039, 33.36946377010182, 3);
 
 -- 후기
 insert into jeju_place_comment(comment_no, place_no, comment, user_no) values(1, 1, '깨끗하고 놀기 좋아요', 1);

@@ -7,6 +7,8 @@ public class KakaoVo {
 	private String y;
 	private String place_name;
 	
+	
+	
 	public String getId() {
 		return id;
 	}
