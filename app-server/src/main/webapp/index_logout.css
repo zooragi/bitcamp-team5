@@ -5,6 +5,8 @@
     --orange-color : #F6BB43;
     --black-color : #181816;
     --black-light-color : #42423b;
+    --gery-color : #C0C0C0;
+    --gery-dark-color : #696969;
     --red-color : #9CB348;
 
     /* #A88B5B */
@@ -95,10 +97,10 @@ header .logout-box i{
     padding-left: var(--padding);
 }
 
-/* menu-bar */
-.menu-bar{
+/* side-menu-bar */
+.side-menu-bar{
     position: absolute;
-    display:flex;
+    display: none;    
     flex-direction: column;
     width: var(--menu-size);
     padding: var(--font-huge);
@@ -108,7 +110,7 @@ header .logout-box i{
     background-color: var(--white-color);
     z-index: 10;
 }
-.menu-bar .close-button{
+.side-menu-bar .close-button{
     display:flex;
     justify-content: flex-end;
     color: var(--black-light-color);
@@ -116,33 +118,32 @@ header .logout-box i{
     margin-bottom: var(--font-large);
 }
 
-.menu-bar{
-    display: none;
+.side-menu-bar .name{
+    color : var(--gery-dark-color);
 }
 
-.menu-bar .emozi{
+.side-menu-bar .name:hover{
+    color : var(--black-color);
+}
+
+.side-menu-bar .emozi{
     padding-right: var(--font-more-small);
 }
 
-.menu-bar .home-menu-box .home-menu-list,
-.menu-bar .my-menu-box .my-menu-list,
-.menu-bar .public-menu-box .public-menu-box-list{
+.side-menu-bar .home-menu-box .home-menu-list,
+.side-menu-bar .my-menu-box .my-menu-list,
+.side-menu-bar .public-menu-box .public-menu-box-list{
     
     border-bottom: 1px solid #E5E5E5;
 }
 
-.menu-bar .home-menu-box .home-menu-list li,
-.menu-bar .my-menu-box .my-menu-list li,
-.menu-bar .public-menu-box .public-menu-box-list li,
-.menu-bar .logout-menu-box .logout-menu-box-list li{
+.side-menu-bar .home-menu-box .home-menu-list li,
+.side-menu-bar .my-menu-box .my-menu-list li,
+.side-menu-bar .public-menu-box .public-menu-box-list li,
+.side-menu-bar .logout-menu-box .logout-menu-box-list li{
     font-size: var(--font-medium);
     padding: var(--font-medium);
 }
-
-
-
-
-
 
 .theme-slide {
     display: flex;
@@ -239,6 +240,7 @@ header .logout-box i{
     padding: 0 var(--font-large);
 }
 .hot-place .hot-place-list{
+    height: 150px;
     overflow: hidden;
 }
 
@@ -381,7 +383,7 @@ footer a {
 
 .custom-shape-divider-bottom-1636286082 {
     position: absolute;
-    bottom: -805px;
+    bottom: -861px;
     left: 0;
     width: 100%;
     overflow: hidden;
