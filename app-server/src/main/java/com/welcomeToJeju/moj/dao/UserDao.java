@@ -1,10 +1,9 @@
-package com.welcomeToJeju.dao;
+package com.welcomeToJeju.moj.dao;
 
 import java.util.HashMap;
-
 import java.util.List;
 
-import com.welcomeToJeju.domain.User;
+import com.welcomeToJeju.moj.domain.User;
 
 public interface UserDao {
 	void insert(User user) throws Exception;
