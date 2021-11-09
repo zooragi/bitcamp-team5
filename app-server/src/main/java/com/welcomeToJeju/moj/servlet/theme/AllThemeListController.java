@@ -2,6 +2,8 @@ package com.welcomeToJeju.moj.servlet.theme;
 
 import java.io.IOException;
 import java.util.Collection;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -32,7 +34,12 @@ public class AllThemeListController extends HttpServlet {
       Collection<Theme> themeList = themeDao.findAllPublicTheme();
 
       request.setAttribute("allThemeList", themeList);
-      request.getRequestDispatcher("/theme/AllThemeList.jsp").forward(request, response);
+      
+      request.setAttribute("pageTitle", "전체테마 리스트");
+      request.setAttribute("contentUrl", "/theme/AllThemeList.jsp");
+      
+      request.getRequestDispatcher("/template_main.jsp").forward(request, response);
+
 
     } catch (Exception e){
       request.setAttribute("error", e);
