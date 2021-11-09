@@ -1,19 +1,18 @@
-package com.welcomeToJeju.moj.admin;
+package com.welcomeToJeju.moj.servlet.admin;
 
 import java.io.IOException;
-import java.util.Collection;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import com.welcomeToJeju.moj.dao.UserDao;
 import com.welcomeToJeju.moj.domain.User;
 
-@WebServlet("/admin/list")
-public class AdminUserListController extends HttpServlet {
+@WebServlet("/admin/detail")
+public class AdminUserDetailController extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   UserDao userDao;
@@ -25,15 +24,16 @@ public class AdminUserListController extends HttpServlet {
   }
 
   @Override
-  public void service(ServletRequest request, ServletResponse response)
+  protected void service(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
     try {
 
-      Collection<User> userList = userDao.findAll();
+      int no = Integer.parseInt(request.getParameter("no"));
+      User user = userDao.findByNo(no);
 
-      request.setAttribute("userList", userList);
-      request.getRequestDispatcher("/admin/AdminUserList.jsp").forward(request, response);
+      request.setAttribute("user", user);
+      request.getRequestDispatcher("/admin/AdminUserDetail.jsp").forward(request, response);
 
     } catch (Exception e) {
       request.setAttribute("error", e);

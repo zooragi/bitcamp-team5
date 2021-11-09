@@ -1,4 +1,4 @@
-package com.welcomeToJeju.moj.admin;
+package com.welcomeToJeju.moj.servlet.admin;
 
 import java.io.IOException;
 import javax.servlet.ServletConfig;
