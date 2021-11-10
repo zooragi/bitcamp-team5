@@ -31,12 +31,17 @@
 
         function init() {
             placeListClickEvent();
-            searchButtonEvent();
+            keywordSearchEvent();
         }
 
-        function searchButtonEvent() {
+        function keywordSearchEvent() {
             $keywordSearhButton.addEventListener('click', () => {
                 searchPlaces();
+            });
+            $inputKeyword.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    searchPlaces();
+                }
             });
         }
 
