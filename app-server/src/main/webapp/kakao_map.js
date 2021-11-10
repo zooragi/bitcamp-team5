@@ -28,6 +28,7 @@
 
     function mapApi() {
         let placeData = [];
+        const regex = /[^0-9]/g;
 
         function init() {
             placeListClickEvent();
@@ -67,7 +68,6 @@
         function placesSearchCB(data, status, pagination) {
             if (status === kakao.maps.services.Status.OK) {
                 placeData = data;
-                console.log(placeData);
                 // 정상적으로 검색이 완료됐으면
                 // 검색 목록과 마커를 표출합니다
                 displayPlaces(data);
@@ -162,8 +162,10 @@
             }
                         
             itemStr += '  <span class="tel">' + places.phone  + '</span>' +
-                        '</div>';           
-
+                        '</div>';
+            itemStr += '<button class="placeButton">선택하기</button>';
+            
+            
             el.innerHTML = itemStr;
             el.className = 'item';
 
@@ -251,16 +253,16 @@
                 let liTag = e.target.closest('li'); 
                 if (!liTag) return; 
                 if (!$placesList.contains(liTag)) return;
+
+                let selectedPlaceItemNum = parseInt(liTag.childNodes[0].className.replace(regex, ""));
                 
-                console.log(liTag)
-                
+                console.log(placeData[selectedPlaceItemNum]);
             });
         }
+
         init();
     }
     mapApi();
     // 키워드로 장소를 검색합니다
-    
-
     
 })();
