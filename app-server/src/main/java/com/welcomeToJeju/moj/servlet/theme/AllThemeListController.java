@@ -40,12 +40,9 @@ public class AllThemeListController extends HttpServlet {
       
       request.getRequestDispatcher("/template_main.jsp").forward(request, response);
 
-
     } catch (Exception e){
       request.setAttribute("error", e);
       request.getRequestDispatcher("/Error.jsp").forward(request, response);
     }
-
-
   }
 }
