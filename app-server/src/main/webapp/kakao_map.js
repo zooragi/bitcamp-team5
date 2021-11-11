@@ -33,6 +33,7 @@
         function init() {
             placeListClickEvent();
             keywordSearchEvent();
+            moveMapLocationEvent();
         }
 
         function keywordSearchEvent() {
@@ -67,7 +68,9 @@
         // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
         function placesSearchCB(data, status, pagination) {
             if (status === kakao.maps.services.Status.OK) {
+                
                 placeData = data;
+                console.log(placeData);
                 // 정상적으로 검색이 완료됐으면
                 // 검색 목록과 마커를 표출합니다
                 displayPlaces(data);
@@ -256,13 +259,28 @@
 
                 let selectedPlaceItemNum = parseInt(liTag.childNodes[0].className.replace(regex, ""));
                 
-                console.log(placeData[selectedPlaceItemNum]);
+                console.log(placeData[selectedPlaceItemNum-1]);
+            });
+        }
+            function moveMapLocationEvent() {
+                $placesList.addEventListener('mouseover', (e) => {
+                let liTag = e.target.closest('li'); 
+                if (!liTag) return; 
+                if (!$placesList.contains(liTag)) return;
+
+                let selectedPlaceItemNum = parseInt(liTag.childNodes[0].className.replace(regex, ""));
+                
+                // 이동할 위도 경도 위치를 생성합니다 
+                let moveLatLon = new kakao.maps.LatLng(placeData[selectedPlaceItemNum-1].y, placeData[selectedPlaceItemNum-1].x);
+                
+                // 지도 중심을 부드럽게 이동시킵니다
+                // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+                map.panTo(moveLatLon);
             });
         }
 
         init();
     }
     mapApi();
-    // 키워드로 장소를 검색합니다
     
 })();
